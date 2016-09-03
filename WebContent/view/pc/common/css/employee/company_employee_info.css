@@ -1,0 +1,79 @@
+.right-group-box{
+    /*border: none;*/
+}
+
+.employee_info{
+    text-align: center;
+}
+.employee_info table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.employee_info table tr th,td{
+    border: 1px #C0C0C0 solid;
+}
+
+.btn_manager{
+    width: 100%;
+    margin-top: 10px;
+    text-align: right;
+}
+.items{
+    display: -webkit-flex;
+    display: flex;
+    flex-flow: row;
+    padding: 5px 10px;
+}
+.lable{
+    margin-right: 15px;
+    line-height: 26px;
+    width: 105px;
+    text-align: right;
+}
+.con{
+    line-height: 25px;
+    margin-right: 20px;
+}
+.con input[type="checkbox"]{
+    width: 17px;
+    height: 17px;
+    float: left;
+}
+.fn-input{
+    border-radius: 4px;
+    height: 24px;
+    width: 73%;
+}
+.con.name,.con.en_name,.con.email,.con.phone,.con.weichat{
+    cursor: pointer;
+    color: #2091DF;
+}
+.con.input{
+    display: none;
+    width: 220px;
+}
+.smart{
+    height: 24px;
+    line-height: 24px;
+    font-size: 13px;
+    width: 53px!important;
+    margin-top: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    margin-left: -7px;
+}
+.comp{
+     display: inline-block;
+     padding: 1px 8px 1px 0px;
+ }
+.btn-box{
+    margin-top: 20px;
+    text-align: right;
+}
+.forgetpaw{
+    padding: 0px 4px ;
+    text-decoration: underline;
+    color: #f60;
+    cursor: pointer;
+}

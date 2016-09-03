@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="basemeetingrele">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+
+	<typeAlias alias="BaseMeetingRele"
+		type="cn.com.sims.model.basemeetingrele.BaseMeetingRele" />
+	<!-- Result maps describe the mapping between the columns returned from 
+		a query, and the class properties. A result map isn't necessary if the columns 
+		(or aliases) match to the properties exactly. -->
+	<!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系 -->
+
+
+	<!-- Select with no parameters using the result map for Account class. -->
+
+
+
+
+ <insert id="addmeetingrele" parameterClass="BaseMeetingRele" >
+ 	INSERT INTO base_meeting_rele(
+			 	base_meeting_code,
+			 	base_meeting_rele,
+			 	base_meeting_relecode,
+			 	base_meeting_relename,
+			 	base_meeting_relepcode,
+			 	base_meeting_relepname,
+			 	base_meeting_relepposi,
+			 	deleteflag,
+			 	createid,
+			 	createtime,
+			 	updid,
+			 	updtime) 
+ 	VALUES(			 	
+ 				#base_meeting_code#,
+			 	#base_meeting_rele#,
+			 	#base_meeting_relecode#,
+			 	#base_meeting_relename#,
+			 	#base_meeting_relepcode#,
+			 	#base_meeting_relepname#,
+			 	#base_meeting_relepposi#,
+			 	#deleteflag#,
+			 	#createid#,
+			 	#createtime#,
+			 	#updid#,
+			 	#updtime#) 
+ </insert>
+ 
+<!--dwj 2016-3-7 删除会议相关机构信息-->
+ <delete id="deleteMeetingReleByCode" parameterClass="String">
+ 	DELETE FROM base_meeting_rele WHERE deleteflag='0'
+ 	AND base_meeting_code=#meetingcode#
+ </delete>
+<!--dwj 2016-3-14 根据会议code，相关code删除会议相关机构/公司信息-->
+ <delete id="deleteMeetingReleByType" parameterClass="java.util.HashMap">
+ 	DELETE FROM base_meeting_rele WHERE deleteflag='0'
+ 	AND base_meeting_code=#meetingcode#
+ 	AND base_meeting_rele = #reletype#
+ 	AND base_meeting_relecode = #relecode#
+ 	<isNotEmpty property="relepcode">
+ 		AND base_meeting_relepcode = #relepcode#
+ 	</isNotEmpty>
+ 	<isEmpty  property="relepcode">
+ 		AND base_meeting_relepcode is NULL
+ 	</isEmpty>
+ </delete> 
+ 
+</sqlMap>

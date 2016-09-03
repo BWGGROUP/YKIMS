@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="viewInvestmentInfo">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+
+	<typeAlias alias="viewInvestmentInfo"
+		type="cn.com.sims.model.viewInvestmentInfo.viewInvestmentInfo" />
+		<typeAlias alias="investmentInfo"
+		type="cn.com.sims.model.viewInvestmentInfo.investmentInfo" />
+
+	<!-- Result maps describe the mapping between the columns returned from 
+		a query, and the class properties. A result map isn't necessary if the columns 
+		(or aliases) match to the properties exactly. -->
+	<!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系 -->
+
+
+	<!-- Select with no parameters using the result map for Account class. -->
+
+	<!-- 操作数据库的业务逻辑语句指的是SQL最终反射出一个对象的ID标识指的是实体类地址 -->
+	<select id="search" parameterClass="java.lang.String"
+		resultClass="java.util.HashMap">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--		SELECT base_investment_code code,base_investment_name name,IF(ISNULL(base_investment_name),"","投资机构") nameStr FROM-->
+<!--			view_investment_info b WHERE deleteflag='0' -->
+<!--			and 	(Lower(b.base_investment_name) like Lower(concat('%', #name#, '%'))-->
+<!--			  OR Lower(b.base_investment_ename) like Lower(concat('%', #name#, '%'))-->
+<!--			  OR Lower(b.base_investment_fullname)  like Lower(concat('%', #name#, '%')) -->
+<!--			  OR Lower(b.base_investment_namep) like Lower(concat('%', #name#, '%'))-->
+<!--			  OR Lower(b.base_investment_namepf)  like Lower(concat('%', #name#, '%')) )-->
+<!--		 	order by b.updtime desc limit 0,4-->
+		SELECT 
+			b.base_investment_code AS code,
+			b.base_investment_name AS name,
+			IF(ISNULL(b.base_investment_name),"","投资机构") nameStr,
+			CASE  WHEN b.base_investment_name LIKE concat('%', #name#, '%')
+			THEN -locate(#name#,b.base_investment_name)
+			ELSE NULL
+			END AS m 
+		FROM
+			view_investment_info b 
+		WHERE b.deleteflag='0' 
+		AND (Lower(b.base_investment_name) LIKE Lower(concat('%', #name#, '%'))
+			OR Lower(b.base_investment_ename) LIKE Lower(concat('%', #name#, '%'))
+			OR Lower(b.base_investment_fullname)  LIKE Lower(concat('%', #name#, '%')) 
+			OR Lower(b.base_investment_namep) LIKE Lower(concat('%', #name#, '%'))
+			OR Lower(b.base_investment_namepf)  LIKE Lower(concat('%', #name#, '%')) )
+		ORDER BY m DESC limit 0,4
+
+	</select>
+	<select id="findInvestmentByName" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+
+	SELECT base_investment_code,
+		base_investment_name,view_investment_typename FROM
+		view_investment_info WHERE deleteflag='0'
+		<dynamic>
+			<isNotEmpty prepend='and' property="name">
+			 (Lower(base_investment_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_ename) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_fullname)  like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namepf)  like Lower(concat('%', #name#, '%')) )
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY base_investment_namep asc,updtime desc limit #startIndex#,#pageSize# 
+		
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!-- 		SELECT 
+			base_investment_code,
+			base_investment_name,
+			view_investment_typename,
+			case  WHEN base_investment_name LIKE concat('%', #name#, '%')
+			then -locate(#name#,base_investment_name)
+			ELSE NULL
+			END AS m 
+		FROM view_investment_info 
+		WHERE deleteflag='0'
+		<dynamic>
+			<isNotEmpty prepend='and' property="name">
+			 (Lower(base_investment_name) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_ename) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_fullname)  LIKE Lower(concat('%', #name#, '%')) 
+			  OR Lower(base_investment_namep) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namepf)  LIKE Lower(concat('%', #name#, '%')) )
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY m DESC limit #startIndex#,#pageSize# -->
+	</select>
+
+	<select id="gotoSearchByName" parameterClass="java.util.Map"
+		resultClass="java.util.HashMap">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+SELECT base_investment_code,
+		base_investment_name,view_investment_typename FROM
+		view_investment_info WHERE deleteflag='0'
+		<dynamic>
+			<isNotEmpty prepend='and' property="name">
+			 (Lower(base_investment_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_ename) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_fullname)  like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namepf)  like Lower(concat('%', #name#, '%')) )
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY base_investment_namep asc,updtime desc limit #startCount#,#pageSize#
+
+		<!-- SELECT 
+			base_investment_code,
+			base_investment_name,
+			view_investment_typename,
+			CASE  WHEN base_investment_name LIKE concat('%', #name#, '%')
+			THEN -locate(#name#,base_investment_name)
+			ELSE NULL
+			END AS m 
+		FROM
+			view_investment_info 
+		WHERE deleteflag='0'
+		<dynamic>
+			<isNotNull prepend='and' property="name">
+			 (Lower(base_investment_name) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_ename) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_fullname)  LIKE Lower(concat('%', #name#, '%')) 
+			  OR Lower(base_investment_namep) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namepf)  LIKE Lower(concat('%', #name#, '%')) )
+			</isNotNull>
+		</dynamic>
+		ORDER BY m DESC limit 0,#pageSize# -->
+
+	</select>
+
+	<select id="findCountSizeByName" parameterClass="java.util.Map"
+		resultClass="String">
+		SELECT count(view_investment_id) FROM view_investment_info WHERE deleteflag='0'
+		<dynamic>
+			<isNotEmpty prepend='and' property="name">
+			 (Lower(base_investment_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_ename) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_fullname)  like Lower(concat('%', #name#, '%')) 
+			  OR Lower(base_investment_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(base_investment_namepf)  like Lower(concat('%', #name#, '%')) )
+			</isNotEmpty>
+		</dynamic>
+		 	order by updtime desc
+	</select>
+
+
+	<!--根据机构ｉｄ查询机构详情 -->
+	<select id="findInvestmentById" parameterClass="String"
+		resultClass="viewInvestmentInfo">
+		SELECT * FROM view_investment_info 
+		WHERE base_investment_code=#id#
+	</select>
+
+
+	<!-- 多条件查询投资机构信息 -->
+	<!-- <select id="findMoreList" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select
+		a1.base_investment_code,a1.base_investment_name,a1.view_investment_typename,IF(ISNULL(a2.view_investment_compcode),"否","是") view_investment_compcode
+		from view_investment_info a1
+		<dynamic>
+			<isNotEmpty property="competitionList">
+				left join view_investment_info a2 on
+				a1.base_investment_code=a2.base_investment_code
+				<iterate prepend='and' property='competitionList' open='('
+					close=')' conjunction='OR'>
+					a2.view_investment_compcode like '%$competitionList[]$%'
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="competitionList">
+				inner join (select '' as view_investment_compcode ) a2
+			</isEmpty>
+		</dynamic>
+		where a1.deleteflag='0'
+		<dynamic>
+			<isNotNull prepend='and' property="lableBaskList">
+				<iterate property='lableBaskList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_baskcode like '%$lableBaskList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableinduList">
+				<iterate property='lableinduList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_inducode like '%$lableinduList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableCurrencyList">
+				<iterate property='lableCurrencyList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_currency like '%$lableCurrencyList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableFeatureList">
+				<iterate property='lableFeatureList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_featcode like '%$lableFeatureList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lablepayatteList">
+				<iterate property='lablepayatteList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_payattcode like '%$lablepayatteList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableStageList">
+				<iterate property='lableStageList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_stagecode like '%$lableStageList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableScaleList">
+				<iterate property='lableScaleList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_scalecode like '%$lableScaleList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNull prepend='and' property="usdScaleList">
+			a1.base_invesfund_currency like '%USD%' and
+				<iterate property='usdScaleList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_scalecode like '%$usdScaleList[]$%'
+				</iterate>
+			</isNull>
+		</dynamic>
+		<dynamic>
+			<isNotEmpty prepend='and' property="usdScaleList">
+			(base_invesfund_currency like '%Lable-currency-001%'
+				<iterate prepend='and' property='usdScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty>base_invesfund_scalecode like '%$usdScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+				<isNotEmpty prepend='or' property="cnyScaleList">
+			(base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					
+					<isEmpty>1=1</isEmpty>
+					<isNotEmpty>  
+				base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+			</isNotEmpty>
+			</isNotEmpty>
+			<isEmpty  property="usdScaleList">
+			<isNotEmpty prepend='and' property="cnyScaleList">
+			base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty>base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+			</isNotEmpty>
+			</isEmpty>
+		</dynamic>
+		ORDER BY a1.createtime limit #startCount#,#pageSize#
+	</select> -->
+	<select id="findMoreList" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		select
+		a1.base_investment_code,a1.base_investment_name,a1.view_investment_typename,a1.view_investment_compcode,a1.view_investment_backcont,a1.view_investment_stagename
+		,a1.base_investment_namep from view_investment_info a1
+		<!-- <dynamic>
+			<isNotEmpty property="competitionList">
+				left join view_investment_info a2 on
+				a1.base_investment_code=a2.base_investment_code
+				<iterate prepend='and' property='competitionList' open='('
+					close=')' conjunction='OR'>
+					a2.view_investment_compcode like '%$competitionList[]$%'
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="competitionList">
+				inner join (select '' as view_investment_compcode ) a2
+			</isEmpty>
+		</dynamic> -->
+		where 1=1
+		<dynamic>
+			<isNotNull prepend='and' property="delList">
+				<iterate property='delList' open='(' close=')'
+					conjunction='OR'>
+					a1.deleteflag='$delList[]$'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="typeList">
+				<iterate property='typeList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_typecode like '%$typeList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableBaskList">
+				<iterate property='lableBaskList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_baskcode like '%$lableBaskList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableinduList">
+				<iterate property='lableinduList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_inducode like '%$lableinduList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<!-- <dynamic>
+			<isNotNull prepend='and' property="lableCurrencyList">
+				<iterate property='lableCurrencyList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_currency like '%$lableCurrencyList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic> -->
+		<dynamic>
+			<isNotNull prepend='and' property="lableFeatureList">
+				<iterate property='lableFeatureList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_featcode like '%$lableFeatureList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lablepayatteList">
+				<iterate property='lablepayatteList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_payattcode like '%$lablepayatteList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableStageList">
+				<iterate property='lableStageList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_stagecode like '%$lableStageList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<!-- <dynamic>
+			<isNotNull prepend='and' property="lableScaleList">
+				<iterate property='lableScaleList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_scalecode like '%$lableScaleList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic> -->
+<!-- 		<dynamic>
+			<isNull prepend='and' property="usdScaleList">
+			a1.base_invesfund_currency like '%USD%' and
+				<iterate property='usdScaleList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_scalecode like '%$usdScaleList[]$%'
+				</iterate>
+			</isNull>
+		</dynamic> -->
+		<dynamic>
+			<isNotEmpty prepend='and' property="usdScaleList">
+			((base_invesfund_currency like '%Lable-currency-001%'
+				<iterate prepend='and' property='usdScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty property='usdScaleList[]'>base_invesfund_scalecode like '%$usdScaleList[]$%'</isNotEmpty>
+				</iterate>
+			)
+				<isNotEmpty prepend='or' property="cnyScaleList">
+			(base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					
+					<isEmpty>1=1</isEmpty>
+					<isNotEmpty property='cnyScaleList[]'>  
+				base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+			</isNotEmpty>
+				)
+			</isNotEmpty>
+			<isEmpty  property="usdScaleList">
+			<isNotEmpty prepend='and' property="cnyScaleList">
+			base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty property='cnyScaleList[]'>base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+			</isNotEmpty>
+			</isEmpty>
+			<isEmpty property="usdScaleList">
+			<isEmpty property="cnyScaleList">
+			<isNotNull property="lableCurrencyList" prepend='and'>
+			<iterate property="lableCurrencyList" open='(' close=')'
+					conjunction='OR'>
+					base_invesfund_currency like '%$lableCurrencyList[]$%'
+				</iterate>
+			</isNotNull>
+			</isEmpty>
+			</isEmpty>
+		</dynamic>
+		<!-- 2015-12-18 TASK92 yl add start-->
+		<dynamic>
+			<isNotNull prepend='and' property="lableBgroundList">
+				<iterate property='lableBgroundList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_backcode like '%$lableBgroundList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+   <!-- 2015-12-18 TASK92 yl add end-->
+		ORDER BY a1.base_investment_namep,a1.updtime desc limit #startCount#,#pageSize#
+	</select>
+
+	<!-- 多条件查询投资机构总条数 -->
+	<select id="findInvestmentByMoreCount" parameterClass="java.util.HashMap"
+		resultClass="String">
+		select count(view_investment_id) from view_investment_info where 1=1
+		<dynamic>
+			<isNotNull prepend='and' property="delList">
+				<iterate property='delList' open='(' close=')'
+					conjunction='OR'>
+					deleteflag='$delList[]$'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="typeList">
+				<iterate property='typeList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_typecode like '%$typeList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableBaskList">
+				<iterate property='lableBaskList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_baskcode like '%$lableBaskList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableinduList">
+				<iterate property='lableinduList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_inducode like '%$lableinduList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		
+
+		<dynamic>
+			<isNotEmpty prepend='and' property="usdScaleList">
+			((base_invesfund_currency like '%Lable-currency-001%'
+				<iterate prepend='and' property='usdScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isEmpty>1=1</isEmpty>
+					<isNotEmpty property='usdScaleList[]'>base_invesfund_scalecode like '%$usdScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+				<isNotEmpty prepend='or' property="cnyScaleList">
+			(base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					
+					<isEmpty>1=1</isEmpty>
+					<isNotEmpty property='cnyScaleList[]'>  
+				base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+			</isNotEmpty>
+			)
+			</isNotEmpty>
+			<isEmpty  property="usdScaleList">
+			<isNotEmpty prepend='and' property="cnyScaleList">
+			base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty property='cnyScaleList[]'>base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+			</isNotEmpty>
+			</isEmpty>
+			<isEmpty property="usdScaleList">
+			<isEmpty property="cnyScaleList">
+			<isNotNull property="lableCurrencyList" prepend='and'>
+			<iterate property="lableCurrencyList" open='(' close=')'
+					conjunction='OR'>
+					base_invesfund_currency like '%$lableCurrencyList[]$%'
+				</iterate>
+			</isNotNull>
+			</isEmpty>
+			</isEmpty>
+		</dynamic>
+
+		<dynamic>
+			<isNotNull prepend='and' property="lableFeatureList">
+				<iterate property='lableFeatureList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_featcode like '%$lableFeatureList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableStageList">
+				<iterate property='lableStageList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_stagecode like '%$lableStageList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lablepayatteList">
+				<iterate property='lablepayatteList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_payattcode like '%$lablepayatteList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<!-- 2015-12-18 TASK92 yl add start-->
+		<dynamic>
+			<isNotNull prepend='and' property="lableBgroundList">
+				<iterate property='lableBgroundList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_backcode like '%$lableBgroundList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+   <!-- 2015-12-18 TASK92 yl add end-->
+	</select>
+
+	<!-- 根据选择的行业查询相关行业近期交易 -->
+	<select id="findCompanyRe" parameterClass="java.util.HashMap"
+		resultClass="String">
+		select GROUP_CONCAT( a1.NAMEstr) NAMEstr
+		from (select DISTINCT a1.base_comp_name NAMEstr
+		from view_trade_info a1
+		where a1.base_investment_code=#base_investment_code#
+		<dynamic>
+			<isNotNull prepend='and' property="lableinduList">
+				<iterate property='lableinduList' open='(' close=')'
+					conjunction='OR'>
+					view_trade_inducode like '%$lableinduList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		ORDER by base_trade_date desc,updtime desc LIMIT 0,5) a1
+	</select>
+	<!-- 根据选择的行业查询相关行业近期交易 -->
+	<select id="findCompanyRece" parameterClass="java.util.HashMap"
+		resultClass="String">
+		select GROUP_CONCAT( a1.NAMEstr) NAMEstr
+		from (select DISTINCT a1.base_comp_name NAMEstr
+		from view_trade_info a1
+		where a1.base_investment_code=#base_investment_code#
+		<dynamic>
+			<isNotNull prepend='and' property="lableinduList">
+				<iterate property='lableinduList' open='(' close=')'
+					conjunction='OR'>
+					view_trade_inducode like '%$lableinduList[]$%'
+				</iterate>
+			</isNotNull>
+			</dynamic>
+			<dynamic>
+		</dynamic>
+		and a1.base_trade_date>#oldyear# and a1.base_trade_date &lt;#nowdate#
+		ORDER by base_trade_date desc,updtime desc ) a1
+	</select>
+	
+	<!-- 多条件查询投资机构信息 -->
+  <select id="findInvestmentByMoreConExport" parameterClass="java.util.HashMap"
+		resultClass="cn.com.sims.model.viewInvestmentInfo.investmentInfo">
+		select
+		a1.base_investment_code,a1.base_investment_name,a1.view_investment_typename,a1.view_investment_compcode,a1.view_investment_backcont,a1.view_investment_stagename
+		from view_investment_info a1
+		where a1.deleteflag='0'
+		<!-- 2015-12-18 TASK92 yl add start-->
+		<dynamic>
+			<isNotNull prepend='and' property="lableBgroundList">
+				<iterate property='lableBgroundList' open='(' close=')'
+					conjunction='OR'>
+					view_investment_backcode like '%$lableBgroundList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+   <!-- 2015-12-18 TASK92 yl add end-->
+		<dynamic>
+			<isNotNull prepend='and' property="lableBaskList">
+				<iterate property='lableBaskList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_baskcode like '%$lableBaskList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableinduList">
+				<iterate property='lableinduList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_inducode like '%$lableinduList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+<!-- 		<dynamic>
+			<isNotNull prepend='and' property="lableCurrencyList">
+				<iterate property='lableCurrencyList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_currency like '%$lableCurrencyList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic> -->
+		<dynamic>
+			<isNotNull prepend='and' property="lableFeatureList">
+				<iterate property='lableFeatureList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_featcode like '%$lableFeatureList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lablepayatteList">
+				<iterate property='lablepayatteList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_payattcode like '%$lablepayatteList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<dynamic>
+			<isNotNull prepend='and' property="lableStageList">
+				<iterate property='lableStageList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_stagecode like '%$lableStageList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+<!--	2016-6-7	dwj add 投资类型-->
+		<dynamic>
+			<isNotNull prepend='and' property="lableTypeList">
+				<iterate property='lableTypeList' open='(' close=')'
+					conjunction='OR'>
+					a1.view_investment_typecode like '%$lableTypeList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic>
+		<!-- <dynamic>
+			<isNotNull prepend='and' property="lableScaleList">
+				<iterate property='lableScaleList' open='(' close=')'
+					conjunction='OR'>
+					a1.base_invesfund_scalecode like '%$lableScaleList[]$%'
+				</iterate>
+			</isNotNull>
+		</dynamic> -->
+
+		<dynamic>
+			<isNotEmpty prepend='and' property="usdScaleList">
+			((base_invesfund_currency like '%Lable-currency-001%'
+				<iterate prepend='and' property='usdScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty property='usdScaleList[]'>base_invesfund_scalecode like '%$usdScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+				<isNotEmpty prepend='or' property="cnyScaleList">
+			(base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					
+					<isEmpty>1=1</isEmpty>
+					<isNotEmpty property='cnyScaleList[]'>  
+				base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+				)
+			</isNotEmpty>
+			)
+			</isNotEmpty>
+			<isEmpty  property="usdScaleList">
+			<isNotEmpty prepend='and' property="cnyScaleList">
+			base_invesfund_currency like '%Lable-currency-002%'
+				<iterate prepend='and' property='cnyScaleList' open='(' close=')'
+					conjunction='OR'>
+					<isNull>1=1</isNull>
+					<isNotEmpty property='cnyScaleList[]'>base_invesfund_scalecode like '%$cnyScaleList[]$%'</isNotEmpty>
+				</iterate>
+			</isNotEmpty>
+			</isEmpty>
+			<isEmpty property="usdScaleList">
+			<isEmpty property="cnyScaleList">
+			<isNotNull property="lableCurrencyList" prepend='and'>
+			<iterate property="lableCurrencyList" open='(' close=')'
+					conjunction='OR'>
+					base_invesfund_currency like '%$lableCurrencyList[]$%'
+				</iterate>
+			</isNotNull>
+			</isEmpty>
+			</isEmpty>
+		</dynamic>
+		ORDER BY a1.base_investment_namep ASC,a1.updtime desc
+	</select>
+	
+	<select id="findInvestmentByNameExport" parameterClass="java.util.HashMap"
+		resultClass="investmentInfo">
+
+	select base_investment_code,
+		base_investment_name,view_investment_typename,view_investment_backcont,view_investment_stagename
+		from view_investment_info
+		WHERE deleteflag='0'
+		<dynamic>
+			<isNotEmpty property="investmentName" prepend='and'>
+				(Lower(base_investment_name) like Lower(concat('%', #investmentName#, '%')) or
+				 Lower(base_investment_ename) like Lower(concat('%', #investmentName#, '%')) or
+			  	Lower(base_investment_fullname)  like Lower(concat('%', #investmentName#, '%')) or
+				Lower(base_investment_namep) like Lower(concat('%', #investmentName#, '%')) or
+				Lower(base_investment_namepf) like Lower(concat('%', #investmentName#, '%')))
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY base_investment_namep ASC, updtime desc 
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!-- 			SELECT 
+					base_investment_code,
+					base_investment_name,
+					view_investment_typename,
+					view_investment_backcont,
+					view_investment_stagename,
+					CASE  WHEN base_investment_name LIKE '%$investmentName$%'
+					THEN -locate(#investmentName#,base_investment_name)
+					ELSE NULL
+					END AS m 
+					FROM view_investment_info
+					WHERE deleteflag='0'
+			<dynamic>
+				<isNotEmpty property="investmentName" prepend='and'>
+					(Lower(base_investment_name) LIKE Lower(concat('%', #investmentName#, '%')) 
+					or Lower(base_investment_ename) LIKE Lower(concat('%', #investmentName#, '%')) 
+					or Lower(base_investment_fullname)  LIKE Lower(concat('%', #investmentName#, '%'))
+					or Lower(base_investment_namep) LIKE Lower(concat('%', #investmentName#, '%')) 
+					or Lower(base_investment_namepf) LIKE Lower(concat('%', #investmentName#, '%')))
+				</isNotEmpty>
+			</dynamic>
+			ORDER BY m DESC -->
+		</select>
+		
+			<!-- 根据机构简称查询模糊查询该机构信息-->
+  <select id="queryInvestmentlistByOrgname" parameterClass="java.util.HashMap" resultClass="viewInvestmentInfo">
+<!--  		SELECT v.base_investment_code,v.base_investment_name,-->
+<!--  		FROM view_investment_info v -->
+<!--		  where v.deleteflag='0'-->
+<!--		  <dynamic prepend="">-->
+<!--				<isNotEmpty prepend="and" property="name">-->
+<!--			 (Lower(v.base_investment_name) like Lower(concat('%', #name#, '%'))-->
+<!--			  OR Lower(v.base_investment_ename) like Lower(concat('%', #name#, '%'))-->
+<!--			  OR Lower(v.base_investment_fullname)  like Lower(concat('%', #name#, '%')) -->
+<!--			  OR Lower(v.base_investment_namep) like Lower(concat('%', #name#, '%'))-->
+<!--			  OR Lower(v.base_investment_namepf)  like Lower(concat('%', #name#, '%')) )-->
+<!--				</isNotEmpty>-->
+<!--			</dynamic>-->
+<!--			order by v.updtime desc-->
+<!--		  LIMIT #pagestart# , #limit#-->
+
+
+			SELECT 
+					v.base_investment_code,
+					v.base_investment_name,
+					CASE  WHEN base_investment_name LIKE concat('%', #name#, '%')
+					THEN -locate(#name#,base_investment_name)
+					ELSE NULL
+					END AS m 
+  			FROM view_investment_info v 
+		 	WHERE v.deleteflag='0'
+		 	<dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 	(Lower(v.base_investment_name) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investment_ename) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investment_fullname)  LIKE Lower(concat('%', #name#, '%')) 
+			  OR Lower(v.base_investment_namep) LIKE Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investment_namepf)  LIKE Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+			ORDER BY m DESC
+		  LIMIT #pagestart# , #limit#
+  </select> 
+  
+     <!-- 根据机构简称查询模糊查询该机构信息的数目-->
+  <select id="queryInvestmentlistnumByOrgname" parameterClass="java.util.HashMap" resultClass="int">
+  		SELECT count(v.base_investment_name)
+  		FROM view_investment_info v 
+		  where v.deleteflag='0'
+	 		<dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 (Lower(v.base_investment_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investment_ename) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investment_fullname)  like Lower(concat('%', #name#, '%')) 
+			  OR Lower(v.base_investment_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investment_namepf)  like Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+  </select> 
+  
+<!--  修改机构删除标识 duwenjie 2016-4-20-->
+  <update id="updateViewOrgDel" parameterClass="java.util.HashMap">
+  	UPDATE view_investment_info
+  	SET deleteflag=#del#,
+  		updid = #updid#,
+		updtime = #updtime#
+  	WHERE base_investment_code=#orgcode#
+  </update>
+  
+</sqlMap>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ViewOrganizationTrade">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="ViewOrganizationTrade" type="cn.com.sims.model.vieworganizationtrade.ViewOrganizationTrade"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+ <!--根据机构id查询机构交易记录总条数-->
+  <select id="findCountTradeByOrgId" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM view_trade_info WHERE deleteflag='0' and base_investment_code=#orgCode# 
+  </select>
+  
+ <!--根据机构ｉｄ关联查询机构交易详情-->
+  <select id="findTradeByOrganizationId" parameterClass="String" resultClass="ViewOrganizationTrade">
+		SELECT * FROM view_trade_info WHERE deleteflag='0' and base_investment_code=#id#
+  </select>
+  
+  <!--根据机构id分页查询机构交易详情-->
+  <select id="findPageTradeByOrgId" parameterClass="java.util.HashMap" resultClass="ViewOrganizationTrade">
+		SELECT 
+			view_trade_id,
+			base_trade_code,
+			base_trade_date,
+			base_trade_stage,
+			base_trade_stagecont,
+			base_trade_money,
+			base_trade_comnum,
+			base_comp_code,
+			base_comp_name,
+			base_comp_fullname,
+			base_comp_ename,
+			base_comp_stage,
+			base_comp_stagecont,
+			base_comp_img,
+			base_investment_code,
+			base_investment_name,
+			base_investor_code,
+			base_investor_name,
+			CASE WHEN base_trade_collvote=0 THEN '是'
+			 	 WHEN base_trade_collvote=1 THEN '否'
+			END as base_trade_collvote,
+			base_trade_inmoney,
+			CASE WHEN base_trade_ongam=0 THEN '是'
+			 	 WHEN base_trade_ongam=1 THEN '否'
+			END as base_trade_ongam,
+			CASE WHEN base_trade_subpay=0 THEN '是'
+			 	 WHEN base_trade_subpay=1 THEN '否'
+			END as base_trade_subpay
+		FROM view_trade_info WHERE deleteflag='0' and base_investment_code=#orgCode# 
+		order by base_trade_date desc,updtime desc
+		limit $startCount$,$pageSize$
+  </select>
+</sqlMap>

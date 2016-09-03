@@ -1,0 +1,22 @@
+.meet_update{
+    width: 100%;
+    text-align: center;
+}
+.meet_update table{
+    table-layout: fixed;
+    word-wrap: break-word;
+    font-size: 13px;
+    margin: auto;
+    width: 80%;
+    border-collapse: collapse;
+}
+.meet_update table tr th,td{
+    border: 1px #C0C0C0 solid;
+}
+.meet_page{
+    width: 90%;
+    text-align: center;
+}
+.footer_btn{
+    text-align: right;
+}

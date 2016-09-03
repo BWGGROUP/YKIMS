@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseCompdInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseCompdInfo" type="cn.com.sims.model.basecompinfo.BaseCompInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+ 
+ <!--模糊查询公司分页-->
+ <select id="companylistbyname" parameterClass="java.util.HashMap" resultClass="BaseCompdInfo">
+
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+
+<!--SELECT base_comp_code,base_comp_name,base_comp_fullname,base_comp_ename FROM base_comp_info b WHERE deleteflag='0' -->
+<!--<dynamic prepend="">-->
+<!--	<isNotEmpty prepend="and" property="name">-->
+<!--			 ( Lower(base_comp_name) like Lower(concat('%', #name#, '%')) OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%'))  OR Lower(base_comp_ename)  like Lower(concat('%', #name#, '%')) OR Lower(base_comp_namef)  like Lower(concat('%', #name#, '%'))  OR Lower(base_comp_namep)-->
+<!--	 like Lower(concat('%', #name#, '%')) )-->
+<!--					</isNotEmpty>-->
+<!--	</dynamic>-->
+<!--	order by updtime desc-->
+<!--	 LIMIT #pagestart# , #limit#-->
+		SELECT 
+				base_comp_code,
+				base_comp_name,
+				base_comp_fullname,
+				base_comp_ename,
+				CASE  WHEN base_comp_name LIKE concat('%', #name#, '%')
+				THEN -locate(#name#,base_comp_name)
+				ELSE NULL
+				END as m
+		FROM base_comp_info b 
+		WHERE deleteflag='0' 
+		<dynamic prepend="">
+			<isNotEmpty prepend="and" property="name">
+				 ( Lower(base_comp_name) LIKE Lower(concat('%', #name#, '%')) 
+				OR Lower(base_comp_fullname) LIKE Lower(concat('%', #name#, '%'))  
+				OR Lower(base_comp_ename)  LIKE Lower(concat('%', #name#, '%')) 
+				OR Lower(base_comp_namef)  LIKE Lower(concat('%', #name#, '%'))  
+				OR Lower(base_comp_namep)  LIKE Lower(concat('%', #name#, '%')) )
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY m DESC
+		LIMIT #pagestart# , #limit#
+  </select> 
+  <select id="listbyname_totalnum" parameterClass="java.util.HashMap" resultClass="int">
+SELECT COUNT(*)  bc FROM base_comp_info b WHERE deleteflag='0' 
+<dynamic prepend="">
+	<isNotEmpty prepend="and" property="name">
+			 (Lower(base_comp_name) like Lower(concat('%', #name#, '%')) 
+			 OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%'))  
+			 OR Lower(base_comp_ename)  like Lower(concat('%', #name#, '%')) 
+			 OR Lower(base_comp_namef)  like Lower(concat('%', #name#, '%'))  
+			 OR Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) )
+					</isNotEmpty>
+	</dynamic>
+  </select> 
+    <!-- 查询公司 -->
+  <select id="findCompany" parameterClass="String" resultClass="java.util.HashMap">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--		SELECT base_comp_code,base_comp_name FROM base_comp_info WHERE deleteflag='0' -->
+<!--		and (Lower(base_comp_name) like Lower(concat('%', #name#, '%')) -->
+<!--			 OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%'))  -->
+<!--			 OR Lower(base_comp_ename)  like Lower(concat('%', #name#, '%')) -->
+<!--			 OR Lower(base_comp_namef)  like Lower(concat('%', #name#, '%'))  -->
+<!--			 OR Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) )-->
+<!--			order by updtime desc limit 0,4-->
+
+			SELECT 
+					base_comp_code,
+					base_comp_name,
+					CASE  WHEN base_comp_name LIKE concat('%', #name#, '%')
+					THEN -locate(#name#,base_comp_name)
+					ELSE NULL
+					END as m
+			FROM base_comp_info 
+			WHERE deleteflag='0' 
+				AND (Lower(base_comp_name) LIKE Lower(concat('%', #name#, '%')) 
+				  OR Lower(base_comp_fullname) LIKE Lower(concat('%', #name#, '%'))  
+				  OR Lower(base_comp_ename)  LIKE Lower(concat('%', #name#, '%')) 
+				  OR Lower(base_comp_namef)  LIKE Lower(concat('%', #name#, '%'))  
+				  OR Lower(base_comp_namep) LIKE Lower(concat('%', #name#, '%')) )
+			ORDER BY m DESC limit 0,4
+
+  </select>
+  
+  <!-- 根据名字查询数据库中是否存在易凯创建或修改的公司信息 -->
+	<select id="findcompinfoBynameForIT" parameterClass="java.util.HashMap" resultClass="BaseCompdInfo">
+		SELECT * FROM base_comp_info 
+		WHERE deleteflag='0' AND  base_comp_estate!='1' 
+		AND base_comp_estate!='4' and  
+		<dynamic prepend="">
+		(base_comp_name=#basecompname#
+			<isNotEmpty prepend="or" property="basecompfullname">
+				 base_comp_fullname=#basecompfullname#
+			</isNotEmpty>
+			)
+			</dynamic>
+		limit 1
+	</select>
+	
+	<!-- 根据it桔子code查询数据库中是否存在公司数据 -->
+	<select id="findcompinfoBytmpcodeForIT" parameterClass="String" resultClass="BaseCompdInfo">
+		SELECT * FROM base_comp_info 
+		WHERE deleteflag='0'  and Tmp_Company_Code=#tmpcompanycode# limit 1
+	</select>
+	
+	<!-- IT桔子导入更新公司信息(基础)-->
+ <update id="updateBaseCompforIT" parameterClass="BaseCompdInfo">
+		UPDATE base_comp_info SET
+		base_comp_name=#base_comp_name#,
+		base_comp_fullname=#base_comp_fullname#,
+		base_comp_stage=#base_comp_stage#,
+		base_comp_estate=#base_comp_estate#,
+		base_comp_namep=#base_comp_namep#,
+		base_comp_namef=#base_comp_namef#,
+		base_datalock_pltype=#base_datalock_pltype#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_comp_code=#base_comp_code#
+	
+	</update>
+	
+	<!-- 插入公司信息 -->
+	<insert id="insertBaseCompforIT" parameterClass="BaseCompdInfo">
+		INSERT INTO base_comp_info (
+		base_comp_code,base_comp_name,base_comp_fullname,base_comp_stage,
+		base_comp_stem,base_comp_estate,base_comp_namep,base_comp_namef,
+		Tmp_Company_Code,deleteflag,createid,createtime,updid,updtime,
+		base_datalock_viewtype,base_datalock_pltype)
+		values(
+		#base_comp_code#,#base_comp_name#,#base_comp_fullname#,#base_comp_stage#,
+		#base_comp_stem#,#base_comp_estate#,#base_comp_namep#,#base_comp_namef#,
+		#Tmp_Company_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,
+		#base_datalock_viewtype#,#base_datalock_pltype#)
+	</insert>
+	<select id="findVersionByCode" parameterClass="String" resultClass="long">
+	select base_datalock_viewtype from base_comp_info where base_comp_code=#code# and deleteflag='0'
+	</select>
+	<!-- 修该公司名称 -->
+	<update id="tranModifyCompName" parameterClass="BaseCompdInfo">
+		UPDATE base_comp_info SET
+		<isNotNull property="base_comp_name">
+		base_comp_name=#base_comp_name#,
+		</isNotNull>
+		<isNotNull property="base_comp_fullname">
+		base_comp_fullname=#base_comp_fullname#,
+		</isNotNull>
+		<isNotNull property="base_comp_ename">
+		base_comp_ename=#base_comp_ename#,
+		</isNotNull>
+		<isNotNull property="base_comp_namep">
+		base_comp_namep=#base_comp_namep#,
+		</isNotNull>
+		<isNotNull property="base_comp_namef">
+		base_comp_namef=#base_comp_namef#,
+		</isNotNull>
+		<isNotNull property="base_datalock_pltype">
+		base_datalock_pltype=#base_datalock_pltype#,
+		</isNotNull>
+		<isNotNull property="base_comp_stage">
+		base_comp_stage = #base_comp_stage#,
+		</isNotNull>
+		<isNotNull property="base_comp_estate">
+		base_comp_estate=#base_comp_estate#,
+		</isNotNull>
+		<isNotNull property="base_datalock_viewtype">
+		base_datalock_viewtype=#base_datalock_viewtype#,
+		</isNotNull>
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_comp_code=#base_comp_code#
+		AND base_datalock_viewtype &lt; #base_datalock_viewtype#
+	
+	</update>
+	
+	<select id="findCompinfoByCode" parameterClass="String" resultClass="BaseCompdInfo">
+	select * from base_comp_info where base_comp_code=#compcode# and deleteflag='0'
+	</select>
+	<insert id="insertcompany" parameterClass="BaseCompdInfo">
+	INSERT INTO base_comp_info (
+		base_comp_code,base_comp_name,base_comp_fullname,base_comp_ename,base_comp_stage,
+		base_comp_stem,base_comp_estate,base_comp_namep,base_comp_namef,
+		Tmp_Company_Code,deleteflag,createid,createtime,updid,updtime,
+		base_datalock_viewtype,base_datalock_pltype)
+		values(
+		#base_comp_code#,#base_comp_name#,#base_comp_fullname#,#base_comp_ename#,#base_comp_stage#,
+		#base_comp_stem#,#base_comp_estate#,#base_comp_namep#,#base_comp_namef#,
+		#Tmp_Company_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,
+		#base_datalock_viewtype#,#base_datalock_pltype#)
+	</insert>
+	
+	<select id="selectName" parameterClass="String" resultClass="int">
+	select count(base_comp_code) from base_comp_info where deleteflag='0' and Lower(base_comp_name) = Lower(#name#)
+	</select>
+				<!--	添加交易判断投资机构简称是否唯一 -->
+	<select id="queryCompOnlyName" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_comp_info 
+		WHERE deleteflag='0' 
+		AND upper(base_comp_name)=upper(#name#)
+	</select>
+</sqlMap>

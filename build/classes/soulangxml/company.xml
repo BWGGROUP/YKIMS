@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docs>
+	<!--SoupLang是WebCollector 2.x中的一种爬虫脚本，以Jsoup内置的CSS SELECTOR为基础 程序会将SoupLang的脚本(xml)转换成语义树，所以不用担心配置文件会影响网页抽取的速度。 
+		SoupLang除了有Jsoup选择元素、元素属性的功能外，还可以做正则匹配、写数据库等操作 -->
+
+	<!--一个doc对应一个网页,url表示网页的正则。 如果有多个doc的url，和网页的url匹配，程序会执行多次(所有对应的doc)。 所以尽量保证一个网页之能匹配到一个doc。 
+		多个doc的设计，是为了爬虫统一管理配置设定的。很多爬虫要多多种不同类型的页面做抽取，抽取 的代码很难统一管理。利用SoupLang这种脚本，可以将所有的抽取业务写道一个 -->
+	<doc url="http://www.itjuzi.com/company/[0-9]{1,8}">
+<!--	div[class=public-info pull-left]>p>a-->
+		<!-- 公司简称 -->
+		<element selector="ul[class=bread dark]>li:last-child>a">
+			<!--这里如果将name="content"放到element中，name的输出是一个jsoup的Element元素， 插入到数据库中时，会以Element元素源码的形式插入 -->
+			<text name="Tmp_Company_Name" />
+		</element>
+
+		<!-- <element selector="div[class=media-body]>ui.detail-info>li:contains(职位:)"> 
+			<text name="Tmp_Investor_Position"/> </element> <element selector="div[class=media-body]>ui.detail-info>li:contains(微博:)"> 
+			<text name="Tmp_Investor_Recom"/> </element> <element selector="div[class=media-body]>ui.detail-info>li:contains(介绍:)"> 
+			<text name="Tmp_Investor_Blog"/> </element> -->
+			
+		<!-- 公司logo -->
+		<element selector="div[class=pic]>img"><!-- div.archive-logo.pull-left>img -->
+		   <attr attr="abs:src" name="Tmp_Company_logo"/>
+		</element>
+		
+		<!-- 宣传图片位置 -->
+		<element selector="div[class=picshow]>div>img"><!-- div.swiper-slide>img -->
+		   <attr attr="abs:src" name="Tmp_Company_conduimg"/>
+		</element>
+		
+		<!-- 网址 -->
+		<element selector="div[class=link-line]>a[class*=weblink]"><!-- li:contains(网址:) -->
+			<attr attr="abs:href" name="Tmp_Company_URL" />
+		</element>
+		
+		<!-- 公司全称 -->
+		<element selector="span:contains(公司全称)">
+<!--		 <element selector="em">-->
+		    <text name="Tmp_Company_Comp" />
+<!--		 </element>-->
+		</element>
+		<!-- 成立时间 -->
+   		<element selector="span:contains(成立时间)"><!-- li:contains(时间:) -->
+<!--		 <element selector="em">-->
+		   <text name="Tmp_Company_Time" />
+<!--		 </element>-->
+		</element>
+		<!-- 公司地点 -->
+		<element selector="span[class=loca c-gray-aset]"><!-- li:contains(地点:) -->
+			<text name="Tmp_Company_Address" />
+		</element>
+		<!-- 状态 -->
+		<element selector="div[class=des-more]>div>span[class ~=tag]"><!-- li:contains(状态:) -->
+<!--		 <element selector="a">-->
+		  <text name="Tmp_Company_Active" />
+<!--		 </element>   		 -->
+		</element>
+		
+		<element selector="li:contains(阶段:)">
+		 <element selector="a">
+		  <text name="Tmp_Company_Stage" />
+		 </element>   		 
+		</element>
+		<!-- 行业 -->
+		<element selector="span[class=scope c-gray-aset]>a:first-child"><!-- li:contains(行业:) -->
+		   <text name="Tmp_Company_Industry" />		 
+		</element>
+		<!-- 子行业 -->
+		<element selector="span[class=scope c-gray-aset]>a:last-child"><!-- li:contains(子行业:) -->
+		   <text name="Tmp_Company_SubIndustry" />		 
+		</element>
+		<!-- TAG -->
+		<element selector="div[class=tagset dbi c-gray-aset]"><!-- li:contains(TAG:) -->
+		   <text name="Tmp_Company_TAG" />		 
+		</element>
+		
+		<!--简介-->
+		<element selector="div[class=des]"><!-- li:contains(简介:) -->
+		   <text name="Tmp_Company_Brief" />		 
+		</element>
+		
+		<!--融资需求-->
+		<element selector="aside[class=two-col-little-right]>div:first-child">
+		 <element selector="p#company-fund-status>a">
+		     <text name="Tmp_Company_Fundneeds" />
+		 </element>
+		</element>
+		
+		<!-- <element selector="aside[class=two-col-little-right]>">
+		<element selector="div.normal-box:nth-child(2)">
+		 <element selector="a.">
+		     <text name="Tmp_Company_Fundstatus" />
+		 </element>
+		</element>
+		</element> -->
+		<!--<element selector="aside[class=two-col-little-right]">
+		<element selector="div[class=normal-box][style=border-top:none;]">
+		 <element selector="p#company-fund-status>a">
+		     <text name="Tmp_Company_Fundstatus" />
+		 </element>
+		</element>
+		</element>-->
+
+		<!--获投状态	-->
+		<element selector="span[class=t-small c-green]">
+			<text name="Tmp_Company_Fundstatus" />
+		</element>
+		
+		<element selector="iframe" >
+		<attr attr="abs:src" name="iframe"/>
+		</element>
+		
+		<element selector="li:contains(注册号: )">
+		 <element selector="em">
+		  <text name="Tmp_Company_regisnum" />		 
+		 </element>
+ 		</element>
+ 		
+ 		<element selector="li:contains(经营状态:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_operastate" />		 
+		 </element>
+ 		</element>
+ 		<element selector="li:contains(法定代表:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_legal" />		 
+		 </element>
+ 		</element>
+ 		<element selector="li:contains(公司类型:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_gtype" />		 
+		 </element>
+ 		</element>
+ 		<element selector="li:contains(成立日期:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_datees" />		 
+		 </element>
+ 		</element>
+ 		<element selector="li:contains(注册资本:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_reca" />		 
+		 </element>
+ 		</element>
+ 		<element selector="li:contains(营业期限:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_operaper" />		 
+		 </element>
+ 		</element>
+ 		<element selector="li:contains(住所:)">
+		 <element selector="em">
+		  <text name="Tmp_Company_resi" />		 
+		 </element>
+ 		</element>
+<!--		<list selector="tr" name="results">-->
+<!--		<element selector="td:first-child>a">-->
+<!--		<attr attr="abs:href" name="Tmp_Entrepreneur_Code" />	-->
+<!--		</element>-->
+<!--		<element selector="td:nth-child(3)">-->
+<!--		<text name="Tmp_Compterm_Position" />	-->
+<!--		</element>-->
+		 <!-- <element selector="a">
+		  <attr attr="abs:href" name="Tmp_Entrepreneur_Code" />		 
+		 </element> -->
+<!-- 		</list>-->
+ 		<list selector="ul[class=list-prodcase limited-itemnum]>li" name="results">
+ 			<element selector="div>div[class=right]>h4>a[class=title]">
+			<attr attr="abs:href" name="Tmp_Entrepreneur_Code" />
+			</element>
+			<element selector="div>div[class=right]>h4>a[class=title]>b>span[class=c-gray]">
+			<text name="Tmp_Compterm_Position" />	
+			</element>
+ 		</list>
+ 		
+ 		
+ 		<!-- <list selector="tr>td:nth-child(3)" name="resultss">
+		 <text name="Tmp_Compterm_Position" />
+ 		</list> -->
+ 		<!-- <element selector="tr>td:nth-child(3)">
+		  <text name="Tmp_Compterm_Position" />		 
+ 		</element> -->
+ 		<!-- <element selector="li:contains(产品介绍:)">
+		   <text name="Tmp_Company_Product" />		 
+		</element> -->
+		<!-- <list selector="div.company-product-item" name="result">
+            <element selector="h3>a:first-child">
+                <text name="title"/>
+            </element>
+            <element selector="h3>a:nth-child(2)">
+                <attr attr="abs:href" name="url"/>  
+            </element>
+            <element selector="p">
+                <text name="des"/>
+            </element>
+        </list>-->
+		<!--插入数据库,temp1是程序中，用JDBCHelper.createMysqlTemplate创建template时指定的名称 -->
+		<sql
+		    sql="REPLACE INTO Tmp_Company_Info (Tmp_Company_Code,Tmp_Company_Name,Tmp_Company_di,Tmp_Company_logo,Tmp_Company_conduimg,Tmp_Company_URL,Tmp_Company_Comp,Tmp_Company_Time,Tmp_Company_Address,Tmp_Company_Active,Tmp_Company_Stage,Tmp_Company_Industry,Tmp_Company_SubIndustry,Tmp_Company_TAG,Tmp_Company_Brief,Tmp_Company_Product,Tmp_Company_Type,Tmp_Company_Fundstatus,Tmp_Company_Fundneeds,Tmp_Company_regisnum,Tmp_Company_operastate,Tmp_Company_legal,Tmp_Company_gtype,Tmp_Company_datees,Tmp_Company_reca,Tmp_Company_operaper,Tmp_Company_resi,Tmp_Company_Note,deleteFlag,createtime,updtime) VALUES (?,?,'0',?,?,?,?,?,?,?,?,?,?,?,?,?,'0',?,?,?,?,?,?,?,?,?,?,null,'0',now(),date_add(utc_timestamp(), interval 8 hour) )"
+		    params="url,Tmp_Company_Name,Tmp_Company_logo,Tmp_Company_conduimg,Tmp_Company_URL,Tmp_Company_Comp,Tmp_Company_Time,Tmp_Company_Address,Tmp_Company_Active,Tmp_Company_Stage,Tmp_Company_Industry,Tmp_Company_SubIndustry,Tmp_Company_TAG,Tmp_Company_Brief,result,Tmp_Company_Fundstatus,Tmp_Company_Fundneeds,iframe,Tmp_Company_operastate,Tmp_Company_legal,Tmp_Company_gtype,Tmp_Company_datees,Tmp_Company_reca,Tmp_Company_operaper,Tmp_Company_resi" template="temp2" /> 
+		   
+		<sql
+			sql="update Tmp_Compterm_info set Tmp_Compterm_Active='1' where Tmp_Company_Code=?"
+			params="url" template="temp2" />
+		<!-- <sql
+			sql="REPLACE INTO Tmp_Compterm_info (Tmp_Company_Code,Tmp_Entrepreneur_Code,Tmp_Compterm_Active,Tmp_Compterm_Position,deleteFlag,Tmp_Compterm_Note,createtime,updtime) VALUES (?,?,'0',?,'0',null,now(),date_add(utc_timestamp(), interval 8 hour) )"
+			params="url,Tmp_Entrepreneur_Code,Tmp_Compterm_Position" template="temp2" /> -->
+	</doc>
+
+</docs>

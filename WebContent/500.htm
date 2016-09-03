@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<title>易凯投资</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="易凯投资">
+<meta name=”renderer” content=”webkit”>
+<meta name="viewport"
+	content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+<link rel="stylesheet" href="view/mobile/css/font.css">
+<link rel="stylesheet" href="view/mobile/css/common.css">
+<style type="text/css">
+*,*:after,*:before {
+  padding:0;
+  margin:0;
+}
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 600;
+  background:#ccc;
+}
+.wrapper {
+  margin:40px auto;
+  text-align:center;
+}
+
+/*EXAMPLE ONE - EMBOSS, NEW BROWSERS*/
+
+p {
+  background:#fff;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: rgba(0,0,0,0.2) 1px 1px 1px;
+  font-size:20px;
+  line-height:1.2em;
+}
+
+/*EXAMPLE TWO - INLET, NEW BROWSERS*/
+
+p:nth-child(2) {
+  font-size:3em;
+  background:#BABABA;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: rgba(255,255,255,0.2) 1px 4px 2px;
+}
+
+/*EXAMPLE THREE - CROSS-BROWSER COMPATIBLE*/
+
+.inlet {
+height:100%;
+  color: rgba(120,120,120,1.0);
+  position: relative;
+}
+
+.inlet:before, .inlet:after {
+  content: attr(title);
+  color: rgba(240,240,240,.5);
+  position: absolute;
+  display:block;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.inlet:before { 
+  top: 1px; 
+  left: 1px;
+}
+.inlet:after  { 
+  top: 2px; 
+  left: 2px; 
+}
+</style>
+<script type="text/javascript">
+function browserRedirect() {
+	
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (!(bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) ){
+//     	 window.location.href="gotoSearchMain.html?logintype=PC";
+    	 window.location.href="/SIMS/500.jsp";
+    }
+}
+browserRedirect();
+</script>
+</head>
+<body>
+	<div class="main-content">
+		<div class="header">
+			<div class="header-left left-menu-btn"></div>
+			<div class="header-center">
+				<div class="logo"></div>
+			</div>
+			<div class="header-right"></div>
+		</div>
+		<div class="content-body">
+			<div class="wrapper">
+  <div class="inlet" title="500" style="font-size:100px;">500<p> 服务器遇到错误，无法完成请求！</p></div>
+</div>
+		</div>
+
+	</div>
+
+</body>
+<script type="text/javascript" src="view/mobile/js/jquery.min.js"></script>
+<script type="text/javascript" src="view/mobile/js/common.js"></script>
+</html>

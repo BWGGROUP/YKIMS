@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysUserInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="SysUserInfo" type="cn.com.sims.model.sysuserinfo.SysUserInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+ 
+ <!--根据邮箱查询用户信息-->
+ <select id="sysuserbyemail" parameterClass="String" resultClass="SysUserInfo">
+SELECT * FROM sys_user_info WHERE deleteflag='0' 
+AND LOWER(sys_user_email)=LOWER(#email#);
+  </select> 
+   <select id="findAllUserInfo" parameterClass="String" resultClass="java.util.HashMap">
+	SELECT  a.sys_user_code as id,a.sys_user_name as text 
+	from sys_user_info a WHERE a.deleteflag='0' 
+	ORDER BY CONVERT( a.sys_user_name USING gbk ) COLLATE gbk_chinese_ci ASC 
+  </select>
+   <select id="sysuserbyname" parameterClass="String" resultClass="SysUserInfo">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--SELECT * FROM sys_user_info WHERE deleteflag='0' -->
+<!--<dynamic prepend="">-->
+<!--	<isNotEmpty prepend="and" property="value">-->
+<!--	((sys_user_name likeconcat('%', #name#, '%')) -->
+<!--	OR (Lower(sys_user_ename)  like Lower(concat('%', #name#, '%'))))-->
+<!--	</isNotEmpty>-->
+<!--	</dynamic>-->
+<!--	order by updtime DESC-->
+		SELECT 
+				sys_user_code,
+				sys_user_paw,
+				sys_user_name,
+				sys_user_ename,
+				sys_user_email,
+				sys_user_phone,
+				sys_user_wechatnum,
+				sys_user_wechatopen,
+				sys_user_wechatflag,
+				sys_user_addmnum,
+				sys_user_cmnum,
+				sys_user_addreconum,
+				sys_user_updreconum,
+				deleteflag,
+				createid,
+				createtime,
+				updid,
+				updtime,
+				CASE  WHEN sys_user_name LIKE concat('%', #name#, '%')
+				THEN -locate(#name#,sys_user_name)
+				ELSE NULL
+				END as m 
+		FROM sys_user_info 
+		WHERE deleteflag='0' 
+		<dynamic prepend="">
+			<isNotEmpty prepend="and" property="value">
+			((sys_user_name LIKE concat('%', #name#, '%')) 
+			OR (Lower(sys_user_ename)  LIKE Lower(concat('%', #name#, '%'))))
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY m DESC
+  </select> 
+   <select id="weixin_userid" parameterClass="String" resultClass="SysUserInfo">
+SELECT * FROM sys_user_info WHERE deleteflag='0' AND sys_user_wechatopen=#id#;
+  </select>
+  <update id="bindweichat" parameterClass="SysUserInfo">
+   UPDATE sys_user_info SET sys_user_wechatopen=#sys_user_wechatopen# where sys_user_code=#sys_user_code#
+  </update> 
+   <select id="userbyKcode" parameterClass="java.util.HashMap" resultClass="SysUserInfo">
+SELECT DISTINCT a.*  FROM sys_user_info a  LEFT JOIN sys_user_wad b ON a.sys_user_code=b.sys_user_code  
+WHERE a.deleteflag='0' 
+AND b.sys_wad_code=#code# AND a.sys_user_code!=#admin#
+	order by a.updtime DESC,b.updtime DESC
+  </select> 
+  
+  <select id="usernoinKcode" parameterClass="java.util.HashMap" resultClass="SysUserInfo">
+  select sys_user_code,sys_user_name from 
+(select b.sys_wad_code,a.sys_user_code,a.sys_user_name
+,a.updtime 
+from sys_user_info a
+left join sys_user_wad b
+on a.sys_user_code =b.sys_user_code
+and b.sys_wad_code=#code# where a.deleteflag='0'
+)s
+where s.sys_wad_code is null and s.sys_user_code!=#admin# 
+	order by s.updtime DESC
+  </select> 
+<!--   张子光更改下SQL -->
+ <select id="findUserInfo" parameterClass="String" resultClass="SysUserInfo">
+        select * from sys_user_info where deleteflag='0' and sys_user_code=#code#
+ </select>
+  <select id="addwad_alluser" parameterClass="String" resultClass="java.util.HashMap">
+	SELECT  * from sys_user_info WHERE deleteflag='0'
+	AND sys_user_code!=#admin#
+		order by updtime DESC
+  </select>
+    <update id="changeuserinfo" parameterClass="SysUserInfo">
+   UPDATE sys_user_info SET sys_user_paw=#sys_user_paw#,sys_user_name=#sys_user_name#
+   ,sys_user_ename=#sys_user_ename#,sys_user_email=#sys_user_email#,
+   sys_user_phone=#sys_user_phone#,sys_user_wechatnum=#sys_user_wechatnum#,updid=#updid#,updtime=#updtime#
+   ,deleteflag=#deleteflag#
+    where sys_user_code=#sys_user_code#
+  </update> 
+  
+ <select id="querysysuserinfo" parameterClass="String" resultClass="java.util.HashMap">
+		SELECT a.sys_user_code as code,
+		a.sys_user_name as name
+		FROM sys_user_info a WHERE a.deleteflag='0' 
+		ORDER BY CONVERT( a.sys_user_name USING gbk ) COLLATE gbk_chinese_ci ASC 
+ </select> 
+    <select id="userbyname" parameterClass="java.util.HashMap" resultClass="SysUserInfo">
+SELECT * FROM sys_user_info WHERE deleteflag='0' 
+<dynamic prepend="">
+	<isNotEmpty prepend="and" property="name">
+	((Lower(sys_user_name) like Lower(concat('%', #name#, '%'))) 
+	OR (Lower(sys_user_ename)  like Lower(concat('%', #name#, '%'))))
+	</isNotEmpty>
+	</dynamic>
+	and sys_user_code!=#admin#  ORDER BY updtime DESC LIMIT #start#,#size# 
+  </select> 
+     <select id="userbyname_num" parameterClass="java.util.HashMap" resultClass="int">
+SELECT COUNT(*) FROM sys_user_info WHERE deleteflag='0' 
+<dynamic prepend="">
+	<isNotEmpty prepend="and" property="name">
+	((Lower(sys_user_name) like Lower(concat('%', #name#, '%'))) 
+	OR (Lower(sys_user_ename)  like Lower(concat('%', #name#, '%'))))
+	</isNotEmpty>
+	</dynamic>
+	and sys_user_code!=#admin#
+  </select> 
+  <insert id="adduser" parameterClass="SysUserInfo">
+  INSERT INTO sys_user_info (sys_user_code,sys_user_paw,sys_user_name,sys_user_phone,sys_user_ename,sys_user_email,
+  sys_user_wechatnum,
+  deleteflag,createid,createtime,updid,updtime)
+   VALUES (#sys_user_code#,#sys_user_paw#,#sys_user_name#,#sys_user_phone#,#sys_user_ename#,#sys_user_email#,#sys_user_wechatnum#,
+   #deleteflag#,#createid#,#createtime#,#updid#,#updtime#)
+  </insert>
+  
+<!--  根据筐code查询用户信息-->
+  <select id="findUserInfoByBaskCode" parameterClass="String" resultClass="SysUserInfo">
+  	SELECT b.* FROM sys_user_wad a 
+  	LEFT JOIN sys_user_info b 
+  	ON a.sys_user_code=b.sys_user_code
+	WHERE a.sys_wad_code=#wadcode#
+  </select>
+</sqlMap>

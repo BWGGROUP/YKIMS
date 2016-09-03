@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="basemeetingshare">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+
+	<typeAlias alias="BaseMeetingShare"
+		type="cn.com.sims.model.basemeetingshare.BaseMeetingShare" />
+	<!-- Result maps describe the mapping between the columns returned from 
+		a query, and the class properties. A result map isn't necessary if the columns 
+		(or aliases) match to the properties exactly. -->
+	<!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系 -->
+
+
+	<!-- Select with no parameters using the result map for Account class. -->
+
+
+
+
+ <insert id="addmeetingshare" parameterClass="BaseMeetingShare" >
+ 	INSERT INTO base_meeting_share(
+			 	base_meeting_code,
+			 	base_meeting_sharecode,
+			 	base_meeting_sharetype,
+			 	deleteflag,
+			 	createid,
+			 	createtime,
+			 	updid,
+			 	updtime) 
+ 	VALUES(			 	
+ 				#base_meeting_code#,
+			 	#base_meeting_sharecode#,
+			 	#base_meeting_sharetype#,
+			 	#deleteflag#,
+			 	#createid#,
+			 	#createtime#,
+			 	#updid#,
+			 	#updtime#) 
+ </insert>
+<!--dwj 2016-3-4 根据会议code，筐code删除分享范围-->
+ <delete id="deleteShare" parameterClass="java.util.HashMap">
+ 	DELETE FROM base_meeting_share WHERE deleteflag='0'
+ 	AND base_meeting_code=#meetcode#
+ 	AND base_meeting_sharecode=#baskcode#
+ </delete>
+ <!--dwj 2016-3-7 根据会议code删除分享范围-->
+ <delete id="deleteShareByCode" parameterClass="String">
+ 	DELETE FROM base_meeting_share WHERE deleteflag='0'
+ 	AND base_meeting_code=#meetingcode#
+ </delete>
+<!-- 查询用户会议分享筐范围-->
+ <select id="findBaskShareByMeetingCode" parameterClass="String" resultClass="java.util.HashMap">
+ 	SELECT a.base_meeting_sharecode AS code,b.sys_wad_name AS name FROM base_meeting_share a
+ 	INNER JOIN sys_wad_info b ON a.base_meeting_sharecode=b.sys_wad_code
+ 	WHERE a.deleteflag='0' 
+ 	AND a.base_meeting_sharetype='1'
+ 	AND a.base_meeting_code=#code#
+ 	ORDER BY a.updtime DESC
+ </select>
+ <!-- 查询用户会议分享人范围-->
+ <select id="findUserShareByMeetingCode" parameterClass="String" resultClass="java.util.HashMap">
+ 	SELECT a.base_meeting_sharecode AS code,b.sys_user_name AS name FROM base_meeting_share a
+ 	INNER JOIN sys_user_info b ON a.base_meeting_sharecode=b.sys_user_code
+ 	WHERE a.deleteflag='0' 
+ 	AND a.base_meeting_sharetype='2'
+ 	AND a.base_meeting_code=#code#
+ 	ORDER BY a.updtime DESC
+ </select>
+</sqlMap>

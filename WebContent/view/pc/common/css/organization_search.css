@@ -1,0 +1,241 @@
+.searchform{
+    width: 460px;
+    margin: 0 auto;
+    height: 35px;
+    margin-top: 24px;
+    position: relative;
+}
+.searchform .line{
+
+    display: inline-block;
+    height: 100%;
+    float: left;
+}
+.search-input{
+    height: 34px;
+    width: 394px;
+    padding:5px 10px;
+    font-size: 14px;
+    color: #555555;
+    border: 2px solid #f60;
+    outline: none;
+}
+.search-btn{
+    width: 70px;
+    height: 34px;
+    margin-left: -4px;
+    color: #fff;
+    background: #f60;
+    font-size: 15px;
+    line-height: 34px;
+}
+.right-content-body{
+    padding: 24px 30px;
+}
+.shgroup{
+    width: 100%;
+    height: 24px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 11px;
+}
+.shgroup.heightauto{
+    height: auto!important;
+}
+
+.shgroup .more{
+    position: absolute;
+    display: none;
+    width: 40px;
+    line-height:22px;
+    height: 22px;
+    right: 0;
+    top: 0;
+    font-size:12px;
+    color: #2091DF;
+    cursor:pointer;
+}
+.shgroup.havemore .more{
+    display: block;
+}
+.shgroup .title{
+    width: 120px;
+    text-align: right;
+    font-size: 13px;
+   float: left;
+    line-height: 22px;
+}
+.shgroup .tiplist{
+    position: relative;
+    width: 530px;
+    overflow: hidden;
+}
+.tiplist ul{
+
+}
+.tiplist li{
+    display: inline-block;
+    width: auto;
+    padding: 2px 5px;
+    margin-left: 5px;
+    color: #2091DF;
+    font-size: 13px;
+    cursor:pointer;
+border-radius: 4px;
+    height: 22px;
+    margin-bottom: 2px;
+}
+.tiplist li:hover{
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+}
+.closeshearch{
+    height: 22px;
+    line-height: 21px;
+    width: 70px;
+    text-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    font-size: 12px;
+    position: absolute;
+    background: #fff;
+    margin-left: -35px;
+    left: 50%;
+    color: #817B7B;
+    cursor:pointer;
+}
+.condition{
+    height: 25px;
+    line-height: 20px;
+    font-size: 13px;
+    padding: 3px 7px;
+    border: 1px solid #C0C0C0;
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+.condition .tip,.condition .del{
+
+    color: #f60;
+}
+.condition .del{
+    display: inline-block;
+   width: 25px;
+    text-align: center;
+    cursor:pointer;
+}
+
+.fitcompany{
+position: relative;
+    margin-top: 5px;
+    height: 43px;
+    overflow: inherit;
+}
+.fitcompany-boder{
+    width: 100%;
+    height: 10px;
+    position: relative;
+    border-top: 1px solid #C0C0C0;
+    margin-top: 15px;
+
+}
+.fitcompany span{
+    display: inline-block;
+    width: 145px;
+    margin-left: 3px;
+    margin-right: 25px;
+    position: relative;
+}
+.fitcompany span input{
+    width: 100%;
+    margin: 0 auto;
+    height: 26px;
+    padding-left: 4px;
+    color: #555555;
+    border-radius: 3px;
+    border: 1px solid #C0C0C0;
+}
+.fitcompany span input:focus{
+    border: 1px solid #f60;
+    transition: all .3s !important;
+}
+.shgroup.fitcompany .title{
+    margin-top: 4px;
+}
+.shgroup.fitcompany .tiplist{
+    overflow: inherit;
+    width: 662px;
+}
+.shgroup.fitcompany .tiplist li{
+    margin-left: 0;
+    color: #333;
+    border-radius: 0;
+}
+.searchbox{
+    text-align: right;
+}
+.search_b_list{
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    background: #fff;
+    box-shadow: 0px 4px 13px #c7c7c7;
+    border: 1px solid #cfcfcf;
+    display: none;
+    top: 34px;
+}
+.search_b_list ul{
+    width: 100%;
+}
+.search_b_list ul li{
+    width: 100%;
+    height: 25px;
+    padding: 0px 11px;
+    line-height: 26px;
+    color: #504F4F;
+}
+.search_b_list ul li b{
+    display: inline-block;
+    width: 85px;
+    font-size: 14px;
+
+}
+.search_b_list ul li span{
+    display: inline-block;
+    font-size: 13px;
+}
+.search_b_list ul li:hover,.companytip ul li:hover{
+    background: #f0f0f0;
+    cursor: pointer;
+}
+.search_b_list ul li.keybod{
+    background: #f0f0f0;
+
+}
+
+.companytip{
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    background: #fff;
+    box-shadow: 0px 4px 13px #c7c7c7;
+    border: 1px solid #cfcfcf;
+    display: none;
+}
+.companytip ul{
+    width: 100%;
+}
+.companytip ul li{
+    width: 100%;
+    height: 21px;
+    padding: 0px 5px;
+    line-height: 22px;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+#condition{
+    text-align: center;
+}

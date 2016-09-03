@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysLabelelementInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="SysLabelelementInfo" type="cn.com.sims.model.syslabelelement.SysLabelelementInfo"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+  <!-- 操作数据库的业务逻辑语句指的是SQL最终反射出一个对象的ID标识指的是实体类地址 -->
+  <select id="findDIC" parameterClass="String" resultClass="java.util.HashMap">
+	SELECT sys_labelelement_code,sys_labelelement_name 
+		FROM sys_labelelement_info 
+		WHERE deleteflag='0' 
+			AND sys_labelelement_state='0'  
+			AND sys_label_code=#labelCode#
+	ORDER BY label_index ASC
+  </select> 
+  
+<!--  查询币种子项数据-->
+  <select id="findAllCurrencyChild" resultClass="java.util.HashMap">
+  	SELECT sys_labelelement_code,sys_label_code,sys_labelelement_name 
+  	from sys_labelelement_info 
+  	WHERE deleteflag='0' 
+  	AND sys_label_code LIKE 'Lable-currency-%' 
+  	AND sys_labelelement_state='0'
+  	ORDER BY label_index ASC
+  </select>
+  
+    <!-- 操作数据库的业务逻辑语句指的是SQL最终反射出一个对象的ID标识指的是实体类地址 -->
+  <select id="findLable" parameterClass="String" resultClass="java.util.HashMap">
+		SELECT sys_labelelement_code,sys_labelelement_name FROM
+	sys_labelelement_info WHERE deleteflag='0' and
+	sys_labelelement_state='0' and sys_label_code=#type#
+	ORDER BY label_index ASC
+  </select>
+  <select id="findLableScale" resultClass="java.util.HashMap">
+		SELECT s2.sys_labelelement_code sys_labelelement_code,s2.sys_labelelement_name sys_labelelement_name from sys_labelelement_info s1
+inner join sys_labelelement_info s2
+on s1.sys_labelelement_code=s2.sys_label_code
+and s1.sys_label_code='Lable-currency' and s1.sys_labelelement_state='0'
+and s2.sys_labelelement_state='0'
+ORDER BY s1.label_index ASC
+	</select>
+	
+	<!-- 根据标签元素名字查找标签元素code -->
+	<select id="querylabelelementbyname" parameterClass="java.util.HashMap" resultClass="SysLabelelementInfo">
+		SELECT sys_labelelement_code,sys_label_code from sys_labelelement_info 
+		where (UPPER(sys_labelelement_name)=UPPER(#labelelementname#) 
+		or UPPER(sys_labelelement_cname)=UPPER(#labelelementname#) 
+		or UPPER(sys_labelelement_tname)=UPPER(#labelelementname#) 
+		)
+		and sys_label_code=#labelcode#
+	</select>
+	
+	<!-- 根据标签code查找最大的标签code -->
+	<select id="querymaxlabelelementbycode" parameterClass="String" resultClass="String">
+	select MAX(sys_labelelement_code) sys_labelelement_code from sys_labelelement_info    
+		where  sys_label_code=#labelcode#
+	</select>
+	
+	<!-- 插入系统标签元素 -->
+	<insert id="insertsyslabelementinfo" parameterClass="SysLabelelementInfo" >
+	insert into sys_labelelement_info(
+		sys_labelelement_code,sys_label_code,sys_labelelement_name,sys_labelelement_state,
+		deleteflag,createid,createtime,updid,updtime,label_index
+	) 
+	values(
+			#sys_labelelement_code#,#sys_label_code#,#sys_labelelement_name#,#sys_labelelement_state#,
+			#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,#label_index#
+		)
+	</insert>
+	<select id="lablebycode" parameterClass="java.util.HashMap" resultClass="SysLabelelementInfo">
+	SELECT * FROM sys_labelelement_info WHERE deleteflag='0' AND sys_labelelement_code=#code#
+	</select>
+	<update id="updatalable" parameterClass="SysLabelelementInfo" >
+	UPDATE sys_labelelement_info SET sys_labelelement_name=#sys_labelelement_name#,
+	updid=#updid#,updtime=#updtime# WHERE sys_labelelement_code=#sys_labelelement_code#
+	</update>
+		<select id="bysyscodeandname" parameterClass="java.util.HashMap" resultClass="SysLabelelementInfo">
+SELECT * FROM sys_labelelement_info WHERE deleteflag='0' AND sys_label_code=#code# AND sys_labelelement_name=#name#
+	</select>
+
+	<!--duwenjie 2016-3-29 查询类型标签的数量-->
+	<select id="findLabelCountByLabelcode" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(sys_label_code) FROM sys_labelelement_info
+		WHERE deleteflag='0'
+		AND sys_label_code=#labelcode#
+	</select>
+	
+<!--duwenjie	查询标签类型上一个序号的标签信息-->
+	<select id="findLabelNextLabel" parameterClass="java.util.HashMap" resultClass="SysLabelelementInfo">
+		SELECT a.* 
+		FROM sys_labelelement_info a 
+		WHERE a.sys_label_code = #labelcode#
+		AND a.label_index &lt; (SELECT b.label_index  
+								FROM sys_labelelement_info b
+								WHERE b.sys_labelelement_code=#elcode#  
+							)
+		ORDER BY a.label_index DESC LIMIT 1
+	</select>
+	
+<!--	修改标签序号-->
+	<update id="updateLabelIndex" parameterClass="java.util.HashMap">
+		UPDATE sys_labelelement_info
+		SET label_index= #sign#
+		WHERE sys_labelelement_code=#elcode#
+	</update>
+	
+	
+
+</sqlMap>

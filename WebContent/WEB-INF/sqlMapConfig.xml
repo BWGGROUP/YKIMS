@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd"> 
+
+<sqlMapConfig> 
+	<settings 
+	 cacheModelsEnabled="true" 
+	 enhancementEnabled="true" 
+	 lazyLoadingEnabled="true" 
+	 maxRequests="32" 
+	 maxSessions="10" 
+	 maxTransactions="10" 
+	 useStatementNamespaces="true" />
+<!-- id编号生成表 -->
+<sqlMap resource="cn/com/sims/model/code/Code.xml" />
+<!-- 系统更新记录 -->
+<sqlMap resource="cn/com/sims/model/baseupdloginfo/BaseUpdlogInfo.xml" />
+<!-- 系统标签元素信息 -->
+<sqlMap resource="cn/com/sims/model/syslabelelement/SysLabelelementInfo.xml" />
+<!-- 系统用户信息（易凯） -->
+<sqlMap resource="cn/com/sims/model/sysuserinfo/SysUserInfo.xml" /> 
+<!-- 系统调用存储过程 -->
+<sqlMap resource="cn/com/sims/model/sysstoredprocedure/SysStoredProcedure.xml" /> 
+<!-- 用户筐信息（易凯） -->
+<sqlMap resource="cn/com/sims/model/sysuserwad/SysUserWad.xml" /> 
+
+<!-- 投资机构信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseinvestmentinfo/baseInvestmentInfo.xml" />
+<!-- 投资机构信息（业务） -->
+<sqlMap resource="cn/com/sims/model/viewInvestmentInfo/viewInvestmentInfo.xml" />
+<!-- 投资机构基金信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseinvesfundinfo/BaseInvesfundInfo.xml" />
+<!-- 投资机构标签信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseinveslabelinfo/BaseInveslabelInfo.xml" />
+<!-- 投资机构易凯联系人信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseinvesreponinfo/BaseInvesreponInfo.xml" />
+<!-- 投资机构note信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseinvesnoteinfo/BaseInvesnoteInfo.xml" />
+
+<!-- 投资人信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseinvestorinfo/BaseInvestorInfo.xml" />
+<!-- 投资人信息（业务） --> 
+<sqlMap resource="cn/com/sims/model/viewInvestorInfo/viewInvestorInfo.xml" /> 
+<!-- 投资人标签信息（基础） --> 
+<sqlMap resource="cn/com/sims/model/baseinvestorlabelinfo/BaseInvestorlabelInfo.xml" />
+<!-- 投资人note信息（基础） --> 
+<sqlMap resource="/cn/com/sims/model/baseinvestornoteinfo/BaseInvestornoteInfo.xml" />
+<!-- 投资人机构关系信息（基础） --> 
+<sqlMap resource="cn/com/sims/model/baseinvestmentinvestor/BaseInvestmentInvestor.xml" />
+
+<!-- 公司信息（基础） -->
+<sqlMap resource="cn/com/sims/model/basecompinfo/BaseCompnfo.xml" />
+<!-- 公司信息（业务） -->
+<sqlMap resource="cn/com/sims/model/viewcompinfo/viewCompInfo.xml" />
+<!-- 公司note信息（基础） -->
+<sqlMap resource="cn/com/sims/model/basecompnoteinfo/BaseCompnoteInfo.xml" />
+<!-- 公司标签信息（基础） -->
+<sqlMap resource="cn/com/sims/model/basecomplabelinfo/BaseComplabelInfo.xml" />  
+<!-- 公司创业者（联系人）信息（基础） -->
+<sqlMap resource="cn/com/sims/model/baseentrepreneurinfo/BaseEntrepreneurInfo.xml" />
+<!-- 公司创业者（联系人）关系信息（基础） -->
+<sqlMap resource="cn/com/sims/model/basecompentrepreneur/BaseCompEntrepreneur.xml" />  
+<!-- 公司融资计划信息（基础）--> 
+<sqlMap resource="cn/com/sims/model/basefinancplaninfo/BaseFinancplanInfo.xml" />
+<!-- 公司融资计划发送邮件信息--> 
+<sqlMap resource="cn/com/sims/model/basefinancplanemail/BaseFinancplanEmail.xml" />
+
+<!-- 交易信息（基础）-->
+<sqlMap resource="/cn/com/sims/model/basetradeinfo/BaseTradeInfo.xml" />
+<!-- 机构交易信息（基础）-->
+<sqlMap resource="/cn/com/sims/model/basetradeinves/BaseTradeInves.xml" />
+<!-- 交易标签信息（基础）-->
+<sqlMap resource="/cn/com/sims/model/basetradelabelinfo/BaseTradelabelInfo.xml" />
+<!-- 交易信息（业务）-->
+<sqlMap resource="/cn/com/sims/model/viewtradeinfo/ViewTradeInfo.xml" />
+<!-- 机构交易信息（业务）-->
+<sqlMap resource="cn/com/sims/model/viewtradeser/ViewTradSer.xml" />
+<!-- 机构交易信息（业务）-->
+<sqlMap resource="cn/com/sims/model/vieworganizationtrade/ViewOrganizationTrade.xml" />
+<!-- 交易备注(基础) -->
+<sqlMap resource="cn/com/sims/model/basetradenoteinfo/BaseTradenoteInfo.xml" /> 
+
+<!-- 会议信息（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetinginfo/BaseMeetingInfo.xml" /> 
+<!-- 会议标签信息（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetinglabelinfo/BaseMeetingLabelInfo.xml" /> 
+<!-- 会议分享范围信息（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetingshare/BaseMeetingShare.xml" /> 
+<!-- 会议与会者信息（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetingparp/BaseMeetingParp.xml" /> 
+<!-- 会议相关机构公司信息（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetingrele/BaseMeetingRele.xml" /> 
+<!-- 会议信息（业务）-->
+<sqlMap resource="cn/com/sims/model/viewmeetingrele/ViewMeetingRele.xml" /> 
+<!-- 会议note信息（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetingnoteinfo/BaseMeetingNoteInfo.xml" /> 
+<!-- 会议上传附件（基础）-->
+<sqlMap resource="cn/com/sims/model/basemeetingfile/BaseMeetingFile.xml" /> 
+
+<!-- 系统筐权限信息-->
+<sqlMap resource="cn/com/sims/model/syswadjuri/SysWadJuri.xml" /> 
+<!-- 系统筐权限信息-->
+<sqlMap resource="cn/com/sims/model/syswadinfo/SysWadInfo.xml" /> 
+<!-- 导入机构投资阶段对应关系-->
+<sqlMap resource="cn/com/sims/model/sysimportinvesestagerela/SysImportinvesestageRela.xml" /> 
+</sqlMapConfig> 

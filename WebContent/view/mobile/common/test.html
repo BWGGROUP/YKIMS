@@ -1,0 +1,81 @@
+<!-- 此页面不改为jsp -->
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>易凯投资</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="易凯投资">
+    <meta name=”renderer” content=”webkit”>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/test.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+    <script type="text/javascript" src="../js/test.js"></script>
+    <script type="text/javascript" src="../js/Template.js"></script>
+    <script type="text/javascript" src="../js/dropload.js"></script>
+    <script>
+        $(function () {
+            inputlsit_edit.config({
+                title:"公司名称",
+                list:[{id:"96",lable:"通用名",readonly:"readonly"}],
+                submit: function () {
+
+                }
+            });
+//            $('.inner').dropload({
+//                domUp : {
+//                    domClass   : 'dropload-up',
+//                    domRefresh : '<div class="dropload-refresh">↓下拉刷新</div>',
+//                    domUpdate  : '<div class="dropload-update">↑释放更新</div>',
+//                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+//                },
+//                domDown : {
+//                    domClass   : 'dropload-down',
+//                    domRefresh : '<div class="dropload-refresh">↑上拉加载更多</div>',
+//                    domUpdate  : '<div class="dropload-update">↓释放加载</div>',
+//                    domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+//                },
+//
+//                loadDownFn : function(me){
+//
+//                }
+//            });
+            $(".inner").height($(window).height()-48);
+        })
+    </script>
+</head>
+<body>
+<div class="main-content">
+    <div class="header">
+        <div class="header-left left-menu-btn"></div>
+        <div class="header-center"><div class="logo"></div></div>
+        <div class="header-right"></div>
+    </div>
+    <div class="content-body">
+
+    </div>
+</div>
+<div id="select-page" class="select-page">
+    <div class="search-head">
+        <div class="serarch-back-btn"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></div>
+        <div class="center ">
+            <input class="select-page-input" placeholder="检索">
+            <div class="serarch-btn"></div>
+        </div>
+        <div class="serarch-add-btn"></div>
+    </div>
+    <div class="inner">
+        <div class="lists">
+            <div class="page-add-box">
+                <div class="add-box-title">添加机构</div>
+                <input class="inputdef add-box-input">
+                <button class="btn btn-default add-box-btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

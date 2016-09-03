@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysStoredProcedure">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="SysStoredProcedure" type="cn.com.sims.model.sysstoredprocedure.SysStoredProcedure"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+     <parameterMap id="paramMap" class="SysStoredProcedure">
+      	<parameter property="orgCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+       	<parameter property="opreaType"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+        <parameter property="opreaElement"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+        <parameter property="userCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+    </parameterMap>
+    
+   <parameterMap id="codeparamMap" class="SysStoredProcedure">
+      <parameter property="orgCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="opreaType"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="opreaElement"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="userCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="investmentcode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+    </parameterMap>
+    
+    <parameterMap id="baskinduparamMap" class="SysStoredProcedure">
+      <parameter property="orgCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="opreaType"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="userCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+    </parameterMap>
+    
+   <parameterMap id="meetingparamMap" class="SysStoredProcedure">
+      <parameter property="orgCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="opreaType"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+      <parameter property="userCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+    </parameterMap>
+    <parameterMap id="userparamMap" class="SysStoredProcedure">
+     <parameter property="userCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+    </parameterMap>
+    <parameterMap id="userinvesparamMap" class="SysStoredProcedure">
+    	<parameter property="beforemonth"  javaType="int" jdbcType="varchar" mode="IN"/> 
+     <parameter property="aftermonth"  javaType="int" jdbcType="varchar" mode="IN"/> 
+     <parameter property="userCode"  javaType="java.lang.String" jdbcType="varchar" mode="IN"/> 
+     
+    </parameterMap>
+  <!-- Select with no parameters using the result map for Account class. -->
+ <procedure id="callViewinvestment" parameterMap="paramMap">
+ 	{call viewinvestment(?,?,?,?)}
+ </procedure>
+ 
+ <procedure id="callViewinvestorInfo" parameterMap="paramMap">
+ 	{call viewinvestorinfo(?,?,?,?)}
+ </procedure>
+ 
+ <procedure id="callViewcompinfo" parameterMap="paramMap">
+ 	{call viewcompinfo(?,?,?,?)}
+ </procedure>
+  <procedure id="callViewtradeser" parameterMap="paramMap">
+ 	{call viewtradeser(?,?,?,?)}
+ </procedure>
+ 
+  <procedure id="callViewtradeinfo" parameterMap="codeparamMap">
+ 	{call viewtradeinfo(?,?,?,?,?)}
+ </procedure>
+ <procedure id="callBaskindureapro" parameterMap="baskinduparamMap">
+ 	{call baskindureapro(?,?,?)}
+ </procedure>
+ <procedure id="callViewmeetingrele" parameterMap="meetingparamMap">
+ 	{call viewmeetingrele(?,?,?)}
+ </procedure>
+ <procedure id="callSysuseropertotalnum" parameterMap="userparamMap">
+ 	{call sysuseropertotalnum(?)}
+ </procedure>
+ <procedure id="callTimeinvesfeature" parameterMap="userinvesparamMap">
+ 	{call featuretrans(?,?,?)}
+ </procedure>
+
+</sqlMap>

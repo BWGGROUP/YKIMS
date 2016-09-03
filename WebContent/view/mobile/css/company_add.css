@@ -1,0 +1,136 @@
+.shgroup .title{
+    width: 68px;
+}
+.addbtn{
+    width: 20px;
+    height: 20px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -10px;
+}
+/*.tiplist li.edit-btn{*/
+/*position: absolute;*/
+    /*width: 14px!important;*/
+    /*height: 14px;*/
+    /*margin-left.jsp: 10px;*/
+    /*margin-bottom: 0px;*/
+    /*background: url("../icon/edit.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
+    /*margin-top: 2px;*/
+/*}*/
+.color-def{
+    color: #D5D5D5;
+}
+.edit-btn{
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+    background: url("../icon/edit.png") no-repeat;
+    background-size: 100% 100%;
+}
+.shgroup .tiplist {
+    padding-right: 26px;
+
+}
+.comp {
+    display: inline-block;
+    padding: 1px 4px;
+}
+.tiplist .hangyelist li{
+    /* display: block; */
+}
+.meeting-box{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+
+}
+.box-body .shgroup.node{
+    position: relative;
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 110px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.meeting-box textarea {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.notecompet{
+    text-align: center;
+    /*padding-right: 15px;*/
+}
+.inputlist li .inputdef{
+    width: 178px;
+    background: #fff;
+}
+.tiplist ul {
+     max-height: 10000px;
+}
+.inputdef_l{
+    width:95px;
+    background: #fff;
+    margin-left: 10px;
+}
+.people li {
+    display: block;
+}
+.tiplist li{
+    height: auto!important;
+}
+.inputdef{
+	width:120px;
+}
+.inputlist .lable {
+vertical-align: middle;
+}
+textarea {
+min-height: 60px;
+}
+.shgroup .title {
+    font-size: 12px;
+    text-align: right;
+    display: table-cell;
+    padding-top: 13px;
+    padding-bottom: 11px;
+    vertical-align: top;
+}
+.tiplist ul {
+    min-height: 24px;
+}
+#addpeoname{
+	width: 70px;
+height: 25px;
+line-height: 26px;
+margin-top: -3px;
+vertical-align: middle;
+}
+#text{
+	margin-top: 10px;
+}

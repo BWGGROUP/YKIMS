@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseUpdlogInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseUpdlogInfo" type="cn.com.sims.model.baseupdloginfo.BaseUpdlogInfo"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+<!--  系统更新记录-->
+  <insert id="insertUpdlogInfo" parameterClass="BaseUpdlogInfo">
+  		INSERT INTO base_updlog_info(
+			base_updlog_type,
+			base_updlog_typename,
+			base_ele_code,
+			base_ele_name,
+			base_updlog_opertype,
+			sys_user_code,
+			sys_user_name,
+			base_updlog_opertypecode,
+			base_updlog_opertypename,
+			base_updlog_opercont,
+			base_updlog_oridata,
+			base_updlog_newdata,
+			operaflag,
+			createid,
+			createtime,
+			updid,
+			updtime
+  		)
+  		values(
+			#base_updlog_type#,
+			#base_updlog_typename#,
+			#base_ele_code#,
+			#base_ele_name#,
+			#base_updlog_opertype#,
+			#sys_user_code#,
+			#sys_user_name#,
+			#base_updlog_opertypecode#,
+			#base_updlog_opertypename#,
+			#base_updlog_opercont#,
+			#base_updlog_oridata#,
+			#base_updlog_newdata#,
+			#operaflag#,
+			#createid#,
+			#createtime#,
+			#updid#,
+			#updtime#
+  		)
+  </insert>
+  
+  <!-- 根据投资机构ID查询投资机构易凯联系人 -->
+<!--  <select id="findYKLinkmanByOrgId" parameterClass="String" resultClass="java.util.HashMap">-->
+<!--		SELECT id,base_updlog_type,base_updlog_typename,sys_user_code,sys_user_name -->
+<!--		FROM base_updlog_info -->
+<!--		WHERE deleteflag='0' and base_updlog_type='Lable-investment' and base_ele_code=#id# GROUP BY sys_user_code-->
+<!--  </select>-->
+  
+  <!--根据机构code分页查询机构note详情-->
+  <select id="findPageUpdlogCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_updlog_info 
+		WHERE deleteflag='0' 
+		and base_updlog_type=#type#
+		and base_ele_code=#code# 
+  </select>
+  
+  <!--根据机构code分页查询机构note详情-->
+  <select id="findPageUpdlogInfo" parameterClass="java.util.HashMap" resultClass="BaseUpdlogInfo">
+		SELECT * FROM base_updlog_info 
+		WHERE deleteflag='0' 
+		and base_updlog_type=#type#
+		and base_ele_code=#code# 
+		order by updtime DESC limit $startCount$,$pageSize$
+  </select>
+  
+<!--  删除日志信息-->
+  <delete id="deleteUpdlogByElecode" parameterClass="java.util.HashMap">
+  		DELETE FROM base_updlog_info 
+  		WHERE base_ele_code=#elecode# 
+  		AND base_updlog_type=#logtype#
+  </delete>
+  
+  <!-- 	条件查询用户的足迹信息数量-->
+  <select id="findUpdByupdlogUserCount" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+  		SELECT COUNT(t.base_ele_code) FROM (SELECT base_ele_code FROM base_updlog_info 
+		WHERE base_updlog_type = #logtype#
+			AND base_updlog_opertypecode = #opertype#
+			AND createid = #usercode#
+			AND base_ele_code &lt;&gt; ''
+			AND base_ele_code IS NOT NULL
+			AND createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		GROUP BY base_ele_code) t
+  </select>
+  
+  <!-- 	条件查询用户机构的足迹信息-->
+  <select id="findOrgByupdlogUser" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	  	SELECT u.base_ele_code as code,
+		  	v.base_investment_name as name,
+		  	v.view_investment_typename as typename
+		FROM base_updlog_info u
+		LEFT JOIN view_investment_info v
+		ON u.base_ele_code=v.base_investment_code
+			WHERE u.base_updlog_type = #logtype#
+			AND u.base_updlog_opertypecode = #opertype#
+			AND u.createid = #usercode#
+			AND u.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH) 
+			AND base_ele_code &lt;&gt; ''
+			AND base_ele_code IS NOT NULL
+			GROUP BY u.base_ele_code 
+			ORDER BY u.updtime DESC
+		LIMIT #starttime#,#pageSize#
+  </select>
+  
+  <!-- 	条件查询用户交易的足迹信息数量-->
+  <select id="findTradeCountByupdlogUser" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+  		SELECT COUNT(a1.base_ele_code) FROM (SELECT 
+  			u.base_ele_code
+		FROM base_updlog_info u
+		INNER JOIN view_trade_ser t ON u.base_ele_code = t.base_trade_code
+		WHERE u.base_updlog_type = #logtype#
+		AND u.base_updlog_opertypecode = #opertype#
+		AND u.createid = #usercode#
+		AND u.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		AND base_ele_code &lt;&gt; ''
+		AND base_ele_code IS NOT NULL
+		GROUP BY u.base_ele_code) a1
+  </select>
+  <!-- 	条件查询用户交易的足迹信息-->
+  <select id="findTradeByupdlogUser" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+  		SELECT 
+  			u.base_ele_code as base_trade_code,
+  			t.base_trade_date,
+  			t.base_comp_code,
+  			t.base_comp_name,
+  			t.base_trade_money,
+			t.view_investment_cont,
+			t.base_trade_stagecont,
+			t.view_trade_inducont
+		FROM base_updlog_info u
+		INNER JOIN view_trade_ser t ON u.base_ele_code = t.base_trade_code
+		WHERE u.base_updlog_type = #logtype#
+		AND u.base_updlog_opertypecode = #opertype#
+		AND u.createid = #usercode#
+		AND u.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		AND base_ele_code &lt;&gt; ''
+		AND base_ele_code IS NOT NULL
+		GROUP BY u.base_ele_code
+		ORDER BY u.updtime DESC
+		LIMIT #starttime#,#pageSize#
+  </select>
+  <!-- 	条件查询用户操作公司的足迹信息-->
+  <select id="findCompanyByupdlogUser" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+  		SELECT 
+  			u.base_ele_code as base_comp_code,
+  			c.base_comp_name,
+  			c.view_comp_inducont,
+  			c.base_comp_stagecont,
+  			c.view_comp_baskcont,
+  			c.base_comp_namep 
+  		FROM base_updlog_info u
+  		LEFT JOIN view_comp_info c ON
+  			u.base_ele_code=c.base_comp_code
+  		WHERE u.base_updlog_type = #logtype#
+			AND u.base_updlog_opertypecode = #opertype#
+			AND u.createid = #usercode#
+			AND u.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+			AND base_ele_code &lt;&gt; ''
+			AND base_ele_code IS NOT NULL
+		GROUP BY u.base_ele_code
+		ORDER BY u.updtime DESC
+		LIMIT #starttime#,#pageSize#
+  </select>
+  
+  <!-- 	条件查询用户操作会议的足迹信息数量-->
+  <select  id="findMeetingCountByupdlogUser" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+  		SELECT COUNT(t.base_ele_code) FROM (SELECT 
+  			u.base_ele_code 
+  		FROM base_updlog_info u
+  		INNER JOIN view_meeting_rele m  ON
+  			u.base_ele_code= m.base_meeting_code
+  		WHERE u.base_updlog_type = #logtype#
+			AND u.base_updlog_opertypecode = #opertype#
+			AND u.createid = #usercode#
+			AND u.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		GROUP BY u.base_ele_code) t
+  </select>
+  <!-- 	条件查询用户操作会议的足迹信息-->
+  <select  id="findMeetingByupdlogUser" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+  		SELECT 
+  			u.base_ele_code as base_meeting_code,
+  			m.base_meeting_time,
+  			m.base_meeting_compcont,
+  			m.base_meeting_invicont,
+  			m.createid
+  		FROM base_updlog_info u
+  		INNER JOIN view_meeting_rele m  ON
+  			u.base_ele_code= m.base_meeting_code
+  		WHERE u.base_updlog_type = #logtype#
+			AND u.base_updlog_opertypecode = #opertype#
+			AND u.createid = #usercode#
+			AND u.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+		GROUP BY u.base_ele_code
+		ORDER BY u.updtime DESC
+		LIMIT #starttime#,#pageSize#
+		
+  </select>
+  
+</sqlMap>

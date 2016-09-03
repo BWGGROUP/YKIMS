@@ -1,0 +1,261 @@
+.info_content{
+    /*border: 1px red solid;*/
+    position: relative;
+    overflow: hidden;
+    font-size: 13px;
+    margin: 5px 0;
+    min-height: 40px;
+}
+
+.info_content_txt{
+    padding-left: 5px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.info_content_title_right{
+    width: 10%;
+    height: 25px;
+    line-height: 25px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    text-align: right;
+}
+.info_content_txt input{
+    width: 80%;
+    height: 24px;
+    line-height: 24px;
+    border: 1px #C0C0C0 solid;
+    padding: 0px 8px ;
+    color: #504F4F;
+    border-radius: 4px;
+}
+.info_content_long{
+    width: 80%;
+    padding-left: 5px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+
+}
+
+.add_redord{
+    width: 103%;
+    font-size: 13px;
+    margin-top: 20px;
+    margin-left: -10px;
+    padding: 30px 0px;
+    border-top: 1px #C0C0C0 dashed;
+    position: relative;
+    overflow: hidden;
+}
+.info_txt{
+    width: 61%;
+    height: 80px;
+    resize: none;
+    color: #504F4F;
+    border: 1px #C0C0C0 solid;
+    padding: 5px;
+}
+
+.txt_redord{
+    padding: 3px;
+			margin-left: 14%;
+			width: 584px;
+			height: 150px;
+			color: #504F4F;
+			resize: none;
+			border-radius: 4px;
+} 
+
+.add_redord_txt{
+    /*border: 1px red solid;*/
+
+}
+
+.block_title{
+    /*border: 1px blue solid;*/
+    margin-left: 6%;
+    text-align: left;
+}
+.link_content{
+    /*border:1px red solid;*/
+    width: 75%;
+    margin-left: 14%;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+
+.link_content table{
+    border-collapse: collapse;
+    width: 99%;
+    text-align: center;
+}
+.link_content table tr th,td{
+    /* border: 1px #C0C0C0 solid; */
+    height: 40px;
+}
+.link_detail input{
+    width: 98%;
+}
+.footer_add{
+    text-align: right;
+    padding: 5px;
+}
+
+.select2{
+    width: 97%;
+}
+.shgroup{
+    margin-top: -3px;
+    margin-bottom: 14px;
+    width: 100%;
+    letter-spacing: 1px;
+    min-height: 23px;
+}
+
+.shgroup .title{
+    width: 83px;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+    margin-top: 2px;
+}
+.shgroup .tiplist{
+    width: 82%;
+    margin-left: 140px;
+}
+.people li {
+   /*  display: block;
+    padding: 0px 3px; */
+    line-height: 25px;
+}
+.people li ul{
+    line-height:23px;
+}
+.people li ul li {
+    display: inline-block!important;
+    margin-left: 0;
+}
+.people_add_img{
+    position: absolute;
+    right: 0px;
+    top: 4px;
+    width: 35px;
+overflow: hidden;
+float: left;
+}
+.tiplist li {
+    display: inline-block;
+    width: auto;
+    padding: 2px 5px;
+    margin-left:-50px;
+    font-size: 13px;
+    border-radius: 4px;
+}
+.addfrom {
+    width: 300px;
+    margin: 10px auto;
+}
+.inputlist .lable,.inputlist .in{
+    display: table-cell;
+    padding-left: 10px;
+}
+.inputlist li .inputdef {
+    height: 25px;
+    padding: 2px 4px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+ul.inputlist{
+    display: table;
+    margin-left: -36px;
+}
+ul.inputlist li{
+    border: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    outline: none;
+}
+.inputlist .lable {
+    text-align: right;
+    min-width: 110px;
+    vertical-align: middle;
+}
+.btn-box {
+    margin-top: 20px;
+    text-align: center;
+}
+.addpeoplebox{
+    margin-left: -32px;
+}
+.select2-container {
+    z-index: 999999999;
+}
+.comp {
+    display: inline-block;
+    padding: 1px 13px 0px 0px;
+    word-break: break-all;
+}
+.orremove{
+    color: #2091DF;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.people li{
+    display: block;
+}
+.dropdown-menu {
+    z-index: 99999999;
+}
+#text{
+    width: 210px;
+    height: 70px;
+    resize: none;
+}
+.flan{
+    width: 210px;
+    word-break: break-all;
+    border-radius: 3px;
+    resize: none;
+}
+.add_peoplename{
+    position: absolute;
+}
+.comp1{
+    display: inline-block;
+    line-height: 25px;
+    padding-right: 10px;
+}
+.emm_info_content{
+    /*border: 1px red solid;*/
+    position: relative;
+    overflow: hidden;
+    font-size: 13px;
+    margin: 10px 0;
+    min-height: 40px;
+
+}
+.peoplel{
+	width: 86%;
+	position: relative;
+	min-height: 25px;
+	margin-left: 12%;
+}
+.induc{
+	margin-left: 12%;
+}
+.bask{
+	margin-left: 12%;
+}

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseTradeInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseTradeInfo" type="cn.com.sims.model.basetradeinfo.BaseTradeInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+<!--根据交易code修改交易信息-->
+  <delete id="deleteTradeInfoByTradeCode" parameterClass="java.util.HashMap">
+  	DELETE FROM base_trade_info WHERE deleteflag='0'
+  	AND base_trade_code=#tradeCode# AND base_datalock_viewtype=#version#
+  </delete>
+
+ <!--根据交易code修改交易信息-->
+  <update id="updateTradeInfo" parameterClass="BaseTradeInfo">
+	UPDATE base_trade_info SET
+	<isNotNull property="base_comp_code">
+		base_comp_code=#base_comp_code#,
+	</isNotNull>
+	<isNotNull property="base_trade_date">
+		base_trade_date=#base_trade_date#,
+	</isNotNull>
+	<isNotNull property="base_trade_stage">
+		base_trade_stage=#base_trade_stage#,
+	</isNotNull>
+	<isNotNull property="base_trade_money">
+		base_trade_money=#base_trade_money#,
+	</isNotNull>
+	<isNotNull property="base_trade_comnum">
+		base_trade_comnum=#base_trade_comnum#,
+	</isNotNull>
+	<isNotNull property="base_trade_comnumtype">
+		base_trade_comnumtype=#base_trade_comnumtype#,
+	</isNotNull>
+	<isNotNull property="deleteflag">
+		deleteflag=#deleteflag#,
+	</isNotNull>
+	<isNotNull property="base_datalock_viewtype">
+		base_datalock_viewtype=#base_datalock_viewtype#,
+	</isNotNull>
+	<isNotNull property="base_datalock_pltype">
+		base_datalock_pltype=#base_datalock_pltype#,
+	</isNotNull>
+	<isNotNull property="base_trade_estate">
+		base_trade_estate=#base_trade_estate#,
+	</isNotNull>
+		updid=#updid#,
+		updtime=#updtime#
+	WHERE 1=1 AND deleteflag='0'
+	AND base_trade_code = #base_trade_code#
+	AND base_datalock_viewtype &lt; #base_datalock_viewtype#
+  </update>
+
+<!--根据交易code查询交易信息-->
+	<select id="findBaseTradeInfoByCode" parameterClass="String" resultClass="BaseTradeInfo">
+		SELECT 
+			base_trade_code,
+			base_comp_code,
+			base_trade_date,
+			base_trade_stage,
+			base_trade_money,
+			base_trade_comnum,
+			deleteflag,
+			createid,
+			createtime,
+			updid,
+			updtime,
+			base_datalock_viewtype
+ 		FROM base_trade_info 
+		WHERE deleteflag='0'
+		And base_trade_code=#tradeCode#
+	</select>
+
+
+
+	<!-- 根据it桔子code查询数据库中是否存在交易数据 -->
+	<select id="findTradeinfoBytmpcodeForIT" parameterClass="String" resultClass="BaseTradeInfo">
+		SELECT * FROM base_trade_info 
+		WHERE deleteflag='0'  and Tmp_Inves_Record_ID=#tmpinvesrecordid# limit 1
+	</select>
+	
+<!-- IT桔子导入更新交易信息(基础)-->
+ <update id="updateBaseTradeinfoforIT" parameterClass="BaseTradeInfo">
+		UPDATE base_trade_info SET
+		base_comp_code=#base_comp_code#,
+		base_trade_date=#base_trade_date#,
+		base_trade_stage=#base_trade_stage#,
+		base_trade_money=#base_trade_money#,
+		base_trade_comnum=#base_trade_comnum#,
+		base_trade_stem=#base_trade_stem#,
+		base_trade_estate=#base_trade_estate#,
+		base_datalock_pltype=#base_datalock_pltype#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_trade_code=#base_trade_code#
+	
+	</update>
+	
+	<!-- 插入交易信息,IT桔子 -->
+	<insert id="insertBaseTradeinfoforIT" parameterClass="BaseTradeInfo">
+		INSERT INTO base_trade_info (
+		base_trade_code,base_comp_code,base_trade_date,base_trade_stage,base_trade_money,
+		base_trade_comnum,base_trade_comnumtype,base_trade_stem,base_trade_estate,Tmp_Inves_Record_ID,
+		deleteflag,createid,createtime,updid,updtime,
+		base_datalock_viewtype,base_datalock_pltype)
+		values(
+		#base_trade_code#,#base_comp_code#,#base_trade_date#,#base_trade_stage#,#base_trade_money#,
+		#base_trade_comnum#,#base_trade_comnumtype#,#base_trade_stem#,#base_trade_estate#,#Tmp_Inves_Record_ID#,
+		#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,
+		#base_datalock_viewtype#,#base_datalock_pltype#)
+	</insert>
+	<!--根据公司code,轮次查询交易信息-->
+	<select id="findcomptradeByCodeforit" parameterClass="BaseTradeInfo" resultClass="int">
+		SELECT 
+			count(base_trade_code)
+ 		FROM base_trade_info 
+		WHERE deleteflag='0'
+		And base_comp_code=#base_comp_code#
+		And base_trade_stage=#base_trade_stage#
+	</select>
+	<!-- 2015-12-01 TASK073 yl add start -->
+	<insert id="database">
+	insert into tmp_trade_info(
+	base_trade_code,base_comp_code,base_trade_date,base_trade_stage,
+	base_trade_money,base_trade_comnum,base_trade_comnumtype,base_trade_stem,
+	base_trade_estate,Tmp_Inves_Record_ID,deleteflag,createid,createtime,
+	updid,updtime,base_datalock_viewtype,base_datalock_pltype) 
+	select base_trade_code,base_comp_code,base_trade_date,base_trade_stage,
+	base_trade_money,base_trade_comnum,base_trade_comnumtype,base_trade_stem,
+	base_trade_estate,Tmp_Inves_Record_ID,deleteflag,createid,createtime,updid,
+	updtime,base_datalock_viewtype,base_datalock_pltype from base_trade_info 
+	where deleteflag='0' and base_trade_code=#tradeCode# AND base_datalock_viewtype=#version#
+	</insert>
+	<!-- 2015-12-01 TASK073 yl add end -->
+	<!--根据公司code,轮次查询数据库迁移数据库交易信息-->
+	<select id="findtmptradeByCodeforit" parameterClass="BaseTradeInfo" resultClass="int">
+		SELECT 
+			count(id)
+ 		FROM tmp_trade_info 
+		WHERE base_comp_code=#base_comp_code#
+		And base_trade_stage=#base_trade_stage#
+	</select>
+</sqlMap>

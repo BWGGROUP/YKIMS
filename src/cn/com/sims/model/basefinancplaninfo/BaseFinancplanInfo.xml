@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseFinancplanInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseFinancplanInfo" type="cn.com.sims.model.basefinancplaninfo.BaseFinancplanInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+ 
+
+ <select id="financingsearch_pagetotal" parameterClass="java.util.HashMap" resultClass="String">
+SELECT count(*)  FROM base_financplan_info WHERE deleteflag='0' 
+<dynamic prepend="">
+	<isNotNull prepend="and" property="companycode">
+	 base_comp_code=#companycode#
+	</isNotNull>
+	<isNotNull prepend="and" property="timestamp">
+	CAST(#timestamp#  AS SIGNED) >= CAST(base_financplan_date AS SIGNED) 
+	</isNotNull>
+</dynamic>
+  </select> 
+   <select id="financingsearchlist" parameterClass="java.util.HashMap" resultClass="BaseFinancplanInfo">
+SELECT  b.base_financplan_code,b.base_comp_code,b.base_financplan_date,b.base_financplan_cont ,c.base_comp_estate,
+c.base_comp_fullname,c.base_comp_ename,c.base_comp_name
+ FROM base_financplan_info AS b left join base_comp_info c 
+ on c.base_comp_code=b.base_comp_code WHERE b.deleteflag='0'
+ 
+<dynamic prepend="">
+	<isNotNull prepend="and" property="companycode">
+	 b.base_comp_code=#companycode#
+	</isNotNull>
+	<isNotNull prepend="and" property="timestamp">
+	CAST(#timestamp#  AS SIGNED) >= CAST(b.base_financplan_date AS SIGNED) 
+	</isNotNull>
+</dynamic>
+order by b.base_financplan_date desc,b.updtime desc 
+LIMIT #startCount#,#pageSize#
+  </select> 
+     <select id="findFinancplanByCode" parameterClass="String" resultClass="java.util.HashMap">
+SELECT  base_financplan_code,base_financplan_date,base_financplan_cont
+ FROM base_financplan_info where deleteflag='0' and base_comp_code = #base_comp_code# 
+order by base_financplan_date desc,updtime desc 
+
+  </select>
+  <insert id="insertFinancplan" parameterClass="BaseFinancplanInfo">
+	insert into
+	base_financplan_info(base_financplan_code,
+	base_comp_code,
+	base_financplan_date,
+	base_financplan_cont,
+	base_financplan_remindate,
+	base_financplan_sendef,
+	base_financplan_sendwf,
+	base_financplan_sendestate,
+	base_financplan_sendwstate,
+	deleteflag,
+	createid,
+	createtime,
+	updid,
+	updtime)
+	value(#base_financplan_code#,
+	#base_comp_code#,
+	#base_financplan_date#,
+	#base_financplan_cont#,
+	#base_financplan_remindate#,
+	#base_financplan_sendef#,
+	#base_financplan_sendwf#,
+	#base_financplan_sendestate#,
+	#base_financplan_sendwstate#,
+	#deleteflag#,
+	#createid#,
+	#createtime#,
+	#updid#,
+	#updtime#)
+  </insert>
+  <!-- 查询小于当前时间的信息 -->
+  <select id="findFinancing" parameterClass="String" resultClass="BaseFinancplanInfo">
+	 <![CDATA[select base_financplan_code,base_comp_code,base_financplan_date,base_financplan_cont,createid from base_financplan_info where deleteflag='0' and base_financplan_sendwstate='0' and base_financplan_sendef='0' and
+	 base_financplan_remindate <= #nowdate#]]>
+	</select>
+	<update id="tranModifyFinlan" parameterClass="BaseFinancplanInfo">
+	   update base_financplan_info set base_financplan_sendestate=#base_financplan_sendestate#,base_financplan_sendwstate=#base_financplan_sendwstate#, updtime=#updtime# where base_financplan_code=#base_financplan_code#
+	</update>
+	
+	<select id="findFinancingfortask" parameterClass="String" resultClass="BaseFinancplanInfo">
+	 select 
+	 a1.base_financplan_code,
+	 a1.base_financplan_date,
+	 a1.base_comp_code,
+	 a1.base_financplan_cont,
+	 a3.sys_user_name,
+	 a3.sys_user_email,
+	 a3.sys_user_wechatopen,
+	 a3.sys_user_code
+	 from base_financplan_info a1
+	 inner join base_financplan_email a2
+	 on a1.base_financplan_code=a2.base_financplan_code
+	 		and a1.deleteflag='0' and a2.deleteflag='0'
+	 		and #nowdate#>=a1.base_financplan_remindate
+	 		and a2.base_financplan_sendwstate='0' 
+	 inner join sys_user_info a3
+	 on a3.sys_user_code =a2.base_financplan_email
+	 and a3.deleteflag='0'
+	</select>
+	
+	<!--	查询用户创建融资计划数量-->
+	<select id="findFincingCountByUsercode" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(base_financplan_code)
+ 		FROM base_financplan_info 
+ 		WHERE deleteflag='0' 
+ 		AND createid=#usercode#
+	</select>
+	
+	<!--	查询用户创建融资计划-->
+	<select id="findFincingByUsercode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT 
+			b.base_financplan_code,
+			b.base_comp_code,
+			b.base_financplan_date,
+			b.base_financplan_cont ,
+			c.base_comp_estate,
+			c.base_comp_fullname,
+			c.base_comp_ename,
+			c.base_comp_name
+ 		FROM base_financplan_info AS b 
+ 		LEFT JOIN base_comp_info c 
+ 		ON c.base_comp_code=b.base_comp_code 
+ 		WHERE b.deleteflag='0'
+ 		AND b.createid=#usercode#
+ 		ORDER BY b.createtime
+ 		LIMIT #starttime#,#pageSize#
+	</select>
+	<!--	查询用户近一个月创建融资计划数量-->
+	<select id="findFMCountByUsercode" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(base_financplan_code)
+ 		FROM base_financplan_info 
+ 		WHERE deleteflag='0' 
+ 		AND createid=#usercode#
+ 		AND createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+	</select>
+	
+	<!--	查询用户创建融资计划-->
+	<select id="findFMByUsercode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT 
+			b.base_financplan_code,
+			b.base_comp_code,
+			b.base_financplan_date,
+			b.base_financplan_cont ,
+			c.base_comp_estate,
+			c.base_comp_fullname,
+			c.base_comp_ename,
+			c.base_comp_name
+ 		FROM base_financplan_info AS b 
+ 		LEFT JOIN base_comp_info c 
+ 		ON c.base_comp_code=b.base_comp_code 
+ 		WHERE b.deleteflag='0'
+ 		AND b.createid=#usercode#
+ 		AND b.createtime > DATE_SUB(NOW(),INTERVAL 1 MONTH)
+ 		ORDER BY b.createtime
+ 		LIMIT #starttime#,#pageSize#
+	</select>
+</sqlMap>

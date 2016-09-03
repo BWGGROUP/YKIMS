@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docs>
+	<!--SoupLang是WebCollector 2.x中的一种爬虫脚本，以Jsoup内置的CSS SELECTOR为基础 程序会将SoupLang的脚本(xml)转换成语义树，所以不用担心配置文件会影响网页抽取的速度。 
+		SoupLang除了有Jsoup选择元素、元素属性的功能外，还可以做正则匹配、写数据库等操作 -->
+
+	<!--一个doc对应一个网页,url表示网页的正则。 如果有多个doc的url，和网页的url匹配，程序会执行多次(所有对应的doc)。 所以尽量保证一个网页之能匹配到一个doc。 
+		多个doc的设计，是为了爬虫统一管理配置设定的。很多爬虫要多多种不同类型的页面做抽取，抽取 的代码很难统一管理。利用SoupLang这种脚本，可以将所有的抽取业务写道一个 -->
+	<doc url="https://www.itjuzi.com/merger/[0-9]{1,8}">
+
+		<element selector="div[class=item]:last-child>div[class=picinfo]>div[class=right]>a[class=name]">
+				<attr attr="abs:href" name="Tmp_Company_Code" />
+		</element>
+		<element selector="div[class=titlebar-center]>p>span[class=date]">
+				<text name="Tmp_Merger_Record_Time" />
+		</element>
+		<element selector="div[class=item]:last-child>div[class=picinfo]>div[class=right]>a:nth-child(2)">
+				<text name="Tmp_Merger_Record_Industry" />
+		</element>
+		<element selector="span[class=fina]">
+				<text name="Tmp_Merger_Record_Money" />
+		</element>
+		<element selector="div[class=item]:first-child>div[class=block-merg-bar]>div[class=right]>div[class=title]">
+				<text name="Tmp_Merger_Record_Rate" />
+		</element>
+		<element selector="div[class=item]:first-child>div[class=picinfo]>div[class=right]>a[class=name]">
+				<attr attr="abs:href" name="Tmp_Investment_Code" />
+		</element>
+
+
+		<!--插入数据库,temp1是程序中，用JDBCHelper.createMysqlTemplate创建template时指定的名称 -->
+		<!-- <sql
+			sql="REPLACE INTO Tmp_Merger_Record (Tmp_Merger_Record_ID,Tmp_Investment_Code,Tmp_Company_Code,Tmp_Merger_Record_Time,Tmp_Merger_Record_Rate,Tmp_Merger_Record_Money,Tmp_Merger_Record_Industry,Tmp_Merger_di,deleteFlag,Tmp_Inment_Istor_Note,createtime,updtime) VALUES (?,?,?,?,?,?,?,'0','0',null,now(),date_add(utc_timestamp(), interval 8 hour) )"
+			params="url,Tmp_Investment_Code,Tmp_Company_Code,Tmp_Merger_Record_Time,Tmp_Merger_Record_Rate,Tmp_Merger_Record_Money,Tmp_Merger_Record_Industry"
+			template="temp2" />-->
+		<sql sql="REPLACE INTO Tmp_Investment_Recordrela (Tmp_Investment_Code,Tmp_Inves_Record_ID,Tmp_Investment_Recordrela_Money,Tmp_Company_Code,deleteFlag,Tmp_Inment_Istor_Note,createtime,updtime) 
+			VALUES (?,?,?,?,'0',null,now(),date_add(utc_timestamp(), interval 8 hour) 
+			)" params="Tmp_Investment_Code,url,Tmp_Inves_Record_Money,Tmp_Company_Code" 
+			template="temp2" /> 
+	</doc>
+
+</docs>

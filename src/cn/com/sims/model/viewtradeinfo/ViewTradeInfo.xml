@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="viewTradeInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="viewTradeInfo" type="cn.com.sims.model.viewtradeinfo.ViewTradeInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+<!--  根据交易code分页查询交易数量-->
+  <select id="findTradeInfoCountByTradeCode" parameterClass="String" resultClass="java.lang.Integer">
+   SELECT count(view_trade_id) FROM view_trade_info 
+   WHERE deleteflag='0' and base_trade_code = #tradeCode#
+	</select>
+  
+<!--  根据交易code查询交易详情 duwnejie-->
+  <select id="findTradeInfoByTradeCode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+  	SELECT 
+  		v.view_trade_id,
+  		v.base_trade_code,
+		v.base_trade_date,
+		v.base_trade_stage,
+		v.base_trade_stagecont,
+		v.base_trade_inmoney,
+		v.base_trade_comnum,
+		v.base_comp_code,
+		v.base_comp_name,
+		v.base_comp_stage,
+		v.base_comp_stagecont,
+		v.view_trade_baskcode,
+		v.view_trade_baskcont,
+		v.view_trade_inducode,
+		v.view_trade_inducont,
+		v.base_investment_code,
+		b.base_investment_name,
+		v.base_investor_code,
+		i.base_investor_name,
+		v.base_trade_collvote,
+		v.base_trade_ongam,
+		v.base_trade_subpay
+  	FROM view_trade_info v 
+  	INNER JOIN base_investment_info b ON v.base_investment_code=b.base_investment_code
+  	LEFT JOIN base_investor_info i ON v.base_investor_code=i.base_investor_code
+  	WHERE v.deleteflag='0' 
+  	AND v.base_trade_code=#tradeCode#
+  	ORDER BY v.base_trade_date desc,v.updtime desc 
+  	limit $startCount$,$pageSize$
+  </select>
+  
+   <!--根据机构code查询机构交易记录总条数-->
+  <select id="findCountTradeInfoByOrgCode" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(base_trade_code) FROM view_trade_info WHERE deleteflag='0' and base_investment_code=#orgCode# 
+  </select>
+  
+   <!--根据机构code分页查询机构交易详情-->
+  <select id="findPageTradeInfoByOrgCode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT 
+			base_trade_code,
+			base_trade_date,
+			base_trade_stage,
+			base_trade_stagecont,
+			base_trade_money,
+			base_trade_comnum,
+			base_comp_code,
+			base_comp_name,
+			CASE WHEN base_trade_collvote=0 THEN '是'
+			 	 WHEN base_trade_collvote=1 THEN '否'
+			END as base_trade_collvote,
+			base_trade_inmoney,
+			CASE WHEN base_trade_ongam=0 THEN '是'
+			 	 WHEN base_trade_ongam=1 THEN '否'
+			END as base_trade_ongam,
+			CASE WHEN base_trade_subpay=0 THEN '是'
+			 	 WHEN base_trade_subpay=1 THEN '否'
+			END as base_trade_subpay
+		FROM view_trade_info 
+		WHERE deleteflag='0' 
+		AND base_investment_code=#orgCode# 
+		ORDER BY base_trade_date desc,updtime desc
+		limit $startCount$,$pageSize$
+  </select>
+
+<!--  根据交易id查询交易详情 duwnejie-->
+  <select id="findViewTradeInfoByID" parameterClass="String" resultClass="viewTradeInfo">
+  	SELECT 
+  		view_trade_id,
+  		base_trade_code,
+		base_trade_date,
+		base_trade_stage,
+		base_trade_stagecont,
+		base_trade_money,
+		base_trade_comnum,
+		base_comp_code,
+		base_comp_name,
+		base_comp_stage,
+		base_comp_stagecont,
+		view_trade_baskcode,
+		view_trade_baskcont,
+		view_trade_inducode,
+		view_trade_inducont,
+		base_investment_code,
+		base_investment_name,
+		base_investor_code,
+		base_investor_name,
+		base_trade_collvote,
+		base_trade_inmoney,
+		base_trade_ongam,
+		base_trade_subpay  	
+  	FROM view_trade_info WHERE deleteflag='0' 
+  	AND view_trade_id=#viewTradeId#
+  </select>
+	<!-- 根据投资人id，获取机构交易信息信息 -->
+	<select id="findTradeInfoByInvestorCode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   SELECT base_trade_code,base_trade_date,base_comp_name,base_trade_stagecont,base_trade_money,base_investment_code,base_trade_inmoney FROM view_trade_info 
+   WHERE deleteflag='0' and base_investor_code = #code# 
+		ORDER BY base_trade_date desc,updtime desc
+    limit #startIndex#,#pagesize#
+	</select>
+	
+	<select id="findTradeInfoCount" parameterClass="String" resultClass="int">
+   SELECT count(view_trade_id) FROM view_trade_info 
+   WHERE deleteflag='0' and base_investor_code = #code#
+	</select>
+	
+		<select id="findpageTradeInfoByCode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+   SELECT base_trade_code,base_trade_date,base_comp_name,base_trade_stagecont,base_trade_money,base_investment_code,base_trade_inmoney FROM view_trade_info 
+   WHERE deleteflag='0' and base_investor_code = #code# 
+		ORDER BY base_trade_date desc,updtime desc
+    limit #startIndex#,#pageSize#
+	</select>
+
+	<!-- 更新业务编号的起始值 -->
+	<update id="updateCodeGenerator" parameterClass="java.util.HashMap">
+	UPDATE syscodegenerator 
+	SET     startnum = startnum+stepnum,
+  					updid='admin'
+	 WHERE generatorid=#generatorid# 
+	</update>
+	<select id="findFinancByCode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	select view_trade_id,base_trade_date,base_trade_stagecont,base_trade_money,base_trade_inmoney,
+	base_investment_name from view_trade_info 
+	where deleteflag='0' and base_comp_code=#code# 
+		ORDER BY base_trade_date desc,updtime desc
+	 limit #startIndex#,#pageSize#
+	</select>
+	<!-- 查询公司交易 -->
+	<select id="findTradeCount" parameterClass="String" resultClass="int">
+   SELECT count(view_trade_id) FROM view_trade_info 
+   WHERE deleteflag='0' and base_comp_code = #code#
+	</select>
+	
+<!--	根据交易code删除机构交易详情-->
+	<delete id="deleteViewTradeInfoByTradeCode" parameterClass="String">
+		DELETE FROM view_trade_info WHERE deleteflag='0'
+		AND base_trade_code=#tradeCode#
+	</delete>
+	<!-- 交易机构 -->
+	<select id="trade_investment" parameterClass="String" resultClass="java.util.HashMap">
+SELECT 
+ GROUP_CONCAT(DISTINCT a2.base_investment_name) view_investment_name,
+ CONCAT("[",GROUP_CONCAT(CONCAT("{'code':'",a1.base_investment_code,
+ "','name':'",a2.base_investment_name,"'"),"}"),"]") view_investment_cont
+ FROM base_trade_inves a1 
+ inner JOIN base_investment_info a2
+ on a2.base_investment_code=a1.base_investment_code
+ where a1.base_trade_code=#code# and a1.deleteflag='0';
+	</select>
+		<select id="investor_notin_tradser" parameterClass="java.util.HashMap" resultClass="int">
+   SELECT count(view_trade_id) FROM view_trade_info 
+   WHERE deleteflag='0' and base_trade_code = #tradecode# 
+AND (base_investment_code!=#investmentcode#  OR base_investor_code is NULL)
+	</select>
+	
+ </sqlMap>

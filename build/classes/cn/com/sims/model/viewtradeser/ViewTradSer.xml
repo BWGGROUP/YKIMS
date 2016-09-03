@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ViewTradSer">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+
+	<typeAlias alias="ViewTradSer"
+		type="cn.com.sims.model.viewtradeser.ViewTradSer" />
+	<!-- Result maps describe the mapping between the columns returned from 
+		a query, and the class properties. A result map isn't necessary if the columns 
+		(or aliases) match to the properties exactly. -->
+	<!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系 -->
+
+
+	<!-- Select with no parameters using the result map for Account class. -->
+
+	<select id="tradesearchlist" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	SELECT  base_trade_code ,base_trade_date,base_comp_code,base_comp_name
+,base_trade_money, view_investment_cont ,base_trade_stagecont ,view_trade_inducont 
+FROM view_trade_ser where deleteflag='0'
+<dynamic prepend="">
+		<isNotEmpty prepend="and" property="starttime">
+ CAST(base_trade_date AS datetime)	>= CAST(#starttime# AS datetime)
+			</isNotEmpty>
+				<isNotEmpty prepend="and" property="endtime">
+CAST(#endtime# AS datetime) 	>= CAST(base_trade_date AS datetime)
+			</isNotEmpty>
+			<isNotEmpty  property="induList">
+ <iterate prepend='and' property='induList' open='('
+					close=')' conjunction='OR'>
+					view_trade_inducode like '%$induList[]$%'
+					</iterate>
+			</isNotEmpty>
+				<isNotEmpty  property="stageList">
+ <iterate prepend='and' property='stageList' open='('
+					close=')' conjunction='OR'>
+					base_trade_stage like '%$stageList[]$%'
+					</iterate>
+			</isNotEmpty>
+	</dynamic>
+		ORDER BY base_trade_date desc,updtime desc
+	LIMIT #start#,#size# 
+	</select>
+
+	<select id="tradesearchlist_num" parameterClass="java.util.HashMap" resultClass="int">
+	SELECT COUNT(*)  FROM view_trade_ser where deleteflag='0'
+	<dynamic prepend="">
+		<isNotEmpty prepend="and" property="starttime">
+ CAST(base_trade_date AS datetime)	>= CAST(#starttime# AS datetime)
+			</isNotEmpty>
+				<isNotEmpty prepend="and" property="endtime">
+CAST(#endtime# AS datetime) 	>= CAST(base_trade_date AS datetime)
+			</isNotEmpty>
+			<isNotEmpty  property="induList">
+ <iterate prepend='and' property='induList' open='('
+					close=')' conjunction='OR'>
+					view_trade_inducode like '%$induList[]$%'
+					</iterate>
+			</isNotEmpty>
+				<isNotEmpty  property="stageList">
+ <iterate prepend='and' property='stageList' open='('
+					close=')' conjunction='OR'>
+					base_trade_stage like '%$stageList[]$%'
+					</iterate>
+			</isNotEmpty>
+	</dynamic>
+
+	</select>
+	
+<!--	根据交易code查询交易信息-->
+	<select id="findTradeSerInfoByTradeCode" parameterClass="String" resultClass="ViewTradSer">
+		select * from view_trade_ser where deleteflag='0' and base_trade_code=#tradeCode#
+	</select>
+		<select id="findFinancByCode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+	select base_trade_code,base_trade_date,base_trade_stagecont,base_trade_money,view_investment_cont,view_investment_name,view_investment_code from view_trade_ser 
+	where deleteflag='0' and base_comp_code=#code# 
+		ORDER BY base_trade_date desc,updtime desc
+	 limit #startIndex#,#pageSize#
+	</select>
+	<!-- 查询公司交易 -->
+	<select id="findTradeCount" parameterClass="String" resultClass="int">
+   SELECT count(view_trade_serid) FROM view_trade_ser 
+   WHERE deleteflag='0' and base_comp_code = #code#
+	</select>
+	
+	<delete id="deleteTradeSerByTradeCode" parameterClass="String">
+		DELETE FROM view_trade_ser WHERE deleteflag='0'
+		AND base_trade_code=#tradeCode#
+	</delete>
+	
+</sqlMap>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ROOT>
+	<!-- 每页显示的条数 -->
+    <PAGESIZE>10</PAGESIZE>
+    <!-- 页面交易，融资计划，基金初始加载的显示条数 -->
+    <SHOWPAGESIZE>10</SHOWPAGESIZE>
+    <!-- 操作模块类型,名称 -->
+	<Lable-investment>Lable-investment</Lable-investment>
+	<Lable-investment-name>投资机构</Lable-investment-name>
+	<Lable-people>Lable-people</Lable-people>
+	<Lable-people-name>投资人</Lable-people-name>
+	<Lable-trading>Lable-trading</Lable-trading>
+	<Lable-trading-name>交易</Lable-trading-name>
+	<Lable-company>Lable-company</Lable-company>
+	<Lable-company-name>公司</Lable-company-name>
+	<Lable-meeting>Lable-meeting</Lable-meeting>
+	<Lable-meeting-name>会议</Lable-meeting-name>
+	<Lable-syskuang>Lable-syskuang</Lable-syskuang>
+	<Lable-syskuang-name>系统筐</Lable-syskuang-name>
+	<Lable-sysuser>Lable-sysuser</Lable-sysuser>
+	<Lable-sysuser-name>系统用户</Lable-sysuser-name>
+	<Lable-financing>Lable-financing</Lable-financing>
+	<Lable-financing-name>融资计划</Lable-financing-name>
+	
+	<!-- #操作类型code# -->
+	<CODE-IT-CRE>IT-CRE</CODE-IT-CRE>
+	<CODE-YK-CRE>YK-CRE</CODE-YK-CRE>
+	<CODE-YK-ADD>YK-ADD</CODE-YK-ADD>
+	<CODE-YK-UPD>YK-UPD</CODE-YK-UPD>
+	<CODE-YK-DELE>YK-DELE</CODE-YK-DELE>
+	<CODE-YK-ADDNOTE>YK-ADDNOTE</CODE-YK-ADDNOTE>
+	<CODE-YK-DELENOTE>YK-DELENOTE</CODE-YK-DELENOTE>
+	<CODE-YK-SEARCH>YK-SEARCH</CODE-YK-SEARCH>
+	
+	<!-- #操作显示内容# -->
+	<CONTENT-IT-CRE>IT桔子创建</CONTENT-IT-CRE>
+	<CONTENT-YK-CRE>易凯创建</CONTENT-YK-CRE>
+	<CONTENT-YK-ADD>易凯添加元素</CONTENT-YK-ADD>
+	<CONTENT-YK-UPD>易凯修改</CONTENT-YK-UPD>
+	<CONTENT-YK-DELE>易凯删除</CONTENT-YK-DELE>
+	<CONTENT-YK-ADDNOTE>易凯添加note</CONTENT-YK-ADDNOTE>
+	<CONTENT-YK-DELENOTE>易凯删除note</CONTENT-YK-DELENOTE>
+	<CONTENT-YK-SEARCH>易凯搜索</CONTENT-YK-SEARCH>
+	
+	<!-- 字典 -->
+	<Lable-bask>Lable-bask</Lable-bask><!-- 筐 -->
+	<Lable-bask-name>筐</Lable-bask-name>
+	<Lable-indu>Lable-indu</Lable-indu><!-- 行业 -->
+	<Lable-indu-name>行业</Lable-indu-name>
+	
+	<Lable-orgindu>Lable-orgindu</Lable-orgindu><!-- 机构行业 -->
+	<Lable-orgindu-name>机构行业</Lable-orgindu-name>
+	<Lable-comindu>Lable-comindu</Lable-comindu><!-- 公司行业 -->
+	<Lable-comindu-name>公司行业</Lable-comindu-name>
+	
+	<Lable-payatt>Lable-payatt</Lable-payatt><!--近期特别关注  -->
+	<Lable-payatt-name>近期关注</Lable-payatt-name>
+	<Lable-stage>Lable-stage</Lable-stage><!-- 投资阶段 -->
+	<Lable-stage-name>融资阶段</Lable-stage-name>
+	
+	<Lable-comstage>Lable-comstage</Lable-comstage><!-- 公司投资阶段 -->
+	<Lable-comstage-name>公司融资阶段</Lable-comstage-name>
+	<Lable-trastage>Lable-trastage</Lable-trastage><!-- 交易投资阶段 -->
+	<Lable-trastage-name>交易融资阶段</Lable-trastage-name>
+	
+	<Lable-currency>Lable-currency</Lable-currency><!-- 币种 -->
+	<Lable-currency-name>币种</Lable-currency-name>
+	<Lable-feature>Lable-feature</Lable-feature><!-- 投资特征 -->
+	<Lable-feature-name>投资特征</Lable-feature-name>
+	<Lable-type>Lable-type</Lable-type><!-- 类型 -->
+	<Lable-type-name>类型</Lable-type-name>
+	<Lable-bground>Lable-bground</Lable-bground><!-- 背景 -->
+	<Lable-bground-name>背景</Lable-bground-name>
+	<Lable-scale>Lable-scale</Lable-scale><!-- 融资规模 -->
+	<Lable-scale-name>基金规模</Lable-scale-name>
+	<Lable-currency-rnb>Lable-currency-002</Lable-currency-rnb><!-- 人民币融资规模 -->
+	<Lable-currency-rnb-name>基金规模(RMB)</Lable-currency-rnb-name>
+	<Lable-currency-usd>Lable-currency-001</Lable-currency-usd><!-- 美元融资规模 -->
+	<Lable-currency-usd-name>基金规模(USD)</Lable-currency-usd-name>
+	<Lable-meeting>Lable-meeting</Lable-meeting><!-- 会议 -->
+	<Lable-meeting-name>会议</Lable-meeting-name>
+	<Lable-investage>Lable-investage</Lable-investage>
+	<Lable-investage-name>投资阶段</Lable-investage-name>
+	
+	
+	<trade-Lable-bask>Lable-bask</trade-Lable-bask><!-- 交易筐标签 -->
+	<trade-Lable-bask-name>筐</trade-Lable-bask-name>
+	<trade-Lable-indu>Lable-indu</trade-Lable-indu><!-- 交易行业标签 -->
+	<trade-Lable-indu-name>行业</trade-Lable-indu-name>
+	<investmentinfo>investmentinfo</investmentinfo><!-- 修改交易投资机构信息 -->
+	
+	<Lable-meetingtype>Lable-meetingtype</Lable-meetingtype><!-- 会议类型标签 -->
+	<Lable-meetingtype-name>会议类型</Lable-meetingtype-name>
+	
+	<all>all</all><!-- 操作全部 -->
+	<basic>basic</basic><!-- 修改标签基础信息时opreastr 传值 -->
+	
+	<!-- #操作内容# -->
+	<!-- 操作类型 -->
+	<add>添加</add>
+	<del>删除</del>
+	<upd>修改</upd>
+	<search>搜索</search>
+	<!-- 标签类型 -->
+	<baskLable>筐标签</baskLable>
+	<induLable>行业标签</induLable>
+	<payattLable>近期关注标签</payattLable>
+	<stageLable>投资阶段标签</stageLable>
+	<currencyLable>币种标签</currencyLable>
+	<featureLable>投资特征标签</featureLable>
+	<typeLable>类型标签</typeLable>
+	<bgroundLable>背景标签</bgroundLable>
+	<scaleLable>融资规模标签</scaleLable>
+	<!-- 模块种类 -->
+	<company>公司</company>
+	<investment>投资机构</investment>
+	<investor>投资人</investor>
+	<tradae>交易</tradae>
+	<meeting>会议</meeting>
+	<financing>融资计划</financing>
+	
+	<orgInfoAdd>添加投资机构</orgInfoAdd>
+	<orgNoteAdd>添加投资机构note</orgNoteAdd>
+	<orgInvesfundAdd>添加投资机构基金</orgInvesfundAdd>
+	<orgInvesfundEdit>修改投资机构基金</orgInvesfundEdit>
+	<orgInvesfundDelete>删除投资机构基金</orgInvesfundDelete>
+	<orgInvestmentNameEdit>修改机构名称</orgInvestmentNameEdit>
+	<orgYKLinkManAdd>添加投资机构易凯联系人</orgYKLinkManAdd>
+	<orgYKLinkManEdit>修改投资机构易凯联系人</orgYKLinkManEdit>
+	<orgLabelAdd>添加投资机构标签信息</orgLabelAdd>
+	<orgLabelDelete>删除投资机构标签信息</orgLabelDelete>
+	<orgDetailLabelEdit>编辑投资机构标签信息</orgDetailLabelEdit>
+	<meetingNoteAdd>添加会议note</meetingNoteAdd>
+	<meetingShareUpd>修改会议分享范围</meetingShareUpd>
+	<investorEdit>修改投资人信息</investorEdit>
+	<investorInvesEdit>修改投资人所属机构信息</investorInvesEdit>
+	<addInvestorInvesEdit>添加投资人所属机构</addInvestorInvesEdit>
+	<delInvestorInduLabel>删除投资人行业标签信息</delInvestorInduLabel>
+	<delInvestorPattyLabel>删除投资人近期关注标签信息</delInvestorPattyLabel>
+	<addInvestorInduLabel>添加投资人行业标签信息</addInvestorInduLabel>
+	<addInvestorPattyLabel>添加投资人近期关注标签信息</addInvestorPattyLabel>
+	<investorLabelDelete>删除投资人标签信息</investorLabelDelete>
+	<tradeInfoDelete>删除交易信息</tradeInfoDelete>
+	<tradeInfoEdit>修改交易融资信息</tradeInfoEdit>
+	<tradeInfoEditBasic>修改交易基础信息</tradeInfoEditBasic>
+	<tradeLabelDelete>删除交易标签信息</tradeLabelDelete>
+	<tradeLabelAdd>添加交易标签信息</tradeLabelAdd>
+	<tradeInvesInfoDelete>删除交易融资信息</tradeInvesInfoDelete>
+	<tradeInvesInfoAdd>添加交易融资信息</tradeInvesInfoAdd>
+		<compNameUpdate>修改公司名称</compNameUpdate>
+	<compPeopleUpdate>修改公司联系人</compPeopleUpdate>
+	<compLableAdd>添加公司标签</compLableAdd>
+	<compLabledel>删除公司标签</compLabledel>
+	<compStageUpdate>修改公司阶段标签</compStageUpdate>
+	<addFinancplan>添加融资计划</addFinancplan>
+	<delesystkuang>删除系统筐</delesystkuang>
+	<updatasystkuang>修改系统筐</updatasystkuang>
+	<addsystkuang>添加系统筐</addsystkuang>
+	<addComp>添加公司</addComp>
+	<addCompPeople>添加公司联系人</addCompPeople>
+	<addInvestor>添加投资人</addInvestor>
+	<addtradeInvestment>添加机构</addtradeInvestment>
+	<addtradeInvestor>添加投资人</addtradeInvestor>
+	<addTrade>添加交易</addTrade>
+	<addMeeting>添加会议</addMeeting>
+	<delMeeting>删除会议</delMeeting>
+	<deletesysuser>删除员工</deletesysuser>
+	<addsysuser>添加员工</addsysuser>
+	<updatasysuser>修改员工信息</updatasysuser>
+	<investmentInvestorDelete>删除投资机构的投资人</investmentInvestorDelete>
+	<!-- #操作设备# -->
+	<COMPUTER>PC</COMPUTER><!-- 电脑 -->
+	<PHONE>WX</PHONE><!-- 微信 -->
+	<PHONE-BROWSER>MB</PHONE-BROWSER><!-- 手机浏览器 -->   
+	 <!-- 发件人 -->
+	<!-- <MAIL_FROM>qianqian_ren518@163.com</MAIL_FROM> -->
+	<MAIL_FROM>itinfo@china-ecapital.com</MAIL_FROM>
+	
+	<TITLE>易凯资本－投资机构数据下载</TITLE>
+	<TITLEEMAIL>易凯资本－融资计划提醒</TITLEEMAIL>
+	<FORTPAWEMAIL>易凯资本－密码找回</FORTPAWEMAIL>
+		<NEWUSER>易凯资本－ 新用户</NEWUSER>
+	<MEETINGTITIE>易凯资本－ 会议提醒</MEETINGTITIE>
+	
+	<SHAREMEETING>向您分享了会议，链接：</SHAREMEETING>
+	
+	<!-- 导出投资机构表格存放地址 -->
+<INVESTMENT_DOWN>/tmp/investment/download/</INVESTMENT_DOWN>
+<!-- 导出投资机构表格的下载地址 -->
+<INVESTMENT_DOWNLOAD>SIMS/investment/download/</INVESTMENT_DOWNLOAD>
+
+<!-- 会议上传附件路径 -->
+<MEETING_WORD_SRC>/tmp/meeting/download</MEETING_WORD_SRC>
+<!-- 会议下载附件路径 -->
+<MEETING_WORD_DOWNLOAD>meeting/download</MEETING_WORD_DOWNLOAD>
+
+<!--投资机构表格下载失效时间 单位为天  -->
+<Email_FAILURE_TIME>3</Email_FAILURE_TIME> 
+
+<!-- 后台返回消息文字定义 -->
+<saveFail>保存失败</saveFail>
+<deleteFail>删除失败</deleteFail>
+<updateFail>已被修改,请刷新页面再修改</updateFail>
+<selectFail>查询异常</selectFail>
+<message_nullData>未找到所需数据</message_nullData>
+<nodel>存在相关交易,无法删除投资人</nodel>
+<deleteNull>delete</deleteNull><!-- 已被删除(js判断) -->
+<repeat>repeat</repeat><!-- 名称以存在(js判断) -->
+
+	<!--标签库初始值  -->
+	<LABELELEMENT_CODE_INIT>-001</LABELELEMENT_CODE_INIT>  
+	<!--it桔子导入数据库用户名  -->
+	<ITIMPORT_USER_NAME>ITadmin</ITIMPORT_USER_NAME>
+	<!--	基金权限-->
+	<JURI-FUND>JURI-FUND</JURI-FUND>
+		<!--投资业务权限code  -->
+	<JURI-BUES>JURI-BUES</JURI-BUES>
+			<!--后台管理权限code  -->
+	<JURI-BUES-BACK>JURI-BACKMANAGE</JURI-BUES-BACK>
+			<!--超级权限code  -->
+	<JURI-ALL>SUPERADMIN</JURI-ALL>
+		<!--	会议查看超级权限-->
+	<JURI-PUBLIC>PUBLICADMIN</JURI-PUBLIC>
+		<!--admin用户code  -->
+	<ADMIN-CODE>admin</ADMIN-CODE>
+			<!--微信消息发送 -->
+	<WCHAT>http://117.79.154.158/WeiXinExtended/sendMessageServlet</WCHAT>
+	 <!--微信授权后回调地址 -->
+	<WEICART_UID_CALL>http://www.ecapsmart.com/WeiXinExtended/bandServlet</WEICART_UID_CALL>
+		<!-- 前月，（投资机构特征活跃使用） -->
+  <BEFOREMONTH>3</BEFOREMONTH>
+  	<!-- 后月，（投资机构特征活跃使用） -->
+  <AFTERMONTH>0</AFTERMONTH>
+</ROOT>

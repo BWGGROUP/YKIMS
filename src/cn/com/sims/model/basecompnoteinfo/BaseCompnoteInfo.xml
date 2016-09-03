@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseCompnoteInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseCompnoteInfo" type="cn.com.sims.model.basecompnoteinfo.BaseCompnoteInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+ <!--模糊查询公司分页-->
+ <select id="findCompanyNoteByCode" parameterClass="String" resultClass="java.util.HashMap">
+SELECT base_compnote_code,base_compnote_content,sys_user_name,createtime FROM base_compnote_info WHERE deleteflag='0' 
+and base_comp_code=#code# order by updtime desc
+  </select> 
+  <!-- 添加公司note信息 -->
+  <insert id="insertCompNote" parameterClass="BaseCompnoteInfo">
+insert into base_compnote_info(base_compnote_code,base_comp_code,
+    base_compnote_content,sys_user_name,deleteflag,createid,createtime,updid,updtime)
+     values(#base_compnote_code#,#base_comp_code#,#base_compnote_content#,#sys_user_name#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#)
+  </insert>
+  <delete id="compnote_del" parameterClass="String">
+  DELETE FROM base_compnote_info WHERE deleteflag=0 and base_compnote_code=#code#
+  </delete>
+</sqlMap>

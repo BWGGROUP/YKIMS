@@ -1,0 +1,139 @@
+.employee_info{
+}
+.info_table{
+    width: 100%;
+
+}
+.employee_info table{
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
+    font-size: 13px;
+    border-collapse: collapse;
+    text-align: center;
+
+}
+.employee_info table tr th,td{
+    border: 1px #C0C0C0 solid;
+    height: 28px;
+}
+
+
+.info_add{
+    width: 8%;
+}
+.info_btn{
+    width: 94%;
+    margin-top: 150px;
+    text-align: right;
+}
+.info_btn button{
+    margin: 10px 40px;
+}
+
+.btn_detail{
+    font-size: 13px;
+    background-color: #f60;
+    color: #fff;
+    width: 45px;
+    height: 19px;
+    line-height: 19px;
+    border-radius: 5px;
+    margin: 3px;
+}
+.select_basket{
+    width: 84%;
+}
+.select2{
+    margin-top: 20px;
+}
+.select2-container{
+    z-index: 99999;
+}
+.sharebox{
+    margin-bottom: 15px;
+}
+.search-input{
+    width: 230px;
+    height: 29px;
+    border-radius: 4px;
+}
+.btn-default{
+    height: 28px;
+    line-height: 27px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 87px;
+    border-radius: 5px;
+}
+.delete{
+    color: #f60;
+    text-decoration: underline;
+    padding: 1px 4px;
+    cursor: pointer;
+}
+.companyname{
+    color: #2091DF;
+    cursor: pointer;
+    padding: 2px 3px;
+}
+.companyname:hover{
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+    border-radius: 4px;
+}
+tbody>tr>td {
+    padding: 20px 10px;
+}
+ul.inputlist{
+    display: table;
+}
+ul.inputlist li{
+    border: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.inputlist .lable,.inputlist .in{
+    display: table-cell;
+    padding-left: 10px;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 50px;
+}
+.tiplist .list li{
+    display: block;
+}
+.inputdef {
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 3px;
+    height: 25px;
+    padding-left: 5px;
+}
+.inputlist li .inputdef {
+    height: 25px;
+    padding: 2px 4px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+.addfrom{
+    width: 300px;
+    margin: 10px auto;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 63px;
+}
+.tiplist .list li{
+    display: block;
+}
+.btn-box{
+    margin-top: 20px;
+    text-align: center;
+}

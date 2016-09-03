@@ -1,0 +1,125 @@
+.selectdef{
+    border: 1px solid #f60;
+    outline: none;
+    border-radius: 3px;
+    background: #fff;
+}
+.shgroup .title{
+    width: 79px;
+}
+.inputdef {
+    width: 200px;
+    background: #fff;
+    margin-left: 10px;
+    padding: 4px 5px;
+
+}
+.edit-btn{
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+    background: url("../icon/edit.png") no-repeat;
+    background-size: 100% 100%;
+}
+.box-body .shgroup.node{
+    position: relative;
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 120px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.meeting-box {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-box textarea {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.notecompet{
+    text-align: center;
+    padding-right: 15px;
+}
+.inputlist li .inputdef{
+    width: 178px;
+    background: #fff;
+}
+.tiplist ul {
+
+    max-height: 10000px;
+
+}
+.color-def{
+    color: #D5D5D5;
+}
+.config{
+    color: #9E9B9B!important;
+}
+.addbtn{
+    width: 19px;
+    height: 19px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -10px;
+}
+.peopleContent li {
+
+    display: block;
+    height: auto;
+
+}
+.comp {
+    display: inline-block;
+    padding: 1px 4px;
+}
+.shgroup .title {
+    font-size: 12px;
+    text-align: right;
+    display: table-cell;
+    padding-top: 13px;
+    padding-bottom: 11px;
+    border-top: 1px dashed #C0C0C0;
+    vertical-align: top;
+}
+.tiplist ul {
+    min-height: 24px;
+}
+.box-title{
+	position:relative;
+}
+.smart-btn{
+    width: 68px;
+    height: 25px;
+    line-height: 24px;
+    margin-top: 1px;
+}
+.goback{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+.shgroup .no-border {
+border: none;
+}

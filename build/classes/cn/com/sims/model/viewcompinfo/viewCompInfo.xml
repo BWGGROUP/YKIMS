@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="viewCompInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="viewCompInfo" type="cn.com.sims.model.viewcompinfo.viewCompInfo"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+  <!-- 操作数据库的业务逻辑语句指的是SQL最终反射出一个对象的ID标识指的是实体类地址 -->
+  <select id="findCompany" parameterClass="String" resultClass="java.util.HashMap">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--		SELECT base_comp_code,base_comp_name FROM view_comp_info WHERE deleteflag='0' and -->
+<!--			(Lower(base_comp_name) like Lower(concat('%', #name#, '%'))-->
+<!--			 			 OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%'))-->
+<!--			 			 OR Lower(base_comp_ename)  like Lower(concat('%', #name#, '%')) -->
+<!--			 			 OR Lower(base_comp_namef)  like Lower(concat('%', #name#, '%'))  -->
+<!--			 			 OR Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) ) -->
+<!--			 			 order by updtime desc limit 0,4-->
+			SELECT 
+				base_comp_code,
+				base_comp_name,
+				CASE WHEN base_comp_name LIKE concat('%', #name#, '%')
+				THEN -locate(#name#,base_comp_name)
+				ELSE NULL
+				END as m 
+			FROM view_comp_info 
+			WHERE deleteflag='0' 
+				AND (Lower(base_comp_name) LIKE Lower(concat('%', #name#, '%'))
+			 		OR Lower(base_comp_fullname) LIKE Lower(concat('%', #name#, '%'))
+			 		OR Lower(base_comp_ename)  LIKE Lower(concat('%', #name#, '%')) 
+			 		OR Lower(base_comp_namef)  LIKE Lower(concat('%', #name#, '%'))  
+			 		OR Lower(base_comp_namep) LIKE Lower(concat('%', #name#, '%')) ) 
+			 ORDER BY m DESC limit 0,4
+  </select>
+ <select id="companysearchlist_num" parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*)  FROM view_comp_info where deleteflag='0'
+	<dynamic prepend="">
+			<isNotEmpty  property="induList">
+ <iterate prepend='and' property='induList' open='('
+					close=')' conjunction='OR'>
+					view_comp_inducode like '%$induList[]$%'
+					</iterate>
+			</isNotEmpty>
+				<isNotEmpty  property="stageList">
+ <iterate prepend='and' property='stageList' open='('
+					close=')' conjunction='OR'>
+					base_comp_stage like '%$stageList[]$%'
+					</iterate>
+			</isNotEmpty>
+			<isNotEmpty  property="baskList">
+ <iterate prepend='and' property='baskList' open='('
+					close=')' conjunction='OR'>
+					view_comp_baskcode like '%$baskList[]$%'
+					</iterate>	
+			</isNotEmpty>
+	</dynamic>
+  </select>
+   <select id="companysearchlist" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT base_comp_code,base_comp_name,view_comp_inducont,base_comp_stagecont ,view_comp_baskcont,base_comp_namep FROM view_comp_info where deleteflag='0'
+	<dynamic prepend="">
+			<isNotEmpty  property="induList">
+ <iterate prepend='and' property='induList' open='('
+					close=')' conjunction='OR'>
+					view_comp_inducode like '%$induList[]$%'
+					</iterate>
+			</isNotEmpty>
+				<isNotEmpty  property="stageList">
+ <iterate prepend='and' property='stageList' open='('
+					close=')' conjunction='OR'>
+					base_comp_stage like '%$stageList[]$%'
+					</iterate>
+		 	
+			</isNotEmpty>
+			<isNotEmpty  property="baskList">
+ <iterate prepend='and' property='baskList' open='('
+					close=')' conjunction='OR'>
+					view_comp_baskcode like '%$baskList[]$%'
+					</iterate>	
+			</isNotEmpty>
+				
+	</dynamic>
+	order by base_comp_namep ASC,updtime desc	LIMIT #start#,#size# 
+  </select>
+   <select id="company_searchlistbyname_num" parameterClass="java.util.HashMap" resultClass="int">
+		SELECT COUNT(*) FROM view_comp_info WHERE deleteflag='0' 
+		and (Lower(base_comp_name) like Lower(concat('%', #name#, '%')) or 
+		Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) or Lower(base_comp_namef) like Lower(concat('%', #name#, '%')) 
+		OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%')) OR  Lower(base_comp_ename) like Lower(concat('%', #name#, '%'))) 
+  </select>
+   <select id="company_searchlistbyname" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--		SELECT base_comp_code,base_comp_name,view_comp_inducont,base_comp_stagecont ,view_comp_baskcont FROM view_comp_info -->
+<!--		WHERE deleteflag='0' and (Lower(base_comp_name) like Lower(concat('%', #name#, '%')) or -->
+<!--		Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) or Lower(base_comp_namef) like Lower(concat('%', #name#, '%')) -->
+<!--		OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%')) OR  Lower(base_comp_ename) like Lower(concat('%', #name#, '%'))) -->
+<!--		order by updtime desc	LIMIT #start#,#size# -->
+		
+		SELECT 
+			base_comp_code,
+			base_comp_name,
+			view_comp_inducont,
+			base_comp_stagecont ,
+			view_comp_baskcont ,
+			CASE  WHEN base_comp_name LIKE concat('%', #name#, '%')
+			THEN -locate(#name#,base_comp_name)
+			ELSE NULL
+			END as m
+		FROM view_comp_info 
+		WHERE deleteflag='0' 
+			AND (Lower(base_comp_name) LIKE Lower(concat('%', #name#, '%')) 
+				OR Lower(base_comp_namep) LIKE Lower(concat('%', #name#, '%')) 
+				OR Lower(base_comp_namef) LIKE Lower(concat('%', #name#, '%')) 
+				OR Lower(base_comp_fullname) LIKE Lower(concat('%', #name#, '%')) 
+				OR Lower(base_comp_ename) LIKE Lower(concat('%', #name#, '%'))) 
+		ORDER BY m DESC	LIMIT #start#,#size# 
+  </select>
+  <select id="findCompanyDeatilByCode" parameterClass="String" resultClass="viewCompInfo">
+		SELECT * FROM view_comp_info WHERE deleteflag='0' and base_comp_code=#code#
+  </select>
+  <select id="findNameByCode" parameterClass="String" resultClass="String">
+        select base_comp_name from base_comp_info where deleteflag='0' and base_comp_code=#code#
+  </select>
+<!--   根据名字模糊查询个数 -->
+    <select id="querycompanylistnumByname" parameterClass="java.util.HashMap" resultClass="int">
+			SELECT COUNT(*)  bc FROM view_comp_info b WHERE deleteflag='0' 
+			<dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 		(Lower(base_comp_name) like Lower(concat('%', #name#, '%'))
+			 			 OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%'))
+			 			 OR Lower(base_comp_ename)  like Lower(concat('%', #name#, '%')) 
+			 			 OR Lower(base_comp_namef)  like Lower(concat('%', #name#, '%'))  
+			 			 OR Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+  </select> 
+  
+  <!--   根据名字模糊查询公司信息（业务）分页-->
+    <select id="querycompanylistByname" parameterClass="java.util.HashMap" resultClass="viewCompInfo">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--			SELECT * FROM view_comp_info b WHERE deleteflag='0' -->
+<!--				<dynamic prepend="">-->
+<!--					<isNotEmpty prepend="and" property="name">-->
+<!--			 			(Lower(base_comp_name) like Lower(concat('%', #name#, '%'))-->
+<!--			 			 OR Lower(base_comp_fullname) like Lower(concat('%', #name#, '%'))-->
+<!--			 			 OR Lower(base_comp_ename)  like Lower(concat('%', #name#, '%')) -->
+<!--			 			 OR Lower(base_comp_namef)  like Lower(concat('%', #name#, '%'))  -->
+<!--			 			 OR Lower(base_comp_namep) like Lower(concat('%', #name#, '%')) )-->
+<!--					</isNotEmpty>-->
+<!--				</dynamic>-->
+<!--					order by updtime desc-->
+<!--	 			LIMIT #pagestart# , #limit#-->
+
+				SELECT 
+					view_comp_id,
+					base_comp_code,
+					base_comp_name,
+					base_comp_fullname	,
+					base_comp_ename	,
+					base_comp_stage	,
+					base_comp_stagecont	,
+					view_comp_baskcode	,
+					view_comp_baskcont	,
+					view_comp_inducode	,
+					view_comp_inducont	,
+					CASE  WHEN base_comp_name LIKE concat('%', #name#, '%')
+					THEN -locate(#name#,base_comp_name)
+					ELSE NULL
+					END as m
+				FROM view_comp_info b WHERE deleteflag='0' 
+				<dynamic prepend="">
+					<isNotEmpty prepend="and" property="name">
+			 			(Lower(base_comp_name) LIKE Lower(concat('%', #name#, '%'))
+			 			 OR Lower(base_comp_fullname) LIKE Lower(concat('%', #name#, '%'))
+			 			 OR Lower(base_comp_ename)  LIKE Lower(concat('%', #name#, '%')) 
+			 			 OR Lower(base_comp_namef)  LIKE Lower(concat('%', #name#, '%'))  
+			 			 OR Lower(base_comp_namep) LIKE Lower(concat('%', #name#, '%')) )
+					</isNotEmpty>
+				</dynamic>
+				ORDER BY m DESC
+	 			LIMIT #pagestart# , #limit#
+  </select>
+  		<!--	添加交易判断公司简称是否唯一 -->
+	<select id="queryCompOnlyNamefortrade" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM view_comp_info 
+		WHERE deleteflag='0' 
+		AND upper(base_comp_name)=upper(#name#)
+	</select>
+  
+</sqlMap>

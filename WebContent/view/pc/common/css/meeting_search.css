@@ -1,0 +1,100 @@
+.div_line{
+    border-top: 1px #C0C0C0 solid;
+    height: 30px;
+    width: 95%;
+    margin:0 2%;
+}
+.meet_search{
+    margin: 10px;
+    padding-left: 10px;
+    min-height: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.search_condition{
+    width: 23%;
+    margin-right:0px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.search_condition_title{
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    text-align: right;
+    width: 8%;
+    padding:0 3px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.search_title{
+    width: 20%;
+    height: 28px;
+    line-height: 28px;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+    margin-right: 10px;
+}
+.search_select{
+    width: 80%;
+    height: 50px;
+    padding: 3px 10px;
+    float: left;
+
+}
+
+.search_select select{
+    width: 50%;
+}
+
+.meet_content{
+    width: 100%;
+    text-align: center;
+}
+.meet_content table{
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
+    border-collapse: collapse;
+}
+.meet_content table tr th,td{
+    border: 1px #C0C0C0 solid;
+    height: 28px;
+    font-size: 13px;
+    padding: 5px;
+}
+
+.meet_content table tbody tr:hover{
+    background: #E9E9E9;
+
+    cursor: pointer;
+}
+.meet_content table tbody tr[nomore]{
+    background-color: transparent;
+    color: #504F4F;
+    cursor: default;
+}
+.btn-search{
+    padding: 3px 25px;
+    background-color: #f60;
+    color: #ffffff;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.select2{
+    width: 98%;
+}
+.inputconf{
+    width: 140px;
+}
+.searchdiv{
+	width: 90px;
+	float:right;
+	margin-right:13px;
+	margin-top:10px;
+}

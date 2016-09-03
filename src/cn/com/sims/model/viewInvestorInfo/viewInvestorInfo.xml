@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="viewInvestorInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="viewInvestorInfo" type="cn.com.sims.model.viewInvestorInfo.viewInvestorInfo"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+  <!-- 操作数据库的业务逻辑语句指的是SQL最终反射出一个对象的ID标识指的是实体类地址 -->
+  <select id="findInvestorName" parameterClass="String" resultClass="java.util.HashMap">
+<!--	2015-12-18 TASK089 duwenjie update 优化查询投资机构搜索 -->
+<!--		SELECT base_investor_code code,base_investor_name name,IF(ISNULL(base_investor_name),"","投资人") nameStr -->
+<!--		FROM view_investor_info WHERE deleteflag='0'-->
+<!--		 and (Lower(base_investor_name) like Lower(concat('%', #name#, '%')) or-->
+<!--		 Lower(base_investor_namep) like Lower(concat('%', #name#, '%')) or Lower(base_investor_namepf) like Lower(concat('%', #name#, '%'))) -->
+<!--		order by updtime desc limit 0,4-->
+
+		SELECT 
+				base_investor_code code,
+				base_investor_name name,
+				IF(ISNULL(base_investor_name),"","投资人") nameStr,
+				CASE  WHEN base_investor_name LIKE concat('%', #name#, '%')
+				THEN -locate(#name#,base_investor_name)
+				ELSE NULL
+				END as m 
+		FROM view_investor_info 
+		WHERE deleteflag='0'
+		 and (Lower(base_investor_name) LIKE Lower(concat('%', #name#, '%')) 
+		   OR Lower(base_investor_namep) LIKE Lower(concat('%', #name#, '%')) 
+		   OR Lower(base_investor_namepf) LIKE Lower(concat('%', #name#, '%'))) 
+		ORDER BY m DESC limit 0,4
+  </select>
+  
+  <!-- 根据机构ｉｄ查询所属该机构投资人信息 -->
+  <select id="findInvestorByOrgId" parameterClass="String" resultClass="java.util.HashMap">
+  		SELECT v.base_investor_code,v.base_investor_name,b.base_investor_posiname 
+  		FROM view_investor_info v LEFT JOIN base_investment_investor b 
+  		ON v.base_investor_code=b.base_investor_code 
+  		where v.deleteflag='0' and v.view_investment_code=#id#
+  		order by v.updtime desc
+  </select>
+  
+<!--  
+	查询投资机构投资人数量
+	duwnejie
+-->
+  <select id="findCountInvestor" parameterClass="String" resultClass="java.lang.Integer">
+   	SELECT COUNT(base_investor_code) FROM base_investment_investor
+   	WHERE deleteflag='0' and base_investment_code=#orgCount#
+  </select>
+<!-- 
+	 根据投资机构code分页查询投资人
+	 duwenjie
+	 zzg 修改 2015-12-15
+	 zzg 修改 2015-12-1 TASK 090
+-->
+	<select id="findPageInvestorByOrgId" parameterClass="java.util.HashMap"
+		resultClass="java.util.HashMap">
+		SELECT
+		b.base_investor_code,
+		s.base_investor_name,
+		s.base_investor_namep,
+		b.base_investor_posiname,
+		CASE
+		WHEN b.base_investor_state = 0 THEN
+		'在职'
+		WHEN b.base_investor_state = 1 THEN
+		'已离职'
+		END AS base_investor_state,
+		CASE
+		WHEN b.base_investor_posiname LIKE '%合伙人%'
+		THEN 1
+		ELSE 0
+		END AS posorder
+		FROM
+		base_investment_investor b
+		INNER JOIN base_investor_info s ON b.base_investor_code =
+		s.base_investor_code
+		WHERE
+		b.deleteflag = '0'
+		AND s.deleteflag = '0'
+		AND b.base_investment_code =#orgCode#
+		ORDER BY
+		b.base_investor_state ASC,
+		posorder DESC,
+		s.base_investor_namep,
+		s.updtime DESC,
+		b.updtime DESC
+		limit $startCount$,$pageSize$
+	</select>
+  
+  <!-- 根据投资人id查询投资人详细信息  zzg 修改 2015-12-15-->
+ <select id="findInvestorDeatilByCode" parameterClass="String" resultClass="viewInvestorInfo">
+		SELECT * from view_investor_info WHERE deleteflag='0' and base_investor_code = #code#
+  </select>
+ 
+   <!-- 根据机构code查询模糊查询所属该机构投资人信息 -->
+  <select id="queryInvestorlistByOrgId" parameterClass="java.util.HashMap" resultClass="viewInvestorInfo">
+  		SELECT v.base_investor_code,v.base_investor_name
+  		<dynamic>
+			<isNotEmpty prepend=',' property="invementcode">
+  				b.base_investor_posiname
+  		</isNotEmpty>
+  		<isEmpty prepend=',' property="invementcode">
+  				'' as base_investor_posiname
+  		</isEmpty>
+  		</dynamic>
+  		
+  		FROM base_investor_info v 
+  		<dynamic>
+			<isNotEmpty prepend='' property="invementcode">
+  				inner JOIN base_investment_investor b 
+  					ON v.base_investor_code=b.base_investor_code 
+  					and b.base_investment_code = #invementcode# 
+  		</isNotEmpty>
+		</dynamic>
+		
+		  where v.deleteflag='0' 
+		  <dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 (Lower(v.base_investor_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investor_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investor_namepf)  like Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+			order by
+			<dynamic>
+			<isNotEmpty prepend='' property="invementcode">
+  				b.base_investor_state asc,
+  		</isNotEmpty>
+		</dynamic>
+		v.updtime desc
+		  LIMIT #pagestart# , #limit#
+  </select> 
+  
+     <!-- 根据机构code查询所属该机构投资人信息 的数目-->
+  <select id="queryInvestorlistnumByOrgId" parameterClass="java.util.HashMap" resultClass="int">
+  		SELECT count(v.base_investor_code)
+  		FROM base_investor_info v 
+  		<dynamic>
+			<isNotEmpty prepend='' property="invementcode">
+  				inner JOIN base_investment_investor b 
+  					ON v.base_investor_code=b.base_investor_code 
+  					and b.base_investment_code = #invementcode# 
+  		</isNotEmpty>
+		</dynamic>
+		  where v.deleteflag='0'
+		<dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 (Lower(v.base_investor_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investor_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_investor_namepf)  like Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+  </select>
+  <!-- 2015-11-27 bug yl add start  -->
+  <select id="findInvestmentInvest" parameterClass="String" resultClass="String">
+  select CONCAT("[",GROUP_CONCAT(CONCAT("{'code':'",a1.base_investment_code,"','name':'",
+	 a2.base_investment_name,"','state':'",
+	 IF(a1.base_investor_state='0','在职','已离职'),"','posi':'",
+	 ifnull(a1.base_investor_posiname,""),"'"),"}"),"]") view_investment_cont
+	 FROM base_investment_investor a1 
+	 inner join base_investment_info a2
+	 on a2.base_investment_code=a1.base_investment_code
+	 where a1.base_investor_code=#code# and a1.deleteflag='0';
+  </select>
+  <!-- 2015-11-27 bug yl add end  -->
+</sqlMap>

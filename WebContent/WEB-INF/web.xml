@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  
+  <!-- 应用程序名称 -->
+  <display-name>SIMS</display-name>
+  
+  <!-- 应用程序描述说明性文字 -->
+  <description>Spring,SpringMvc,Ibatis</description>
+  
+  <!-- ServletContext初始化参数 -->
+<context-param>
+<param-name>log4jConfigLocation</param-name>
+<param-value>WEB-INF/log4j.properties</param-value>
+</context-param>
+<context-param>
+<param-name>log4jRefreshInterval</param-name>
+<param-value>60000</param-value>
+</context-param>
+<!--log-->
+
+<!--	For log bug-->
+	<context-param> 
+	<param-name>webAppRootKey</param-name> 
+	<param-value>webapp.root</param-value> 
+	</context-param> 
+<!--For log bug-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext*.xml</param-value>
+  </context-param>
+	
+  <!-- 字符过滤,防止添加到数据库的数据为乱码 -->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+<!--   //防止 xss攻击 -->
+  <filter> 
+       <filter-name>RequestFileter</filter-name> 
+       <filter-class>cn.com.sims.util.requestFileter.RequestFileter</filter-class> 
+</filter> 
+<filter-mapping> 
+   <filter-name>RequestFileter</filter-name> 
+   <url-pattern>*.html</url-pattern> 
+</filter-mapping>
+  
+  <!-- 配置监听器,用于初始化 -->
+  <listener>
+	<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  <!-- Servlet初始化参数,配置springmvc模块 -->
+  <servlet>
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+  
+  	<!-- 配置会议上传附件 -->
+	<servlet>
+	<servlet-name>AddMeetingInfoUpload</servlet-name>
+	<servlet-class>cn.com.sims.action.meeting.AddMeetingInfoUpload</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>AddMeetingInfoUpload</servlet-name>
+	<url-pattern>/AddMeetingInfo.html</url-pattern>
+	</servlet-mapping>
+  
+  <!-- 默认起始页面 -->
+<welcome-file-list>
+        <welcome-file>index.htm</welcome-file>
+</welcome-file-list>
+  
+  <!-- 异常跳转页面 -->
+  <error-page>
+	<error-code>404</error-code>
+	<location>/404.htm</location>
+  </error-page>
+  <error-page> 
+    <error-code>400</error-code> 
+    <location>/400.htm</location> 
+</error-page> 
+<error-page> 
+    <error-code>500</error-code> 
+    <location>/500.htm</location> 
+</error-page>  
+  <error-page>
+	<exception-type>java.lang.Exception</exception-type>
+	<location>/error.htm</location>
+  </error-page>
+</web-app>
+
+
+

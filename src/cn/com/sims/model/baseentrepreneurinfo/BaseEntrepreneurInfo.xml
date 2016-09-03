@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="baseentrepreneurinfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseEntrepreneurInfo" type="cn.com.sims.model.baseentrepreneurinfo.BaseEntrepreneurInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+  <!-- 根据it桔子code查询数据库中是否存在公司联系人（创业者） -->
+	<select id="findBaseEntrepreneurBytmpcodeForIT" parameterClass="String" resultClass="BaseEntrepreneurInfo">
+		SELECT * FROM base_entrepreneur_info 
+		WHERE deleteflag='0'  and Tmp_Entrepreneur_Code=#tmpentrepreneurcode# limit 1
+	</select>
+	
+	<!-- IT桔子导入更新公司联系人（创业者）信息(基础)-->
+ <update id="updateBaseEntrepreneurforIT" parameterClass="BaseEntrepreneurInfo">
+		UPDATE base_entrepreneur_info SET
+		base_entrepreneur_name=#base_entrepreneur_name#,
+		base_entrepreneur_weibo=#base_entrepreneur_weibo#,
+		base_entrepreneur_estate=#base_entrepreneur_estate#,
+		base_entrepreneur_namep=#base_entrepreneur_namep#,
+		base_entrepreneur_namepf=#base_entrepreneur_namepf#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_entrepreneur_code=#base_entrepreneur_code#
+	
+	</update>
+	
+	<!-- 插入公司联系人（创业者）信息 -->
+	<insert id="insertBaseEntrepreneurforIT" parameterClass="BaseEntrepreneurInfo">
+		INSERT INTO base_entrepreneur_info (
+		base_entrepreneur_code,base_entrepreneur_name,base_entrepreneur_weibo,
+		base_entrepreneur_stem,base_entrepreneur_estate,base_entrepreneur_namep,base_entrepreneur_namepf,
+		Tmp_Entrepreneur_Code,deleteflag,createid,createtime,updid,updtime)
+		values(#base_entrepreneur_code#,#base_entrepreneur_name#,#base_entrepreneur_weibo#,
+		#base_entrepreneur_stem#,#base_entrepreneur_estate#,#base_entrepreneur_namep#,#base_entrepreneur_namepf#,
+		#Tmp_Entrepreneur_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#)
+	</insert>
+<select id="findCompanyPeopleByCode" parameterClass="String" resultClass="java.util.HashMap">
+SELECT
+	a.base_entrepreneur_posiname,b.base_entrepreneur_code,
+	base_entrepreneur_name,base_entrepreneur_phone,
+	base_entrepreneur_wechat,base_entrepreneur_email
+FROM
+	base_comp_entrepreneur a inner JOIN base_entrepreneur_info b 
+	ON a.base_entrepreneur_code = b.base_entrepreneur_code
+WHERE
+	a.deleteflag = '0' and b.deleteflag='0' and a.base_entrepreneur_state='0'
+AND a.base_comp_code = #code#
+order by a.createtime desc,b.createtime desc
+</select>
+
+<update id="tranModifyCompPeople" parameterClass="BaseEntrepreneurInfo">
+		UPDATE base_entrepreneur_info SET
+		base_entrepreneur_name=#base_entrepreneur_name#,
+		base_entrepreneur_estate=#base_entrepreneur_estate#,
+		base_entrepreneur_namep=#base_entrepreneur_namep#,
+		base_entrepreneur_namepf=#base_entrepreneur_namepf#,
+		base_entrepreneur_phone=#base_entrepreneur_phone#,
+		base_entrepreneur_wechat=#base_entrepreneur_wechat#,
+		base_entrepreneur_email=#base_entrepreneur_email#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_entrepreneur_code=#base_entrepreneur_code#
+	
+	</update>
+	<insert id="insertCompPeople" parameterClass="BaseEntrepreneurInfo">
+		INSERT INTO base_entrepreneur_info (
+		base_entrepreneur_code,base_entrepreneur_name,base_entrepreneur_phone,base_entrepreneur_wechat,base_entrepreneur_email,
+		base_entrepreneur_weibo,base_entrepreneur_img,base_entrepreneur_stem,base_entrepreneur_estate,
+		base_entrepreneur_namep,base_entrepreneur_namepf,
+		Tmp_Entrepreneur_Code,deleteflag,createid,createtime,updid,updtime)
+		values(#base_entrepreneur_code#,#base_entrepreneur_name#,#base_entrepreneur_phone#,
+		#base_entrepreneur_wechat#,#base_entrepreneur_email#,#base_entrepreneur_weibo#,#base_entrepreneur_img#,#base_entrepreneur_stem#,
+		#base_entrepreneur_estate#,#base_entrepreneur_namep#,#base_entrepreneur_namepf#,
+		#Tmp_Entrepreneur_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#)
+	</insert>
+	<select id="findCountSizeByName" parameterClass="Map" resultClass="int">
+	select count(base_entrepreneur_code) from base_entrepreneur_info where deleteflag='0'
+	<isNotEmpty prepend="and" property="name">
+	base_entrepreneur_name like Lower(concat('%', #name#, '%'))
+	</isNotEmpty>
+	</select>
+	<select id="findEnterByName" parameterClass="Map" resultClass="java.util.HashMap">
+	  select base_entrepreneur_code,base_entrepreneur_name,base_entrepreneur_phone,
+	  base_entrepreneur_wechat,base_entrepreneur_email from base_entrepreneur_info where deleteflag='0'
+	<isNotEmpty prepend="and" property="name">
+	base_entrepreneur_name like Lower(concat('%', #name#, '%'))
+	</isNotEmpty>
+	order by updtime desc
+	limit #startIndex#,#pageSize#
+	</select>
+	
+	 <!-- 根据公司code，联系人姓名查询模糊查询所属该公司联系人信息 -->
+  <select id="queryEntrepreneurlistBycompId" parameterClass="java.util.HashMap" resultClass="BaseEntrepreneurInfo">
+  		SELECT v.base_entrepreneur_code,v.base_entrepreneur_name
+  		<dynamic>
+			<isNotEmpty prepend=',' property="compcode">
+  				b.base_entrepreneur_posiname
+  		</isNotEmpty>
+  		<isEmpty prepend=',' property="compcode">
+  				'' as base_entrepreneur_posiname
+  		</isEmpty>
+  		</dynamic>
+  		
+  		FROM base_entrepreneur_info v 
+  		<dynamic>
+			<isNotEmpty prepend='' property="compcode">
+  				inner JOIN base_comp_entrepreneur b 
+  					ON v.base_entrepreneur_code=b.base_entrepreneur_code 
+  					and b.base_comp_code = #compcode# 
+  		</isNotEmpty>
+		</dynamic>
+		
+		  where v.deleteflag='0' 
+		  <dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 (Lower(v.base_entrepreneur_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_entrepreneur_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_entrepreneur_namepf)  like Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+			order by v.updtime desc
+		  LIMIT #pagestart# , #limit#
+  </select> 
+  
+     <!-- 根据公司code，联系人姓名查询模糊查询所属该公司联系人信息 数目-->
+  <select id="queryEntrepreneurlistnumBycompId" parameterClass="java.util.HashMap" resultClass="int">
+  		SELECT count(v.base_entrepreneur_code)
+  		
+  		FROM base_entrepreneur_info v 
+  		<dynamic>
+			<isNotEmpty prepend='' property="compcode">
+  				inner JOIN base_comp_entrepreneur b 
+  					ON v.base_entrepreneur_code=b.base_entrepreneur_code 
+  					and b.base_comp_code = #compcode# 
+  		</isNotEmpty>
+		</dynamic>
+		
+		  where v.deleteflag='0' 
+		  <dynamic prepend="">
+				<isNotEmpty prepend="and" property="name">
+			 (Lower(v.base_entrepreneur_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_entrepreneur_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(v.base_entrepreneur_namepf)  like Lower(concat('%', #name#, '%')) )
+				</isNotEmpty>
+			</dynamic>
+		  </select>
+</sqlMap>

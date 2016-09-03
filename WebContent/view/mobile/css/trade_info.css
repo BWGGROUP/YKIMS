@@ -1,0 +1,288 @@
+select{
+	background-color:#fff;
+}
+.shgroup .title{
+    width: 73px;
+    padding-top: 5px;
+    padding-bottom:2px;
+    vertical-align: top;
+}
+.shgroup .tiplist{
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.tiplist ul{
+	max-height:none;
+	overflow:visible;
+}
+
+.tiplist li{
+	height:auto;
+	min-height:20px;
+	word-break: break-word;
+}
+
+.shgroup:first-child{
+
+}
+.box-body .shgroup{
+    display: block;
+}
+.tablepadding{
+    padding: 0 10px;
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    table-layout: fixed;
+}
+table>thead{
+    background: #EEE;
+}
+table>thead>tr{
+    height: 33px;
+}
+table>thead>tr>th{
+    vertical-align: middle;
+    padding: 4px ;
+    border: 1px solid #C0C0C0;
+}
+table>tbody>tr>td{
+    border:1px solid #C0C0C0;
+    height:30px;
+    word-wrap:break-word;
+    min-height:30px;
+}
+table>tbody>tr:nth-child(2n){
+    background: #fbfbfb;
+}
+.addrz{
+    text-align: right;
+    margin-top: 6px;
+}
+.btn-rongz {
+    height: 24px;
+    background: #f60;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.spanblock{
+    display:inline-block;
+}
+.meeting-box{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    padding: 10px 6px;
+}
+.meeting-box table{
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+}
+.meeting-box table>tbody>tr>td{
+    border: 1px solid #C0C0C0;
+    padding: 3px 2px;
+    text-align: center;
+}
+.meeting-box table>tbody>tr>td:last-child{
+	width: 20%;
+    text-align: center;
+}
+.meeting-box table>tbody>tr>td:nth-child(1){
+    width: 24%;
+}
+.meeting-box table>tbody>tr>td:nth-child(2){
+    width: 20%;
+}
+.meeting-box table>tbody>tr>td:nth-child(3){
+    width: 36%;
+}
+.meeting-box textarea{
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.notecompet{
+    text-align: center;
+
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 138px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.btn-smart{
+    height: 20px;
+    line-height: 20px;
+    width: 47px;
+    font-size: 13px;
+}
+.inputlist .lable{
+    width: 73px;
+}
+.in-left{
+    text-align: left;
+    padding-left: 15px;
+}
+
+
+.closeshearch{
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+}
+
+.smart{
+    height: 25px;
+    line-height: 25px;
+    font-size: 13px;
+    width: 53px;
+    margin-top: 0;
+}
+
+.blue{
+	color:#2091DF;
+}
+
+.addbtn{
+    width: 20px;
+    height: 20px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: relative;
+    right:3px;
+    z-index: 1;
+    float:right;
+}
+
+
+.inputdef{
+	width:178px;
+}
+
+.morebtn{
+    width: 20px;
+    height: 20px;
+/*    background: url("../icon/addbtn.png") no-repeat;*/
+    background-size: 100%;
+    background-position: center center;
+    position: relative;
+    right: 7px;
+    top: 5px;
+    float:right;
+}
+
+
+.pageBack{
+	background-color: #ffffff;
+	display:none;
+	overflow:auto;
+	z-index:2;
+}
+
+.box-return{
+	float:right;
+}
+.returnBtn{
+	border:none;
+	width:55px;
+	height:24px;
+	font-size:13px;
+	background-color:#f60;
+	color:#ffffff;
+	margin:0 5px;
+}
+
+.page_body{
+	position: relative;
+    padding-top: 48px;
+    padding-bottom: 46px;
+}
+
+.closeshearch{
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+}
+.child .box-title{
+	height: 40px;
+    font-size: 18px;
+    line-height: 40px;
+    padding-top: 0px;
+}
+.pageaction{
+    text-align: right;
+    padding-right: 15px;
+}
+
+.display-none{
+	display:none;
+}
+.display-block{
+	display:block;
+}
+.tiplist li{
+    word-break: break-all;
+}
+.tiplist ul{
+    max-height: 100000px;
+}
+.smart-btn{
+    width: 68px;
+    height: 25px;
+    line-height: 25px;
+    margin-top: 1px;
+}
+.goback{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0px;
+}
+.box-title{
+    position: relative;
+    }
+
+.companyTypeCheck{
+	margin-left:3px;
+}
+.inputlist .in{
+	text-align:left;
+}

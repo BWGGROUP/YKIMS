@@ -1,0 +1,325 @@
+.shgroup{
+    margin-top: -3px;
+    margin-bottom: 14px;
+    width: 100%;
+    letter-spacing: 1px;
+    min-height: 23px;
+}
+
+.shgroup .title{
+    width: 140px;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+    margin-top: 2px;
+}
+.shgroup .tiplist{
+    width: 82%;
+    margin-left: 140px;
+}
+.tiplist li{
+    display: inline-block;
+    /* width: 82%; */
+    width: auto;
+    padding: 2px 5px;
+    margin-left: 5px;
+    font-size: 13px;
+    border-radius: 4px;
+}
+
+.color_blue{
+    /* padding: 3px 10px; */
+    border-radius: 4px;
+}
+.tiplist li .color_blue{
+    color:#2091DF;
+}
+.tiplist li .color_blue:hover{
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+    cursor:pointer;
+}
+
+.detail_record{
+    text-align: center;
+}
+
+.btn_record{
+    margin: 10px 50px;
+    height: 34px;
+    line-height: 35px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 120px;
+    border-radius: 5px;
+}
+
+ .tran_content_table{
+    width: 80%;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 20%;
+} 
+/* .tran_content_table{
+    margin: 0 0 25px 3px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-left: 20%;
+    padding-bottom: 1px;
+} */
+
+.tran_content_table table{
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 98%;
+    margin: auto;
+    position: relative;
+    border-collapse: collapse;
+    text-align: center;
+    margin-left: 2%;
+}
+
+.tran_content_table table tr th,.tran_content_table table tr  td{
+    border: 1px #C0C0C0 solid;
+    height: 28px;
+    font-size: 13px;
+    padding: 5px;
+}
+.tab_title{
+    margin-bottom: 10px;
+    width: 20%;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+}
+
+.td_colsone{
+    width: 15%;
+}
+.td_colstwo{
+    width: 15%;
+}
+.td_colsthree{
+    width: 50%;
+}
+.td_colfour{
+    width: 20%;
+}
+
+.btn_plan{
+    padding: 3px;
+    background-color: #f60 ;
+    color: #FFFFFF;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+
+
+.body_div{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.tran_textarea{
+    border: 1px #C0C0C0 solid;
+    width: 98%;
+    min-height: 80px;
+    border-radius: 4px;
+    padding: 5px;
+    resize: none;
+    color: #504F4F;
+    margin-left: 2%;
+}
+
+.right-content-footer{
+    text-align: center;
+}
+
+.right-content-footer button{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.record_save{
+    text-align: right;
+}
+.people_add_img{
+    position: absolute;
+    right: 0px;
+    top: 4px;
+}
+.inputlist .lable,.inputlist .in{
+    display: table-cell;
+    padding-left: 10px;
+}
+.inputlist li .inputdef {
+    height: 25px;
+    padding: 2px 4px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+ul.inputlist{
+    display: table;
+    margin-left: -36px;
+}
+ul.inputlist li{
+    border: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+.inputdef {
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 3px;
+    height: 25px;
+    padding-left: 5px;
+}
+.select2-container {
+    z-index: 999999999;
+}
+.btn-box {
+    margin-top: 20px;
+    text-align: center;
+}
+.people li {
+    display: block;
+    padding: 0px 3px;
+}
+.people li ul{
+    line-height:23px;
+    width: auto;
+    margin-left: 22px;
+}
+.people li ul li {
+    display: inline-block!important;
+    margin-left: 0;
+}
+.tran_content_table table thead {
+    background: #DADADA;
+}
+.closeshearch {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 98%;
+    text-align: center;
+    display: block;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 2%;
+}
+.closefinacplan {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 98%;
+    text-align: center;
+    display: block;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+    font-size: 13px;
+    cursor: pointer;
+    margin-left: 2%;
+}
+.lockmore{
+    text-align: right;
+    color: #2091DF;
+    text-decoration: underline;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+    margin-top: 5px;
+}
+.tradebox{
+    margin: 10px auto;
+}
+.inputlist .lable {
+    text-align: right;
+    min-width: 110px;
+    vertical-align: middle;
+}
+.addpeopl{
+    position: absolute;
+    right: 0px;
+    top: 182px;
+}
+.addfrom {
+    width: 300px;
+    margin: 10px auto;
+}
+.dropdown-menu {
+    z-index: 99999999;
+}
+#text{
+    width: 210px;
+    height: 70px;
+}
+.tran_content_table table>tbody>tr.nohover:hover{
+    background-color: #fff;
+    cursor: default;
+}
+.tran_content_table table>tbody>tr:hover{
+    background-color: #E9E9E9;
+    cursor: pointer;
+}
+.addpeoplebox{
+    margin-left: -32px;
+}
+.flan{
+    width: 210px;
+    word-break: break-all;
+    border-radius: 3px;
+    resize: none;
+
+}
+.add_peoplename{
+    position: absolute;
+}
+.tiplist ul{
+	margin-right: 10%;
+}
+.body_div_btn {
+margin-top: 5px;
+width: 100%;
+padding-right: 12px;
+text-align: right;
+position: relative;
+}
+.addtradebtn {
+background: url("../icon/icon_add.png") no-repeat;
+background-size: 90% 90%;
+width: 25px;
+height: 24px;
+border: none;
+border-radius: 4px;
+}
+
+.goback {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 20px;
+}

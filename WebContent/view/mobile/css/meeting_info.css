@@ -1,0 +1,201 @@
+.display-table{
+    padding-top: 10px;
+}
+.tiplist li{
+    color: #504F4F;
+}
+.comp{
+    display: inline-block;
+    padding: 1px 4px 1px 0px;
+}
+.shgroup {
+    position: relative;
+}
+.shgroup .tiplist,.shgroup .title{
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.shgroup .tiplist{
+	position:relative;
+}
+.shgroup .title{
+    width: 77px;
+}
+.meeting-box{
+padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    padding: 10px 6px;
+    overflow:hidden; word-wrap:break-word;
+}
+.meeting-box table{
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+}
+.meeting-box table>tbody>tr>td{
+    border: 1px solid #C0C0C0;
+    padding: 3px 2px;
+    text-align: center;
+}
+.meeting-box table>tbody>tr>td:last-child{
+    text-align: left;
+}
+.meeting-box table>tbody>tr>td:nth-child(1){
+    width: 20%;
+}
+.meeting-box table>tbody>tr>td:nth-child(2){
+    width: 20%;
+}
+.meeting-box table>tbody>tr>td:nth-child(3){
+    width: 60%;
+}
+.meeting-box textarea{
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.meeting-box .meetingconttxt{
+    min-height: 150px;
+}
+.notecompet{
+    text-align: center;
+
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 110px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.inputdef{
+    width: 170px;
+    background: #fff;
+}
+.closeshearch{
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+}
+.smart{
+    height: 28px;
+    line-height: 25px;
+    font-size: 13px;
+    width: 53px;
+    margin-top: 0;
+}
+.tiplist ul{
+max-height: 1000px!important;
+}
+ul.invicont li ,ul.companycont li{
+    display: block;
+    height: auto;
+}
+
+.edit-btn{
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+    background: url("../icon/edit.png") no-repeat;
+    background-size: 100% 100%;
+}
+.inputshare{
+	padding-left:10%;
+}
+.addbtn {
+    width: 20px;
+    height: 20px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -10px;
+}
+
+.inputlist li input[type="checkbox"]{
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: -75px;
+}
+.inputlist li .inputdef{
+    width: 160px;
+    background: #fff;
+    margin-left: 2px;
+}
+.meetcontbtn{
+	text-align:right;
+	padding-right:10px;
+}
+.meetingfile{
+	position:absolute;
+}
+.filediv{
+	padding-top:3px;
+	margin-left:86px;
+	
+}
+.meetingfileul{
+	width:90%;
+}
+.meetingfileul>li>a{
+	color:blue;
+	font-size:13px;
+}
+.filename{
+	
+}
+.fileDelClick{
+	color:#f60;
+	margin-left:5px;
+}
+.meetfilediv{
+	min-height:28px;
+}
+.box-title{
+	position:relative;
+}
+.returnBtn {
+    border: none;
+    width: 55px;
+    height: 25px;
+    font-size: 13px;
+    background-color: #f60;
+    color: #ffffff;
+    margin: 0 5px;
+    line-height: 24px;
+}
+.goback{
+	display:none;
+	float:right;
+	position:absolute;
+	right:0px;
+	top:0px;
+}

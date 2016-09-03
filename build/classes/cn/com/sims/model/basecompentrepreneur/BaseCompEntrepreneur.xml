@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="basecompentrepreneur">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseCompEntrepreneur" type="cn.com.sims.model.basecompentrepreneur.BaseCompEntrepreneur"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+    <!-- 根据公司ID和创业者id查询公司创业者关系 for it桔子 -->
+  <select id="queryCompEntrepreneurbycodeforit" parameterClass="java.util.HashMap" resultClass="BaseCompEntrepreneur">
+		select * from base_comp_entrepreneur WHERE deleteflag='0' 
+		and base_entrepreneur_code=#base_entrepreneur_code# and base_comp_code=#base_comp_code# limit 1
+  </select>
+  
+      <!-- 插入公司创业者关系 for it桔子-->
+  <insert id="insertCompEntrepreneurforit" parameterClass="BaseCompEntrepreneur">
+		insert IGNORE into base_comp_entrepreneur (
+			base_entrepreneur_code,
+			base_comp_code,
+			base_entrepreneur_state,
+			base_entrepreneur_posiname,
+			deleteflag,
+			createid	,
+			createtime,
+			updid	,
+			updtime	
+		)
+		values(
+			#base_entrepreneur_code#,
+			#base_comp_code#,
+			#base_entrepreneur_state#,
+			#base_entrepreneur_posiname#,
+			#deleteflag#,
+			#createid#,
+			#createtime#,
+			#updid#,
+			#updtime#	
+		)
+  </insert>
+  
+        <!-- 更新公司创业者关系 for it桔子-->
+  <update id="updateCompEntrepreneurforit" parameterClass="BaseCompEntrepreneur">
+		update base_comp_entrepreneur 
+		set 
+			base_entrepreneur_state=#base_entrepreneur_state#,
+			base_entrepreneur_posiname=#base_entrepreneur_posiname#,
+			updid=#updid#,
+			updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_comp_code=#base_comp_code# and base_entrepreneur_code=#base_entrepreneur_code#
+  </update>
+  <!-- 修改公司和创业者关系 -->
+  <update id="updateCompany" parameterClass="BaseCompEntrepreneur">
+		update base_comp_entrepreneur 
+		set 
+			base_entrepreneur_posiname = #base_entrepreneur_posiname#,	
+			updid=#updid#,
+			updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_comp_code=#base_comp_code# and base_entrepreneur_code=#base_entrepreneur_code#
+  </update>
+  
+  <insert id="insertComp_people" parameterClass="BaseCompEntrepreneur">
+		insert into base_comp_entrepreneur (
+			base_entrepreneur_code,
+			base_comp_code,
+			base_entrepreneur_state,
+			base_entrepreneur_posiname,
+			deleteflag,
+			createid	,
+			createtime,
+			updid	,
+			updtime	
+		)
+		values(
+			#base_entrepreneur_code#,
+			#base_comp_code#,
+			"0",
+			#base_entrepreneur_posiname#,
+			"0",
+			#createid#,
+			#createtime#,
+			#updid#,
+			#updtime#	
+		)
+  </insert>
+  <select id="selectPeople" parameterClass="java.util.HashMap" resultClass="int">
+         select count(*) from base_comp_entrepreneur where deleteflag='0' and base_entrepreneur_code=#peoplecode# and base_comp_code=#code#
+  </select>
+  
+</sqlMap>

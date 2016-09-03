@@ -1,0 +1,182 @@
+.investor_info_content{
+    /*border: 1px red solid;*/
+    position: relative;
+    overflow: hidden;
+    font-size: 13px;
+    margin: 10px 0;
+    min-height: 40px;
+
+}
+.content_txt{
+    /*border: 1px red solid;*/
+    width: 88%;
+    padding-left: 5px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    min-height: 35px;
+}
+.content_txt input{
+    height: 28px;
+    line-height: 28px;
+}
+.content_txtare{
+    width: 65%;
+    padding-left: 5px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+
+.txt_redord{
+    padding: 3px;
+    margin-left: 14%;
+    width: 584px;
+    height: 150px;
+    color: #504F4F;
+    resize: none;
+    border-radius: 4px;
+}
+.info_txt{
+    width: 100%;
+    height: 80px;
+    resize: none;
+    color: #504F4F;
+    border: 1px #C0C0C0 solid;
+    padding: 5px;
+}
+
+
+.add_redord{
+    width: 103%;
+    margin-top: 20px;
+    margin-left: -10px;
+    padding: 30px 0px;
+    border-top: 1px #C0C0C0 dashed;
+}
+
+.add_redord_txt{
+
+}
+.info_title{
+    text-align: right;
+    width: 20%;
+}
+.select2{
+    width: 85%;
+}
+.select_more{
+    width: 85%;
+}
+.select2-dropdown{
+    border-color: #C0C0C0;
+}
+.select2-container--default .select2-selection--single{
+    border-color: #C0C0C0;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field{
+    border-color: #C0C0C0;
+}
+.fn-input{
+    border-radius: 4px;
+    width: 195px;
+}
+.orul li{
+    line-height: 25px;
+}
+.comp {
+    display: inline-block;
+    padding: 1px 13px 0px 0px;
+}
+.orremove{
+    color: #2091DF;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.trade_add_img {
+    position: absolute;
+    right: 0px;
+    top: 4px;
+}
+ul.inputlist{
+    display: table;
+}
+ul.inputlist li{
+    border: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.inputlist .lable,.inputlist .in{
+    display: table-cell;
+    padding-left: 10px;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 50px;
+}
+.tiplist .list li{
+    display: block;
+}
+.inputdef {
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 3px;
+    height: 25px;
+    padding-left: 5px;
+}
+.inputlist li .inputdef {
+    height: 25px;
+    padding: 2px 4px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+.addfrom{
+    width: 300px;
+    margin: 10px auto;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 83px;
+}
+.tiplist .list li{
+    display: block;
+}
+
+.btn-box{
+    margin-top: 20px;
+    text-align: center;
+}
+.select2-container--open .select2-dropdown--below {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    z-index: 99999999;
+}
+.tip-edit{
+    padding: 0;
+}
+.comp1{
+    display: inline-block;
+    line-height: 25px;
+    padding-right: 10px;
+}
+.smart-btn{
+    width: 68px;
+    height: 25px;
+    line-height: 25px;
+}
+.goback{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+.selscttrade_org{
+    width: 200px;
+    height: 30px;
+    background: #fff;
+    margin-left: 10px;
+}

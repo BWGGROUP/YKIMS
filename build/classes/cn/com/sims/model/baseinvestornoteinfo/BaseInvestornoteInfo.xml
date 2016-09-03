@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="baseInvestornoteInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="baseInvestornoteInfo" type="cn.com.sims.model.baseinvestornoteinfo.BaseInvestornoteInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+
+	<!-- 根据投资人id，获取投资人note信息 -->
+ <select id="findNoteByInvestorCode" parameterClass="String" resultClass="java.util.HashMap">
+ 	select createtime,base_investornote_code,base_invesnote_content,sys_user_name from base_investornote_info 
+ 	where base_investor_code = #code# and deleteflag = '0' 
+ 	order by updtime desc
+ </select>
+ <!-- 根据投资人noteid删除note信息 -->
+ <delete id="investotnote_del" parameterClass="String">
+		DELETE  FROM base_investornote_info  WHERE deleteflag='0' 
+AND base_investornote_code=#id#
+	</delete>
+	
+	<!-- 新增投资人Note信息 -->
+  <insert id="insertInvestorNote" parameterClass="BaseInvestornoteInfo">
+  	INSERT INTO base_investornote_info(base_investornote_code,base_investor_code,base_invesnote_content,sys_user_name,createid,createtime,updid,updtime)
+ 	VALUES(#base_investornote_code#,#base_investor_code#,#base_invesnote_content#,#sys_user_name#,#createid#,#createtime#,#updid#,#updtime#)
+  </insert>
+</sqlMap>

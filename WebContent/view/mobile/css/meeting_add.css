@@ -1,0 +1,158 @@
+.shgroup .title{
+    width: 72px;
+}
+.edit-btn{
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+    background: url("../icon/edit.png") no-repeat;
+    background-size: 100% 100%;
+}
+.inputdef{
+    width: 200px;
+    background: #fff;
+    margin-left: 10px;
+}
+.addbtn{
+    width: 20px;
+    height: 20px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -10px;
+}
+.shgroup .tiplist {
+    padding-right: 26px;
+}
+.inputdef_l{
+		width:120px;
+		margin-left:10px;
+}
+.comp {
+    display: inline-block;
+    padding: 0px 4px 1px 0px;
+}
+.rz-btn{
+    background: #f60;
+    color: #fff;
+    border-radius: 3px;
+}
+.tiplist .touzilist li{
+    display: block;
+    height:auto!important;
+}
+.meeting-box{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+
+}
+.box-body .shgroup.node{
+    position: relative;
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+}
+
+.meeting-box textarea {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+
+.inputlist li .inputdef{
+    width: 178px;
+    background: #fff;
+}
+.inputlist li{
+    vertical-align: middle;
+}
+.inputlist li input[type="checkbox"]{
+    width: 12px;
+    height: 12px;
+    position: relative;
+    left: -75px;
+}
+.inputlist .lable, .inputlist .in{
+    vertical-align: middle;
+}
+.box-body .shgroup.node{
+    position: relative;
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+}
+.meeting-box textarea {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.notecompet{
+    text-align: center;
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 110px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.btn-smart{
+    height: 20px;
+    line-height: 20px;
+    width: 47px;
+    font-size: 13px;
+}
+.inputlist li .inputdef{
+    width: 160px;
+    background: #fff;
+    margin-left: 2px;
+}
+.tiplist ul {
+
+    max-height: 10000px;
+
+}
+.inputlist li textarea.inputdef{
+    height: 60px;
+    margin-top: 6px;
+}
+.smart{
+    height: 25px;
+    line-height: 25px;
+    font-size: 13px;
+    width: 53px;
+    margin-top: 0;
+}
+
+#meetingcontent{
+    position: relative;
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+}
+.inputshare{
+	padding-left:20px;
+}

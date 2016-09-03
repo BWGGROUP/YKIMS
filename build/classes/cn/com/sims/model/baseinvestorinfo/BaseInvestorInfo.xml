@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="baseInvestorInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="baseInvestorInfo" type="cn.com.sims.model.baseinvestorinfo.BaseInvestorInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+
+	 <!-- 根据投资人id查询投资人详细信息 -->
+ <select id="findInvestorByCode" parameterClass="String" resultClass="baseInvestorInfo">
+		SELECT * from base_investor_info 
+		WHERE deleteflag='0' and base_investor_code = #code#
+  </select>
+  
+<!--  查询所有投资人,下拉选框-->
+  <select id="findAllInvestorInfo" resultClass="java.util.HashMap">
+  	SELECT base_investor_code as id, base_investor_name as text 
+  	from base_investor_info WHERE deleteflag='0'
+  	order by updtime desc
+  </select>
+  
+  <!--  根据投资机构code查询投资人,下拉选框-->
+  <select id="findInvestorInfoByOrgCode" parameterClass="String" resultClass="java.util.HashMap">
+  	SELECT v1.base_investor_code as id, v2.base_investor_name as text 
+  	FROM base_investment_investor v1 inner JOIN base_investor_info v2
+	ON v1.base_investor_code=v2.base_investor_code
+	WHERE v1.deleteflag='0' AND v2.deleteflag='0'
+	AND v1.base_investment_code=#orgCode#
+	order by v2.updtime desc,v1.updtime desc
+  </select>
+  
+  <update id="tranModifyInvestor" parameterClass="baseInvestorInfo">
+  UPDATE base_investor_info SET
+		<isNotEmpty property="base_investor_name">
+		base_investor_name=#base_investor_name#,
+		</isNotEmpty>
+		<isNotNull property="base_investor_phone">
+		base_investor_phone=#base_investor_phone#,
+		</isNotNull>
+		<isNotNull property="base_investor_wechat">
+		base_investor_wechat=#base_investor_wechat#,
+		</isNotNull>
+		<isNotNull property="base_investor_email">
+		base_investor_email=#base_investor_email#,
+		</isNotNull>
+		<isNotEmpty property="base_datalock_viewtype">
+		base_datalock_viewtype=#base_datalock_viewtype#,
+		</isNotEmpty>
+		base_investor_estate=#base_investor_estate#,
+		base_datalock_pltype=#base_datalock_pltype#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_investor_code=#base_investor_code#
+		AND base_datalock_viewtype &lt; #base_datalock_viewtype#
+  </update>
+  
+  <!-- 根据it桔子code查询数据库中是否存在投资人 -->
+	<select id="findBaseInvestorBytmpcodeForIT" parameterClass="String" resultClass="baseInvestorInfo">
+		SELECT * FROM base_investor_info 
+		WHERE deleteflag='0'  and Tmp_Investor_Code=#tmpinvestorcode# limit 1
+	</select>
+	
+	<!-- IT桔子导入更新投资人信息(基础)-->
+ <update id="updateBaseInvestorforIT" parameterClass="baseInvestorInfo">
+		UPDATE base_investor_info SET
+		base_investor_name=#base_investor_name#,
+		base_investor_estate=#base_investor_estate#,
+		base_investor_namep=#base_investor_namep#,
+		base_investor_namepf=#base_investor_namepf#,
+		base_datalock_pltype=#base_datalock_pltype#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE deleteflag='0' 
+		AND base_investor_code=#base_investor_code#
+	
+	</update>
+	
+	<!-- 插入投资人信息 -->
+	<insert id="insertBaseInvestorforIT" parameterClass="baseInvestorInfo">
+		INSERT INTO base_investor_info (base_investor_code,base_investor_name,
+		base_investor_phone,base_investor_wechat,base_investor_email,
+		base_investor_weibo,base_investor_img,
+		base_investor_stem,base_investor_estate,base_investor_namep,base_investor_namepf,
+		Tmp_Investor_Code,deleteflag,createid,createtime,updid,updtime,
+		base_datalock_viewtype,base_datalock_pltype)
+		values(#base_investor_code#,#base_investor_name#,
+		#base_investor_phone#,#base_investor_wechat#,#base_investor_email#,
+		#base_investor_weibo#,#base_investor_img#,
+		#base_investor_stem#,#base_investor_estate#,#base_investor_namep#,#base_investor_namepf#,
+		#Tmp_Investor_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,
+		#base_datalock_viewtype#,#base_datalock_pltype#)
+	</insert>
+	<insert id="insetInvstor" parameterClass="baseInvestorInfo">
+	INSERT INTO base_investor_info (base_investor_phone,base_investor_wechat,base_investor_email,base_investor_code,base_investor_name,
+		base_investor_stem,base_investor_estate,base_investor_namep,base_investor_namepf,
+		Tmp_Investor_Code,deleteflag,createid,createtime,updid,updtime,
+		base_datalock_viewtype,base_datalock_pltype)
+		values(#base_investor_phone#,#base_investor_wechat#,#base_investor_email#,#base_investor_code#,#base_investor_name#,
+		#base_investor_stem#,#base_investor_estate#,#base_investor_namep#,#base_investor_namepf#,
+		#Tmp_Investor_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,
+		#base_datalock_viewtype#,#base_datalock_pltype#)
+	</insert>
+	<!-- 2015-12-02 TASK76 yl add start  -->
+	<delete id="tranDeleteInvestor" parameterClass="java.util.HashMap">
+	    DELETE FROM base_investment_investor WHERE deleteflag='0'
+		AND base_investor_code=#invstorCode# and base_investment_code=#orgCode#
+	</delete>
+	<update id="updateInvestor" parameterClass="java.util.HashMap">
+	UPDATE base_investor_info SET base_investor_estate=#estate#,updtime=#updtime#,updid=#userCode# where deleteflag='0'
+	 and base_investor_code=#invstorCode#
+	</update>
+	<!-- 2015-12-02 TASK76 yl add end  -->
+	
+<!--dwj 2016-5-13	根据投资人名称查询投资人信息-->
+	<select id="findOrgInvestorByName" parameterClass="java.util.HashMap" resultClass="baseInvestorInfo">
+		SELECT it.* FROM base_investment_investor im 
+		LEFT JOIN base_investor_info it ON im.base_investor_code = it.base_investor_code
+		WHERE im.base_investment_code= #orgcode#
+		AND it.base_investor_name = #name#
+		
+	</select>
+</sqlMap>

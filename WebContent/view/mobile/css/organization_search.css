@@ -1,0 +1,7 @@
+
+.tiplist li.active{
+    border-radius: 3px;
+    background: #f60;
+    color: #fff;
+    transition: all .2s !important;
+}

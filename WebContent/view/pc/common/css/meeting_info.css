@@ -1,0 +1,348 @@
+.shgroup{
+    margin-top: -3px;
+    margin-bottom: 14px;
+    width: 100%;
+    letter-spacing: 1px;
+    min-height: 24px;
+    /**overflow: hidden;**/
+}
+
+.shgroup .title{
+    width: 20%;
+    text-align: right;
+    font-size: 13px;
+    margin-top: 2px;
+    float: left;
+}
+.shgroup .tiplist{
+    width: 80%;
+    float: left;
+    margin-bottom: 14px;
+    position:relative;
+    /**overflow: hidden;**/
+}
+.tiplist li{
+    display: inline-block;
+    width: auto;
+    padding: 2px 4px;
+    margin-left: 5px;
+    color: #404040;
+    font-size: 13px;
+    border-radius: 4px;
+}
+.color_blue{
+    padding: 3px ;
+    border-radius: 4px;
+}
+.tiplist li .color_blue{
+    color:#2091DF;
+}
+.tiplist li .color_blue:hover{
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+    cursor:pointer;
+}
+
+/*.meet_record{*/
+
+/*}*/
+/*.meet_record .title{*/
+    /*width: 20%;*/
+    /*text-align: right;*/
+    /*font-size: 13px;*/
+    /*margin-top: 2px;*/
+/*}*/
+/*.txt_meet{*/
+    /*width: 70%;*/
+    /*margin-left.jsp: 20%;*/
+    /*height: 120px;*/
+    /*padding: 5px;*/
+    /*font-size: 13px;*/
+/*}*/
+/*.txt_meet{*/
+    /**/
+/*}*/
+.meet_title{
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    padding-left: 50px;
+    font-size: 13px;
+}
+.li_type{
+    font-size: 12px;
+    margin-left: 4px;
+    color: #404040;
+    display: inline-block;
+}
+
+.body_div{
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.tran_textarea{
+    border: 1px #C0C0C0 solid;
+    width: 80%;
+    min-height: 80px;
+    padding: 5px;
+    resize: none;
+    color: #504F4F;
+}
+
+.tran_content_table{
+    width: 100%;
+    margin-top: 30px;
+    text-align: right;
+    position: relative;
+
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    padding: 10px 6px;
+    font-size: 13px;
+    word-break: break-all;
+    word-wrap: break-word;
+    margin-top: 3px;
+}
+.tab_content_table{
+    margin: 0 0 25px 3px;
+    width: 80%;
+    position: relative;
+    overflow: hidden;
+    margin-left: 20%;
+    padding-bottom: 1px;
+}
+.tab_content_table table{
+    table-layout: fixed;
+    word-wrap: break-word;
+    width: 100%;
+    font-size: 13px;
+    text-align: center;
+    border-collapse: collapse;
+}
+.tab_content_table table tr th,td{
+    border: 1px #C0C0C0 solid;
+    height: 28px;
+}
+.tab_title{
+    margin-bottom: 10px;
+    width: 19.5%;
+    text-align: right;
+    font-size: 13px;
+    overflow: hidden;
+    float: left;
+}
+
+.record_save{
+    text-align: right;
+}
+.invicont  li ,.companycont li{
+    display: block;
+}
+.comp{
+    display: inline-block;
+    padding: 1px 4px 1px 0px;
+}
+.closeshearch{
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+    cursor: pointer;
+    font-size: 13px;
+
+}
+.tran_content_note table thead{
+    background: #DADADA;
+}
+
+.inputshare{
+	margin:20px 0px;
+}
+.inputshare li{
+	margin-left:30%;
+	font-size:13px;
+	line-height:20px;
+}
+.btn-box{
+	text-align:center;
+}
+
+
+.trade_add_img {
+    position: absolute;
+    right: 0px;
+    top: 4px;
+}
+
+ul.inputlist{
+    display: table;
+}
+ul.inputlist li{
+    border: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.inputlist .lable,.inputlist .in{
+    display: table-cell;
+    padding-left: 10px;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 50px;
+}
+
+
+.inputdef {
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 3px;
+    height: 25px;
+    padding-left: 5px;
+}
+
+.inputlist li .inputdef {
+    height: 25px;
+    padding: 2px 4px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+.addfrom{
+    width: 400px;
+    margin: 10px auto;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 120px;
+    vertical-align:middle;
+}
+.addbuttonselect{
+	display:table-cell;
+	vertical-align:middle;
+	padding-left:10px;
+}
+.select2-container--open .select2-dropdown--below {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    z-index: 99999999;
+}
+.orremove{
+    color: #2091DF;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.dropdown-menu{
+z-index:100000000
+}
+.table-condensed tbody tr td{
+	border:none;
+}
+
+.txt_redord{
+    padding: 3px;
+    width: 86%;
+    min-height: 80px;
+    color: #504F4F;
+    resize: none;
+    border-radius: 4px;
+    height: 140px;
+}
+.txt_redord {
+    padding: 3px;
+    width: 100%;
+    min-height: 80px;
+    color: #504F4F;
+    resize: none;
+    border-radius: 4px;
+    height: 140px;
+}
+.saveMeetCont{
+	margin-top:-20px;
+}
+
+.meetingfile{
+	margin:0px 0px 0px 20%;
+	padding-left:10px;
+}
+.meetingfile ul li{
+	margin:3px 0px;
+	list-style: initial;
+    height: 20px;
+    line-height: 20px;
+}
+
+
+.submitMeeting{
+	width:50px;
+	position:absolute;
+	right:0px;
+	line-height:20px;
+}
+
+.downloadMeeting{
+	font-size:13px;
+	color:blue;
+}
+
+.filename{
+	position:relative;
+	height:28px;
+	line-height:28px;
+	font-size:14px;
+	padding-left:2px;
+}
+
+.choicefile{
+	position: relative;
+/*    display: inline-block;*/
+    background: #f60;
+    border: 1px solid #f60;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    height:28px;
+    line-height:28px;
+    font-size:14px;
+}
+
+.choicefile input{
+	position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.delClick{
+	color:#f60;
+	margin-left:10px;
+	cursor:pointer;
+	font-size:13px;
+}
+.goback {
+    display: none; 
+    position: absolute;
+    top: 0;
+    right: 20px;
+}

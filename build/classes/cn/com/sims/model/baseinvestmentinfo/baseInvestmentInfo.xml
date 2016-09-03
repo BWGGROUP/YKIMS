@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="baseInvestmentInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="baseInvestmentInfo" type="cn.com.sims.model.baseinvestmentinfo.baseInvestmentInfo"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+  <!-- 操作数据库的业务逻辑语句指的是SQL最终反射出一个对象的ID标识指的是实体类地址 -->
+  <select id="search" parameterClass="String" resultClass="java.util.HashMap">
+		SELECT base_investment_code code,base_investment_name name 
+		FROM base_investment_info b WHERE deleteflag='0' 
+		and (Lower(b.base_investment_name) like Lower(concat('%', #name#, '%'))
+			  OR Lower(b.base_investment_ename) like Lower(concat('%', #name#, '%'))
+			  OR Lower(b.base_investment_fullname)  like Lower(concat('%', #name#, '%')) 
+			  OR Lower(b.base_investment_namep) like Lower(concat('%', #name#, '%'))
+			  OR Lower(b.base_investment_namepf)  like Lower(concat('%', #name#, '%')) )
+		 order by updtime desc limit 0,6
+  </select>
+ 
+ <insert id="insertBaseInvestmentInfo" parameterClass="baseInvestmentInfo">
+ 	INSERT IGNORE INTO base_investment_info(
+ 		base_investment_code,
+		base_investment_name,
+		base_investment_ename,
+		base_investment_fullname,
+		base_investment_img,
+		base_investment_stem,
+		base_investment_estate,
+		base_investment_namep,
+		base_investment_namepf,
+		Tmp_Investment_Code,
+		deleteflag,
+		createid,
+		createtime,
+		updid,
+		updtime,
+		base_datalock_viewtype,
+		base_datalock_pltype
+ 	) VALUES(
+ 		#base_investment_code#,
+		#base_investment_name#,
+		#base_investment_ename#,
+		#base_investment_fullname#,
+		#base_investment_img#,
+		#base_investment_stem#,
+		#base_investment_estate#,
+		#base_investment_namep#,
+		#base_investment_namepf#,
+		#Tmp_Investment_Code#,
+		#deleteflag#,
+		#createid#,
+		#createtime#,
+		#updid#,
+		#updtime#,
+		#base_datalock_viewtype#,
+		#base_datalock_pltype#
+ 	)
+ 
+ </insert>
+ 
+<!-- 更新投资机构信息(基础)-->
+ <update id="tranModifyBaseInvestment" parameterClass="baseInvestmentInfo">
+		UPDATE base_investment_info SET
+		<isNotEmpty property="base_investment_name">
+		base_investment_name=#base_investment_name#,
+		</isNotEmpty>
+		<isNotNull property="base_investment_ename">
+		base_investment_ename=#base_investment_ename#,
+		</isNotNull>
+		<isNotNull property="base_investment_fullname">
+		base_investment_fullname=#base_investment_fullname#,
+		</isNotNull>
+		<isNotEmpty property="base_investment_img">
+		base_investment_img=#base_investment_img#,
+		</isNotEmpty>
+		<isNotEmpty property="base_investment_stem">
+		base_investment_stem=#base_investment_stem#,
+		</isNotEmpty>
+		<isNotEmpty property="base_investment_estate">
+		base_investment_estate=#base_investment_estate#,
+		</isNotEmpty>
+		<isNotEmpty property="base_investment_namep">
+		base_investment_namep=#base_investment_namep#,
+		</isNotEmpty>
+		<isNotEmpty property="base_investment_namepf">
+		base_investment_namepf=#base_investment_namepf#,
+		</isNotEmpty>
+		<isNotEmpty property="deleteflag">
+		deleteflag=#deleteflag#,
+		</isNotEmpty>
+		<isNotEmpty property="base_datalock_viewtype">
+		base_datalock_viewtype=#base_datalock_viewtype#,
+		</isNotEmpty>
+		<isNotEmpty property="base_datalock_pltype">
+		base_datalock_pltype=#base_datalock_pltype#,
+		</isNotEmpty>
+		<isNotEmpty property="sys_user_code">
+		sys_user_code=#sys_user_code#,
+		</isNotEmpty>
+		<isNotEmpty property="base_datalock_sessionid">
+		base_datalock_sessionid=#base_datalock_sessionid#,
+		</isNotEmpty>
+		<isNotEmpty property="base_datalock_viewtime">
+		base_datalock_viewtime=#base_datalock_viewtime#,
+		</isNotEmpty>
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE base_investment_code=#base_investment_code#
+		AND base_datalock_viewtype &lt; #base_datalock_viewtype#
+	
+	</update>
+	
+<!--	查询所有投资机构信息,下拉选框使用-->
+	<select id="findAllBaseInvestment" resultClass="java.util.HashMap">
+		SELECT base_investment_code as id,base_investment_name as text 
+		FROM base_investment_info WHERE deleteflag='0' 
+		order by updtime desc
+	</select>
+	
+	
+<!--	根据投资机构code查询-->
+	<select id="findBaseInvestmentByCode" parameterClass="String" resultClass="baseInvestmentInfo">
+		SELECT * FROM base_investment_info 
+		WHERE base_investment_code=#orgCode#
+	</select>
+	
+	<!--	判断投资机构简称是否唯一 -->
+	<select id="findInvestmentOnlyName" parameterClass="baseInvestmentInfo" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_investment_info 
+		WHERE deleteflag='0' 
+		AND UPPER(base_investment_name)=UPPER(#base_investment_name#)
+		<isNotEmpty property="base_investment_code">
+			AND base_investment_code!=#base_investment_code#
+		</isNotEmpty>
+	</select>
+	<!--	判断投资机构全称是否唯一 -->
+	<select id="findInvestmentOnlyFullName" parameterClass="baseInvestmentInfo" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_investment_info 
+		WHERE deleteflag='0' 
+		AND UPPER(base_investment_fullname)=UPPER(#base_investment_fullname#)
+		<isNotEmpty property="base_investment_code">
+			AND base_investment_code!=#base_investment_code#
+		</isNotEmpty>
+		
+	</select>
+	<!--	判断投资机构英文称是否唯一 -->
+	<select id="findInvestmentOnlyEName" parameterClass="baseInvestmentInfo" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_investment_info 
+		WHERE deleteflag='0' 
+		AND UPPER(base_investment_ename)=UPPER(#base_investment_ename#)
+		<isNotEmpty property="base_investment_code">
+			AND base_investment_code!=#base_investment_code#
+		</isNotEmpty>
+	</select>
+	<!-- 根据名字查询数据库中是否存在易凯创建或修改的机构 -->
+	<select id="findBaseInvestmentBynameForIT" parameterClass="String" resultClass="baseInvestmentInfo">
+		SELECT * FROM base_investment_info 
+		WHERE deleteflag='0' AND  base_investment_estate!='1' 
+		AND base_investment_estate!='4' and UPPER(base_investment_name)=UPPER(#baseinvestmentname#) limit 1
+	</select>
+	
+	<!-- 根据it桔子code查询数据库中是否存在机构数据 -->
+	<select id="findBaseInvestmentBytmpcodeForIT" parameterClass="String" resultClass="baseInvestmentInfo">
+		SELECT * FROM base_investment_info 
+		WHERE Tmp_Investment_Code=#tmpinvestmentcode# limit 1
+	</select>
+	
+	<!-- IT桔子导入更新投资机构信息(基础)-->
+ <update id="updateBaseInvestmentforIT" parameterClass="baseInvestmentInfo">
+		UPDATE base_investment_info SET
+		base_investment_name=#base_investment_name#,
+		base_investment_estate=#base_investment_estate#,
+		base_investment_namep=#base_investment_namep#,
+		base_investment_namepf=#base_investment_namepf#,
+		base_datalock_pltype=#base_datalock_pltype#,
+		updid=#updid#,
+		updtime=#updtime#
+		WHERE base_investment_code=#base_investment_code#
+	
+	</update>
+	
+	<!-- 插入机构信息 ，it桔子-->
+	<insert id="insertBaseInvestmentforIT" parameterClass="baseInvestmentInfo">
+		INSERT INTO base_investment_info (base_investment_code,base_investment_name,
+		base_investment_ename,base_investment_fullname,base_investment_img,
+		base_investment_stem,base_investment_estate,base_investment_namep,base_investment_namepf,
+		Tmp_Investment_Code,deleteflag,createid,createtime,updid,updtime,
+		base_datalock_viewtype,base_datalock_pltype)
+		values(#base_investment_code#,#base_investment_name#,
+		#base_investment_ename#,#base_investment_fullname#,#base_investment_img#,
+		#base_investment_stem#,#base_investment_estate#,#base_investment_namep#,#base_investment_namepf#,
+		#Tmp_Investment_Code#,#deleteflag#,#createid#,#createtime#,#updid#,#updtime#,
+		#base_datalock_viewtype#,#base_datalock_pltype#)
+	</insert>
+	<!-- 根据投资机构ｃｏｄｅ查询投资机构名称 -->
+	<select id="findInvestment" parameterClass="String" resultClass="String">
+	 SELECT base_investment_name FROM base_investment_info 
+		WHERE deleteflag='0'  and base_investment_code=#code#
+	</select>
+		
+		<!--	添加交易判断投资机构简称是否唯一 -->
+	<select id="queryInvestmentOnlyNamefottrade" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_investment_info 
+		WHERE deleteflag='0' 
+		AND upper(base_investment_name)=upper(#name#)
+	</select>
+	<!-- 2015-11-30 TASK071 yl add start -->
+	<!-- 公司交易查询投资机构名称 -->
+	<select id="findInvestNameByTrad" parameterClass="String" resultClass="String">
+		SELECT GROUP_CONCAT(DISTINCT a2.base_investment_name) view_investment_name
+		FROM	base_trade_inves a1
+		INNER JOIN base_investment_info a2 
+		ON a2.base_investment_code = a1.base_investment_code
+		WHERE 	a1.base_trade_code = #code#
+		AND a1.deleteflag = '0';
+	</select>
+	<!-- 2015-11-30 TASK071 yl add end -->
+	
+	<!-- 2016-4-20 duwenjie 修改投资机构删除标识 -->
+	<update id="updateBaseOrgDelete" parameterClass="java.util.HashMap">
+		UPDATE base_investment_info 
+		SET deleteFlag = #del#,
+		base_datalock_viewtype=(base_datalock_viewtype+1),
+		updid = #updid#,
+		updtime = #updtime#
+		WHERE base_investment_code=#orgcode#
+		AND base_datalock_viewtype=#lock#
+	</update>
+</sqlMap>

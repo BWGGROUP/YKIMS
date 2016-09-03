@@ -1,0 +1,74 @@
+.display-table{
+    width: auto!important;
+    margin: 0 auto;
+}
+.shgroup .title,.shgroup .tiplist{
+    padding-top:2px;
+    padding-bottom: 2px;
+    display: inline-block;
+}
+.shgroup .title{
+    width: 76px;
+}
+select{
+    background: #fff;
+    border: 1px solid #f60;
+    color: #f60;
+    padding: 1px 5px;
+}
+.searchbtn{
+    width: 70%;
+    margin: 10PX auto;
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+table{
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+table>thead{
+    background: #EEE;
+}
+table>thead>tr{
+    height: 33px;
+}
+table>thead>tr>th{
+    vertical-align: middle;
+    padding: 4px ;
+    border: 1px solid #C0C0C0;
+}
+table>tbody>tr>td{
+    border:1px solid #C0C0C0;
+    padding: 10px 5px;
+}
+table>tbody>tr:nth-child(2n){
+    background: #fbfbfb;
+}
+table>tbody>tr>td>a{
+    text-decoration: none;
+    color: #2091DF;
+    padding: 5px;
+    height: 20px;
+    line-height: 20px;
+}
+.pageaction{
+    text-align: right;
+    padding-right: 15px;
+}
+.inputdef{
+    width: 200px;
+    margin-left: 10px;
+}

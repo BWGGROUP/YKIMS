@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysWadInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="SysWadInfo" type="cn.com.sims.model.syswadinfo.SysWadInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+
+ <select id="wadbyname_num" parameterClass="java.util.HashMap" resultClass="int">
+SELECT COUNT(*) FROM sys_wad_info WHERE deleteflag='0' AND sys_wad_name LIKE concat('%', #name#, '%')
+  </select> 
+ <select id="wadbyname" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+ 
+ (select
+a1.sys_wad_code,
+a1.sys_wad_name
+,sys_juri_name  
+,sys_user_name   sys_user_name
+,a1.sys_wad_type
+,a1.updtime
+from sys_wad_info a1
+inner join (select GROUP_CONCAT(a3.sys_juri_name)  sys_juri_name
+,a1.sys_wad_code
+from 
+sys_wad_info a1
+inner join sys_wad_juri a2
+on a1.sys_wad_code=a2.sys_wad_code
+INNER JOIN sys_juri_info a3
+on a3.sys_juri_code=a2.sys_juri_code
+where a1.sys_wad_type='1' and  a1.sys_wad_name LIKE concat('%', #name#, '%') AND a1.deleteflag='0'
+group by a1.sys_wad_code
+)s
+on a1.sys_wad_code=s.sys_wad_code
+lEFT join (
+select GROUP_CONCAT(a5.sys_user_name)  sys_user_name
+,a1.sys_wad_code
+from 
+sys_wad_info a1
+inner join sys_user_wad a4
+on a4.sys_wad_code=a1.sys_wad_code
+INNER JOIN sys_user_info a5
+on a5.sys_user_code=a4.sys_user_code and a5.deleteflag='0'
+where a1.sys_wad_type='1' and  a1.sys_wad_name LIKE concat('%', #name#, '%') AND a1.deleteflag='0'
+group by a1.sys_wad_code
+)m
+on a1.sys_wad_code=m.sys_wad_code)
+UNION all(
+select 
+a1.sys_wad_code,
+a1.sys_wad_name
+,'超级权限'  sys_juri_name
+,GROUP_CONCAT(a5.sys_user_name)   sys_user_name
+,a1.sys_wad_type
+,a1.updtime
+from sys_wad_info a1
+inner join sys_user_wad a4
+on a4.sys_wad_code=a1.sys_wad_code
+INNER JOIN sys_user_info a5
+on a5.sys_user_code=a4.sys_user_code
+where   a1.sys_wad_type='0' and  a1.sys_wad_name LIKE concat('%', #name#, '%') AND a1.deleteflag='0'
+group by a1.sys_wad_code,a1.sys_wad_name,a1.sys_wad_type
+)
+order by updtime DESC
+LIMIT #start#,#size# 
+ 
+  </select> 
+  <delete id="deletwad" parameterClass="String">
+		DELETE  FROM sys_wad_info  WHERE deleteflag='0' 
+AND sys_wad_code=#code#
+	</delete>
+	 <select id="wadinfobycode" parameterClass="String" resultClass="java.util.HashMap">
+SELECT * FROM sys_wad_info WHERE deleteflag='0' AND sys_wad_code=#code#
+  </select>
+	<select id="juList" parameterClass="String" resultClass="java.util.HashMap">
+SELECT * FROM sys_juri_info WHERE deleteflag='0'
+  </select> 
+  <update id="updatawadinfo" parameterClass="java.util.HashMap">
+  UPDATE sys_wad_info SET sys_wad_name=#name# ,updid=#updid# ,updtime=#updtime# WHERE deleteflag='0' 
+AND sys_wad_code=#code# 
+  </update>
+  <insert id="addwadinfo" parameterClass="SysWadInfo">
+  INSERT INTO sys_wad_info (sys_wad_code,sys_wad_name,sys_wad_type,deleteflag,createid,createtime)
+VALUES(#sys_wad_code#,#sys_wad_name#,#sys_wad_type#,#deleteflag#,#createid#,#createtime#)
+  </insert>
+  <select id="wadlistbyname" parameterClass="String" resultClass="SysWadInfo">
+SELECT * FROM sys_wad_info WHERE deleteflag='0' AND sys_wad_name=#name#
+  </select>
+  
+ <select id="querysyswadinfo" parameterClass="String" resultClass="java.util.HashMap">
+		SELECT sys_wad_code as code,
+		sys_wad_name as name
+		FROM sys_wad_info WHERE deleteflag='0' and sys_wad_type='1'
+ 		order by updtime desc;
+ </select> 
+  <select id="querysupersyswadinfo" parameterClass="String" resultClass="java.util.HashMap">
+		SELECT sys_wad_code as code
+		FROM sys_wad_info WHERE deleteflag='0' and sys_wad_type='0'
+		 	order by updtime desc;
+ </select> 
+</sqlMap>

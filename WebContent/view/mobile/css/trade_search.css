@@ -1,0 +1,72 @@
+.shgroup .title{
+    width: 70px;
+
+}
+.shgroup .tiplist{
+
+}
+.border-bottom{
+    margin-top: 0;
+}
+.tiplist li.active{
+    border-radius: 3px;
+    background: #f60;
+    color: #fff;
+    transition: all .2s !important;
+}
+table{
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: center;
+}
+table>thead{
+    background: #EEE;
+}
+table>thead>tr{
+    height: 33px;
+}
+table>thead>tr>th{
+    vertical-align: middle;
+    padding: 4px ;
+    border: 1px solid #C0C0C0;
+}
+table>tbody>tr>td{
+    border:1px solid #C0C0C0;
+    padding: 10px 5px;
+    word-break:break-all;
+}
+table>tbody>tr:nth-child(2n){
+    background: #fbfbfb;
+}
+table>tbody>tr>td>a{
+    text-decoration: none;
+    color: #2091DF;
+    padding: 5px;
+    height: 20px;
+    line-height: 20px;
+}
+table>tbody>tr>td>a:visited{
+    color: #2091DF;
+}
+table span{
+    display: inline-block;
+}
+.company.hover{
+    border-radius: 3px;
+    background: #f60;
+    color: #fff;
+    transition: all .2s !important;
+}
+.pageaction{
+    text-align: right;
+    padding-right: 15px;
+}
+.inputdef{
+    margin-left: 10px;
+}
+.comp {
+    display: inline-block;
+    padding: 1px 4px;
+}

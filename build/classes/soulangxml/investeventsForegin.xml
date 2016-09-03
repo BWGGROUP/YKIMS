@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docs>
+	<!--SoupLang是WebCollector 2.x中的一种爬虫脚本，以Jsoup内置的CSS SELECTOR为基础 程序会将SoupLang的脚本(xml)转换成语义树，所以不用担心配置文件会影响网页抽取的速度。 
+		SoupLang除了有Jsoup选择元素、元素属性的功能外，还可以做正则匹配、写数据库等操作 -->
+
+	<!--一个doc对应一个网页,url表示网页的正则。 如果有多个doc的url，和网页的url匹配，程序会执行多次(所有对应的doc)。 所以尽量保证一个网页之能匹配到一个doc。 
+		多个doc的设计，是为了爬虫统一管理配置设定的。很多爬虫要多多种不同类型的页面做抽取，抽取 的代码很难统一管理。利用SoupLang这种脚本，可以将所有的抽取业务写道一个 -->
+	<doc url="http://itjuzi.com/investevents/[0-9]{1,8}">
+
+		<element selector="table>tbody>tr:nth-child(2)">
+			<element selector="td:nth-child(2)>a">
+				<attr attr="abs:href" name="Tmp_Company_Code" />
+			</element>
+		</element>
+		<element selector="table>tbody>tr:nth-child(1)">
+			<element selector="td:nth-child(2)">
+				<text name="Tmp_Inves_Record_Time" />
+			</element>
+		</element>
+
+		<element selector="table>tbody>tr:nth-child(5)">
+			<element selector="td:nth-child(2)>a">
+				<text name="Tmp_Inves_Record_Round" />
+			</element>
+		</element>
+
+		<element selector="table>tbody>tr:nth-child(4)">
+			<element selector="td:nth-child(2)">
+				<text name="Tmp_Inves_Record_Money" />
+			</element>
+		</element>
+
+		<element selector="table>tbody>tr:nth-child(3)">
+			<element selector="td:nth-child(2)>a">
+				<text name="Tmp_Inment_Istor_Industry" />
+			</element>
+		</element>
+
+		<!-- <element selector="table>tbody>tr:nth-child(6)">
+			<element selector="td:nth-child(2)>a">
+				<text name="Tmp_Investment_Code" />
+			</element>
+		</element> -->
+<list selector="tr:nth-child(6)>td:nth-child(2)>a" name="results">
+			   <attr attr="abs:href" name="Tmp_Investment_Code" />
+		</list>
+
+		<!--插入数据库,temp1是程序中，用JDBCHelper.createMysqlTemplate创建template时指定的名称 -->
+		<sql
+			sql="REPLACE INTO Tmp_Investment_Record (Tmp_Inves_Record_ID,Tmp_Company_Code,Tmp_Inves_Record_Time,Tmp_Inves_Record_Round,Tmp_Inves_Record_Money,Tmp_Inment_Istor_Industry,Tmp_Inment_Istor_di,deleteFlag,Tmp_Inment_Istor_Note,createtime,updtime) VALUES (?,?,?,?,?,?,'0','0',null,now(),date_add(utc_timestamp(), interval 8 hour) )"
+			params="url,Tmp_Company_Code,Tmp_Inves_Record_Time,Tmp_Inves_Record_Round,Tmp_Inves_Record_Money,Tmp_Inment_Istor_Industry"
+			template="temp2" />
+		<sql
+			sql="update Tmp_Investment_Recordrela set deleteFlag='1' where Tmp_Inves_Record_ID=?"
+			params="url"
+			template="temp2" />
+		<!-- <sql
+			sql="REPLACE INTO Tmp_Investment_Recordrela (Tmp_Investment_Code,Tmp_Inves_Record_ID,Tmp_Investment_Recordrela_Money,Tmp_Company_Code,deleteFlag,Tmp_Inment_Istor_Note,createtime,updtime)
+ VALUES (?,?,?,?,'0',null,now(),date_add(utc_timestamp(), interval 8 hour) )"
+			params="Tmp_Investment_Code,url,Tmp_Inves_Record_Money,Tmp_Company_Code"
+			template="temp2" /> -->
+	</doc>
+
+</docs>

@@ -1,0 +1,307 @@
+.shgroup{
+    margin-top: -3px;
+    margin-bottom: 4px;
+    width: 100%;
+    letter-spacing: 1px;
+
+}
+
+.shgroup .title{
+    width: 120px;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+    height: 27px;
+    line-height: 27px;
+}
+.shgroup .tiplist{
+    width: 82%;
+    line-height: 26px;
+    margin-left: 120px;
+    position: relative;
+}
+.tiplist {
+    color: #2091DF;
+}
+.shgroup .tiplist li>span.canEdit:hover{
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+    cursor:pointer;
+}
+.tiplist li{
+    display: inline-block;
+    width: auto;
+    padding: 2px 5px;
+    margin-left: 5px;
+    font-size: 13px;
+    border-radius: 4px;
+}
+
+.tran_content table>tbody>tr:hover{
+    background-color: #E9E9E9;
+    cursor: pointer;
+}
+.tran_content table thead{
+    background: #DADADA;
+}
+.tran_content table>tbody>tr.nohover:hover{
+    background-color: #fff;
+    cursor: default;
+}
+.tran_content_note table thead{
+    background: #DADADA;
+}
+.tran_content_table{
+    margin: 0 0 45px 3px;
+    width: 80%;
+    position: relative;
+    margin-left: 20%;
+    padding-bottom: 1px;
+}
+
+.tran_content_table table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.tran_content_table table tr th,td{
+    border: 1px #C0C0C0 solid;
+    font-size: 13px;
+    padding: 6px;
+    word-break: break-all;
+}
+
+.tran_body{
+    padding: 20px 10px;
+    border-top: 1px #C0C0C0 solid ;
+}
+
+.tab_title{
+    margin-right: 5px;
+    width: 120px;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+}
+
+.td_colsone{
+    width: 20%;
+}
+.td_colstwo{
+    width: 20%;
+}
+.td_colsthree{
+    width: 50%;
+}
+.td_colsfour{
+    width: 10%;
+}
+.detail_record{
+    text-align: center;
+}
+
+.btn_record{
+    margin: 10px 50px;
+    height: 34px;
+    line-height: 35px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 120px;
+    border-radius: 5px;
+}
+.tran_textarea{
+    border: 1px #C0C0C0 solid;
+    width: 80.5%;
+    min-height: 80px;
+    border-radius: 4px;
+    padding: 5px;
+    resize: none;
+    color: #504F4F;
+}
+.onjob{
+    color: #D5D5D5;
+}
+
+/**
+    标签编辑
+
+.canEdit{
+    padding: 5px 10px;
+    margin: -5px -10px;
+    border-radius: 4px;
+}
+
+.txtEdit{
+    border: 1px #C0C0C0 solid;
+    height: 22px;
+    background-color: #f60;
+    border-radius: 4px;
+}
+.txtInfo{
+    font-size: 12px;
+    border: none;
+    width:85px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0px 0px 0px 3px;
+    border-radius: 2px;
+}
+.txtSave{
+    padding: 0px;
+    width: 32px;
+    margin-left.jsp: -3px;
+    margin-bottom: 1px;
+    border: none;
+    background-color: #f60;
+    color: #FFFFFF;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 5px;
+}
+**/
+.fontColorBlack{
+    color: #504F4F;
+}
+
+.textarea_detial{
+    margin-top: 10px;
+    text-align: right;
+}
+.record_save{
+    text-align: right;
+}
+.viroul li{
+    display: block;
+    padding: 0px 3px;
+}
+.viroul li ul li{
+    display: inline-block!important;
+    margin-left: 0;
+}
+.select{
+    background: #fff;
+    width: 84px;
+    height: 20px;
+}
+.patty,.induc{
+    min-height: 30px;
+}
+.color-def{
+    color: #504F4F;
+}
+.closeshearch {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+.trade_add_img{
+    position: absolute;
+    right: 0px;
+    top: 4px;
+}
+ ul.inputlist{
+    display: table;
+}
+ ul.inputlist li{
+    border: none;
+    display: block;
+    width: 100%;
+margin-bottom: 10px;
+}
+.inputlist .lable,.inputlist .in{
+    display: table-cell;
+padding-left: 10px;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 50px;
+}
+.tiplist .list li{
+    display: block;
+}
+.inputdef {
+    border: 1px solid #aaa;
+    outline: none;
+    border-radius: 3px;
+    height: 25px;
+    padding-left: 5px;
+}
+.inputlist li .inputdef {
+    height: 25px;
+    padding: 2px 4px;
+}
+.inputlist li .inputdef {
+    width: 210px;
+    background: #fff;
+}
+.addfrom{
+    width: 300px;
+    margin: 10px auto;
+}
+.inputlist .lable{
+    text-align: right;
+    min-width: 83px;
+}
+.tiplist .list li{
+    display: block;
+}
+.select2-container{
+    z-index: 999999999;
+}
+.btn-box{
+    margin-top: 20px;
+    text-align: center;
+}
+.lockmore{
+    text-align: right;
+    color: #2091DF;
+    text-decoration: underline;
+    font-size: 14px;
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+    margin-top: -6px;
+}
+.tradebox{
+    margin: 10px auto;
+}
+.txtEdit{
+    height: auto;
+}
+#btn_trade_add{
+    position: absolute;
+    right: 16px;
+    margin-top: -34px;
+}
+.smart-btn{
+    width: 68px;
+    height: 25px;
+    line-height: 25px;
+}
+.goback{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+.selscttrade_org{
+    width: 200px;
+    height: 30px;
+    background: #fff;
+    margin-left: 10px;
+}

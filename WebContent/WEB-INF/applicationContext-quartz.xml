@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- 
+        表达式 意义 
+        "0 0 12 * * ?" 每天中午12点触发 
+        "0 15 10 ? * *" 每天上午10:15触发 
+        "0 15 10 * * ?" 每天上午10:15触发 
+        "0 15 10 * * ? *" 每天上午10:15触发 
+        "0 15 10 * * ? 2005" 2005年的每天上午10:15触发 
+        "0 * 14 * * ?" 在每天下午2点到下午2:59期间的每1分钟触发 
+        "0 0/5 14 * * ?" 在每天下午2点到下午2:55期间的每5分钟触发 
+        "0 0/5 14,18 * * ?" 在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 
+        "0 0-5 14 * * ?" 在每天下午2点到下午2:05期间的每1分钟触发 
+        "0 10,44 14 ? 3 WED" 每年三月的星期三的下午2:10和2:44触发 
+        "0 15 10 ? * MON-FRI" 周一至周五的上午10:15触发 
+        "0 15 10 15 * ?" 每月15日上午10:15触发 
+        "0 15 10 L * ?" 每月最后一日的上午10:15触发 
+        "0 15 10 ? * 6L" 每月的最后一个星期五上午10:15触发 
+        "0 15 10 ? * 6L 2002-2005" 2002年至2005年的每月的最后一个星期五上午10:15触发 
+        "0 15 10 ? * 6#3" 每月的第三个星期五上午10:15触发 
+      -->
+      <!-- 要调用的工作类 -->
+        <bean id="quartzJob" class="cn.com.sims.util.task.TimingUdateData"></bean>
+     <!-- 定时抓取it桔子数据 -->      
+<!-- 定义调用对象和调用对象的方法 -->
+        <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="quartzJob"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>work</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="jobtask"/>
+            </property>
+            <!-- cron表达式 -->
+            <property name="cronExpression">
+            <!-- 每个星期一 20点40分 -->
+<!--                <value>0 50 21 ? * MON</value>-->
+                 <value>0 00 18 ? * 6</value><!-- 每周五18:00 --> 
+<!--              <value>0 05 15 ? * 4</value>-->
+            </property>
+        </bean>
+        
+        
+        <!-- 定义调用对象和调用对象的方法 -->
+        <bean id="jobtaskAll" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="quartzJob"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>workAll</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="doAllTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="jobtaskAll"/>
+            </property>
+            <!-- cron表达式 -->
+            <property name="cronExpression">
+            	<!-- 每三个月 ０0点０0分 -->
+            	<value>0 0 0 1 1/3 ? *</value>
+<!--                <value>0 05 11 ? * 6</value>-->
+            </property>
+        </bean>
+        
+        
+           <!-- 定时读取it桔子导入数据 --> 
+           <!-- 要调用的工作类 -->
+    <bean id="TimingImportITData" class="cn.com.sims.util.task.TimingImportITData"></bean>
+        <!-- 定义调用对象和调用对象的方法 -->
+        <bean id="importdatafortmpdb" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="TimingImportITData"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>importdata</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="importITdataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="importdatafortmpdb"/>
+            </property>
+            <!-- cron表达式,凌晨02:00 -->
+            <property name="cronExpression">
+<!--                 <value>0 13 11 ? * *</value>每个星期日 0点十分 -->
+             <value>0 0 22 ? * SUN</value>  <!--  每周日晚十点 -->
+<!--              <value>0 42 14 * * ?</value>-->
+            </property>
+        </bean>
+        
+        
+           <!-- 定时轮寻数据 --> 
+           <!-- 要调用的工作类 -->
+    <bean id="TaskService" class="cn.com.sims.util.task.TaskService"></bean>
+        <!-- 定义调用对象和调用对象的方法 -->
+        <bean id="taskServiceBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="TaskService"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>sendEmail</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="taskServiceTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="taskServiceBean"/>
+            </property>
+            <!-- cron表达式,每五分钟 -->
+            <property name="cronExpression">
+<!--                 <value>0 0/1 * ? * *</value> -->
+                <value>0 0/5 * ? * *</value>
+            </property>
+        </bean>
+        
+        <!-- 定义调用对象和调用对象的方法 定时删除导出文件 -->
+        <bean id="deleteServiceBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="TaskService"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>deleteExportFile</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="deleteServiceTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="deleteServiceBean"/>
+            </property>
+            <!-- cron表达式,凌晨00:10 -->
+            <property name="cronExpression">
+<!--                 <value>0 10 0 ? * *</value> -->
+                <value>0 0 1 ? * *</value>
+            </property>
+        </bean>
+        
+         <!-- 定时计算用户操作次数 --> 
+           <!-- 要调用的工作类 -->
+    <bean id="TimingUpdateUserOperaData" class="cn.com.sims.util.task.TimingUpdateUserOperaData"></bean>
+        <!-- 定义调用对象和调用对象的方法 -->
+        <bean id="updateuseroperadata" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="TimingUpdateUserOperaData"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>updateuseroperadata</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="updateuseroperadataTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="updateuseroperadata"/>
+            </property>
+            <!-- cron表达式,凌晨06:00 -->
+            <property name="cronExpression">
+<!--                 <value>0 0/1 * ? * *</value> -->
+                <value>0 0 6 ? * *</value>
+            </property>
+        </bean>
+        
+          <!-- 定时更新投资机构投资特征 --> 
+  
+        <!-- 定义调用对象和调用对象的方法 -->
+        <bean id="updateinvestfeature" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+            <!-- 调用的类 -->
+            <property name="targetObject">
+                <ref bean="TimingUpdateUserOperaData"/>
+            </property>
+            <!-- 调用类中的方法 -->
+            <property name="targetMethod">
+                <value>updateinvestfeature</value>
+            </property>
+        </bean>
+        <!-- 定义触发时间 -->
+        <bean id="updateinvestfeatureTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+            <property name="jobDetail">
+                <ref bean="updateinvestfeature"/>
+            </property>
+            <!-- cron表达式,凌晨06:00 -->
+            <property name="cronExpression">
+<!--                 <value>0 54 11 ? * *</value> -->
+                <value>0 10 6 ? * *</value>
+            </property>
+        </bean>
+        
+        <!-- 设置调度总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序   -->
+        <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+            <property name="triggers">
+                <list>
+<!--                	<ref bean="doTime"/> -->
+<!--                    <ref bean="doAllTime"/> -->
+                    <ref bean="importITdataTrigger"/>  
+					<ref bean="taskServiceTrigger"/>
+					<ref bean="deleteServiceTrigger"/>
+					<ref bean="updateuseroperadataTrigger"/>
+					<ref bean="updateinvestfeatureTrigger"/>
+                </list>
+            </property>
+        </bean>
+  <!-- quartz spring 定时器 end  -->
+</beans>			
+			

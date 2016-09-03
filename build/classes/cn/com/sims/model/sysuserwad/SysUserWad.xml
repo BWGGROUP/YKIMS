@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SysUserWad">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="SysUserWad" type="cn.com.sims.model.sysuserwad.SysUserWad"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+
+
+ <select id="userwadbyuserid" parameterClass="String" resultClass="SysUserWad">
+SELECT a.* , b.sys_wad_name FROM sys_user_wad a 
+LEFT JOIN sys_wad_info b ON a.sys_wad_code=b.sys_wad_code
+ WHERE a.deleteflag='0' AND a.sys_user_code=#id#
+ORDER BY a.updtime DESC
+  </select> 
+<delete id="deletuserWad" parameterClass="String">
+		DELETE  FROM sys_user_wad  WHERE deleteflag='0' 
+AND sys_wad_code=#code# 
+	</delete>
+		<insert id="setwad_user" parameterClass="java.util.ArrayList">
+		INSERT INTO sys_user_wad (sys_wad_code,sys_user_code,createid,createtime,deleteflag)
+		VALUES
+		<iterate   conjunction=','>
+					(#SysUserWad[].sys_wad_code#,	#SysUserWad[].sys_user_code#,	#SysUserWad[].createid#,#SysUserWad[].createtime#,'0')
+				</iterate>
+	</insert>
+	<delete id="deletuserWadbyusercode" parameterClass="String">
+		DELETE  FROM sys_user_wad  WHERE deleteflag='0' 
+AND sys_user_code=#code# 
+	</delete>
+</sqlMap>

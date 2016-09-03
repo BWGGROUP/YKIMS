@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docs>
+	<!--SoupLang是WebCollector 2.x中的一种爬虫脚本，以Jsoup内置的CSS SELECTOR为基础 程序会将SoupLang的脚本(xml)转换成语义树，所以不用担心配置文件会影响网页抽取的速度。 
+		SoupLang除了有Jsoup选择元素、元素属性的功能外，还可以做正则匹配、写数据库等操作 -->
+
+	<!--一个doc对应一个网页,url表示网页的正则。 如果有多个doc的url，和网页的url匹配，程序会执行多次(所有对应的doc)。 所以尽量保证一个网页之能匹配到一个doc。 
+		多个doc的设计，是为了爬虫统一管理配置设定的。很多爬虫要多多种不同类型的页面做抽取，抽取 的代码很难统一管理。利用SoupLang这种脚本，可以将所有的抽取业务写道一个 -->
+	<doc url="https://www.itjuzi.com/person/[0-9]{1,8}">
+	
+		<element selector="span[class=name marr10]">
+			<!--这里如果将name="content"放到element中，name的输出是一个jsoup的Element元素， 插入到数据库中时，会以Element元素源码的形式插入 -->
+			<text name="Tmp_Entrepreneur_Name" />
+		</element>
+
+		<!-- <element selector="div[class=media-body]>ui.detail-info>li:contains(职位:)"> 
+			<text name="Tmp_Investor_Position"/> </element> <element selector="div[class=media-body]>ui.detail-info>li:contains(微博:)"> 
+			<text name="Tmp_Investor_Recom"/> </element> <element selector="div[class=media-body]>ui.detail-info>li:contains(介绍:)"> 
+			<text name="Tmp_Investor_Blog"/> </element> -->
+			
+<!--		<element selector="li:contains(职位:)">-->
+		<element selector="p[class=titleset]>span">
+		  <text name="Tmp_Entrepreneur_Position" />
+		</element>
+
+		<element selector="li:contains(微博: )">
+		 <element selector="a">
+		    <text name="Tmp_Entrepreneur_Blog" />
+		 </element>
+		</element>
+		
+<!--   <element selector="li:contains(介绍:)">-->
+		<!-- em -->
+		 <element selector="div:contains(创业者简介) +div>div[class=block block-v]">
+		   <text name="Tmp_Entrepreneur_Recom" />
+		 </element>
+<!--		</element>-->
+
+<!--		<element selector="li:contains(地点:)">-->
+		<element selector="p[class=titleset] +p">
+			<text name="Tmp_Entrepreneur_Address" />
+		</element>
+		
+<!--		 li:contains(角色:)-->
+		<element selector="span[class=tag bg-blue]">
+		   <text name="Tmp_Entrepreneur_Role" />		 
+		</element>
+		<element selector="div[class=titlebar]:contains(教育经历) +div>ul[class=list-timeline-h]">
+		   <text name="Tmp_Entrepreneur_Education" />		 
+		</element>
+<!--		<element selector="li:contains(工作:)">-->
+		<element selector="div[class=titlebar]:contains(工作经历) +div[class=wp100 ofa hscroll]">
+		   <text name="Tmp_Entrepreneur_Work" />		 
+		</element>
+		
+<!--		<element selector="img[class=media-object]">-->
+		<element selector="span[class=usericon]>img">
+			<attr attr="abs:src" name="Tmp_Investor_imgsrc"/>
+		</element>
+		<!--插入数据库,temp1是程序中，用JDBCHelper.createMysqlTemplate创建template时指定的名称 -->
+		<sql
+			sql="REPLACE INTO Tmp_Entrepreneur_Info (Tmp_Entrepreneur_Code,Tmp_Entrepreneur_Name,Tmp_Entrepreneur_Position,Tmp_Entrepreneur_Blog,Tmp_Entrepreneur_Recom,Tmp_Entrepreneur_Address,Tmp_Entrepreneur_Role,
+Tmp_Entrepreneur_Work,Tmp_Entrepreneur_Education,Tmp_Investor_imgsrc,Tmp_Investor_Note,deleteFlag,createtime,updtime) VALUES (?,?,?,?,?,?,?,?,?,?,null,'0',now(),date_add(utc_timestamp(), interval 8 hour) )"
+			params="url,Tmp_Entrepreneur_Name,Tmp_Entrepreneur_Position,Tmp_Entrepreneur_Blog,Tmp_Entrepreneur_Recom,Tmp_Entrepreneur_Address,Tmp_Entrepreneur_Role,
+Tmp_Entrepreneur_Work,Tmp_Entrepreneur_Education,Tmp_Investor_imgsrc," template="temp2" /> 
+	</doc>
+
+</docs>

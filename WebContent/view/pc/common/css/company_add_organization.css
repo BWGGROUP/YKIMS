@@ -1,0 +1,235 @@
+table{
+	border-collapse: collapse;
+	width:99%;
+	margin-left:1%;
+}
+
+table tr td{
+	border:1px #C0C0C0 solid;
+}
+select{
+	background-color:#fff;
+}
+
+.tHead{
+	background-color: #DADADA;
+	border: 1px #C0C0C0 solid;
+    font-size: 13px;
+    line-height: 24px;
+}
+.tHead th{
+	border: 1px #C0C0C0 solid;
+}
+
+.company_info{
+    position: relative;
+}
+.info_content{
+    margin: 5px 0;
+    width: 100%;
+    position: relative;
+    font-size: 13px;
+    min-height: 40px;
+    text-align: center;
+}
+
+.info_content_title{
+    width: 12%;
+    position: relative;
+    float: left;
+    text-align: right;
+    margin:0 3px;
+}
+.info_content_txt{
+    width: 30%;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.info_content_table{
+    width: 70%;
+    text-align: center;
+    position: relative;
+    float: left;
+}
+
+.info_content_company{
+    position: relative;
+    overflow: hidden;
+    width: 85%;
+    text-align: left;
+    min-height:30px;
+}
+
+.add_redord{
+    position: relative;
+    overflow: hidden;
+    font-size: 13px;
+    min-height: 40px;
+    width: 103%;
+    margin-left: -10px;
+    padding: 30px 10px;
+    border-top: 1px #C0C0C0 dashed;
+}
+.txt_redord{
+    padding: 3px;
+    width: 69%;
+    height: 150px;
+    color: #504F4F;
+    resize: none;
+    margin-left:14%;
+    border-radius: 5px;
+}
+
+.body_div_btn{
+    width: 99.8%;
+    text-align: right;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.btn_detail_add{
+    font-size: 13px;
+    background-color: #f60;
+    color: #fff;
+    width: 45px;
+    height: 19px;
+    line-height: 19px;
+    border-radius: 5px;
+    margin: 3px;
+}
+
+.btn_choice{
+    width: 55px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px #f60 solid;
+    background-color: #ffffff;
+    color: #f60;
+    border-radius: 4px;
+}
+.btn_unchoice{
+    width: 55px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px #C0C0C0 solid;
+    background-color: #ffffff;
+    color: #504F4F;
+    border-radius: 4px;
+}
+.select_people{
+    width: 85%;
+}
+.select_tz{
+    width: 94%;
+}
+
+.txt_input{
+    border: 1px #C0C0C0 solid;
+    padding: 3px;
+    font-size: 13px;
+    min-height: 24px;
+    line-height: 24px;
+    border-radius: 4px;
+}
+
+.txtInfo{
+	width:70px	
+}
+.datepicker-days table tr td{
+	border:none;
+}
+.add_redord_btn{
+	text-align:center;
+}
+.btn-input{
+	width:98%;
+	border:1px #C0C0C0 solid;
+	border-radius:4px;
+	min-height:28px;
+	padding:0px 3px;
+	color:#504F4F;
+}
+.addfrom{
+	width:350px;
+	margin: auto;
+	padding-top:10px;
+	text-align:center;
+}
+
+.addfrom ul{
+	margin:auto;
+}
+
+ul.inputlist{
+	display: table;
+}
+
+ul.inputlist li {
+	border: none;
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+}
+.inputlist .lable {
+	text-align: right;
+	min-width: 80px;
+	margin-right:10px
+}
+.btn-box{
+	position:absolute;
+	bottom:10px;
+	left:35%;
+}
+.label{
+	text-align: right;
+	min-width: 80px;
+}
+
+.inputdef {
+	border: 1px solid #aaa;
+	width:210px;
+	outline: none;
+	border-radius: 3px;
+	height: 25px;
+	padding: 2px 4px;
+
+}
+.labelSpan{
+	display: inline-block;
+	line-height: 25px;
+	padding-right: 10px;
+	word-break: break-word;
+}
+.span_add{
+	height:28px;
+}
+
+.btn-default{
+	width:140px;
+}
+
+.trade_add_img{
+	position:absolute;
+	right: 10%;
+    top: 31px;
+}
+.select2-dropdown{
+	z-index:19891016000;
+}
+.ykLabel{
+	float: left;
+    margin:0 10px 5px 0;
+    border: 1px solid #C0C0C0;
+    padding: 0px 4px;
+    height: 25px;
+    
+}
+.ykDelClick{
+	color: #f60;
+	cursor: pointer;
+}
+.tip-edit{
+	padding:0px;
+}

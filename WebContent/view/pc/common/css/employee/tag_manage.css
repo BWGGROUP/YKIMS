@@ -1,0 +1,178 @@
+.select_kuang{
+    width: 200px;
+    margin: 0 auto;
+}
+.action{
+    text-align: right;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.listcontent{
+    width: 300px;
+    margin: 30px auto;
+    height: 450px;
+    border: 1px solid #c0c0c0;
+    border-radius: 6px;
+    position: relative;
+}
+.addbox{
+    border-top: 1px solid #c0c0c0;
+    height: 37px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: none;
+}
+.add_input{
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #c0c0c0;
+    height: 26px;
+    width: 207px;
+    margin-left: 18px;
+    padding: 0 9px;
+}
+.btn-add{
+    width: 50px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+}
+/*标签可编辑修改部分*/
+.tip-edit{
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 4px;
+}
+.tip-edit.active{
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+}
+.edit-tip-box1{
+padding-top: 10px;
+    max-height: 411px;
+    overflow: auto;
+
+}
+.edit-tip-box1  li{
+    padding: 4px 0 4px 10px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    height: 27px;
+    font-size: 13px;
+    position: relative;
+    border-bottom: 1px solid #F5F5F5;
+}
+.tipg{
+    position: relative;
+}
+.edit-tip-box1  li:hover{
+    background-color: #eee;
+}
+.edit-tip-box1.tipg{
+
+}
+.edit-tip-box1 .action{
+    position: absolute;
+    width: 31px;
+    right: 8px;
+    font-size: 12px;
+    top: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.hidden{
+    display: none;
+}
+.edit-tip-box1 .edit,.edit-tip-box1 .delete{
+    border-radius: 2px;
+    padding: 0 1px;
+    text-align: center;
+    display: none;
+}
+.edit-tip-box1 li:hover .edit,.edit-tip-box1  li:hover .delete{
+    display: inline-block;
+}
+.edit-tip-box1 .edit:hover,.edit-tip-box1 .delete:hover{
+    cursor: pointer;
+    background: #f60;
+    color: #fff;
+    transition: all .3s !important;
+
+}
+.tip-detail{
+    line-height: 18px;
+}
+.tip-detail .group-edit{
+
+    margin-top: -1px;
+}
+.fn-input{
+    padding: 2px 4px;
+    color: #555555;
+    border: 1px solid #C0C0C0;
+    margin: 0;
+    width: 84%;
+
+}
+.fn-input:focus{
+    border: 1px solid #f60;
+    transition: all .3s !important;
+}
+.btn-llt{
+    height: 21px;
+    width: 28px;
+    color: #fff;
+    background: #f60;
+    margin-left: -4px;
+}
+.creat-group-name{
+    padding: 4px;
+}
+.creat-group-name{
+    color: #0078B6;
+    width: 100%;
+    font-size: 13px;
+    padding-left: 10px;
+    height: 22px;
+    line-height: 16px;
+    cursor: pointer;
+}
+.creat-group-name:hover{
+    color: #fff;
+    background: #2489d7;
+    transition: all .3s !important;
+}
+.creat-group-action .fn-input{
+    height: 26px;
+    padding: 2px 4px;
+    width: 122px;
+}
+.bt-creat,.bt-close{
+    height: 26px;
+    line-height: 26px;
+    font-size: 12px;
+    width: 50px;
+}
+.bt-creat{
+    background: #f60;
+    color: #fff;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.bt-close{
+    background: #dedede;
+    color: #666;
+}
+.creat-group-action{
+    text-align: center;
+}
+.spanright{
+	float:right;
+	padding-right:6px;
+}
+.spanright:hover{
+	color:#f60;
+}

@@ -1,0 +1,27 @@
+<docs>
+    <!--SoupLang是WebCollector 2.x中的一种爬虫脚本，以Jsoup内置的CSS SELECTOR为基础
+        程序会将SoupLang的脚本(xml)转换成语义树，所以不用担心配置文件会影响网页抽取的速度。  
+        SoupLang除了有Jsoup选择元素、元素属性的功能外，还可以做正则匹配、写数据库等操作-->
+               
+    <!--一个doc对应一个网页,url表示网页的正则。
+        如果有多个doc的url，和网页的url匹配，程序会执行多次(所有对应的doc)。
+        所以尽量保证一个网页之能匹配到一个doc。
+        
+        多个doc的设计，是为了爬虫统一管理配置设定的。很多爬虫要多多种不同类型的页面做抽取，抽取
+        的代码很难统一管理。利用SoupLang这种脚本，可以将所有的抽取业务写道一个
+        
+    -->
+    <doc url="http://itjuzi.com/investor">
+        
+        
+        <!--抽取标题 这里抽取到的标题中有一些不需要的东西，可以利用正则过滤
+            group表示正则抽取中的group(group为0对应整个匹配字符串，然后依次
+            为各个括号中的内容，默认group="1"-->
+<!--         <list selector="li.page" name="result"> -->
+         <element selector="a[class=follow_link]">
+       		 <attr attr="abs:href" name="href"/>
+        </element>
+<!--         </list> -->
+    </doc>
+
+</docs>

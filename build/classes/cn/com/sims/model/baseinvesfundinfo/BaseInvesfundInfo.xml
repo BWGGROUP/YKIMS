@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseInvesfundInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseInvesfundInfo" type="cn.com.sims.model.baseinvesfundinfo.BaseInvesfundInfo"/>
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+ 
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+  <insert id="insertInvesfund" parameterClass="BaseInvesfundInfo">
+	  INSERT INTO base_invesfund_info(
+	  			base_invesfund_code,
+				base_investment_code,
+				base_invesfund_name,
+				base_invesfund_currency,
+				base_invesfund_currencyname,
+				base_invesfund_scalecode,
+				base_invesfund_scale,
+				base_investor_code,
+				base_investor_name,
+				base_invesfund_begintime,
+				base_invesfund_endtime,
+				createid,
+				createtime,
+				updid,
+				updtime,
+				base_invesfund_state
+  )
+  VALUES(
+  				#base_invesfund_code#,
+				#base_investment_code#,
+				#base_invesfund_name#,
+				#base_invesfund_currency#,
+				#base_invesfund_currencyname#,
+				#base_invesfund_scalecode#,
+				#base_invesfund_scale#,
+				#base_investor_code#,
+				#base_investor_name#,
+				#base_invesfund_begintime#,
+				#base_invesfund_endtime#,
+				#createid#,
+				#createtime#,
+				#updid#,
+				#updtime#,
+				#base_invesfund_state#
+  ) 
+  
+  </insert>
+<!--  根据基金code修改基金-->
+  <update id="updateInvesfundByCode" parameterClass="BaseInvesfundInfo">
+  	UPDATE base_invesfund_info SET
+  	<isNotNull property="base_invesfund_name">
+  		base_invesfund_name=#base_invesfund_name#,
+  	</isNotNull>
+  	<isNotEmpty property="base_invesfund_currency">
+  		base_invesfund_currency=#base_invesfund_currency#,
+  	</isNotEmpty>
+  	<isNotEmpty property="base_invesfund_currencyname">
+  		base_invesfund_currencyname=#base_invesfund_currencyname#,
+  	</isNotEmpty>
+  	<isNotEmpty property="base_invesfund_scalecode">
+  		base_invesfund_scalecode=#base_invesfund_scalecode#,
+  	</isNotEmpty>
+  	<isNotEmpty property="base_invesfund_scale">
+  		base_invesfund_scale=#base_invesfund_scale#,
+  	</isNotEmpty>
+  	<isNotEmpty property="base_invesfund_state">
+  		base_invesfund_state=#base_invesfund_state#,
+  	</isNotEmpty>
+  		updid=#updid#,
+  		updtime=#updtime#
+  	WHERE deleteflag='0' AND
+  		base_invesfund_code=#base_invesfund_code#
+  </update>
+<!--  删除投资机构基金-->
+  <delete id="deleteInvesfundByCode" parameterClass="String">
+  		DELETE FROM base_invesfund_info WHERE  deleteflag='0' AND base_invesfund_code=#fundCode#
+  </delete>
+<!-- 查询投资机构基金总数 -->
+  <select id="findCountTfundByOrgId" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM base_invesfund_info WHERE deleteflag='0' and base_investment_code=#orgCode# 
+  </select>
+  
+ <!--根据机构ｉｄ关联查询机构基金详情-->
+  <select id="findInvesfundByOrganizationId" parameterClass="String" resultClass="BaseInvesfundInfo">
+		SELECT * FROM base_invesfund_info 
+		WHERE deleteflag='0' and base_investment_code=#id#
+		order by updtime desc
+  </select>
+  
+  <!--2015-12-17 update duwenjie 关联标签表翻译币种，规模		-->
+  <!--根据机构code分页查询机构基金详情-->
+  <select id="findPageInvesfundByOrgId" parameterClass="java.util.HashMap" resultClass="BaseInvesfundInfo">
+		SELECT 
+			f.base_invesfund_code	,
+			f.base_investment_code	,
+			f.base_invesfund_name	,
+			f.base_invesfund_currency	,
+			l.sys_labelelement_name AS base_invesfund_currencyname,
+			f.base_invesfund_scalecode	,
+			m.sys_labelelement_name AS base_invesfund_scale,
+			f.base_investor_code	,
+			f.base_investor_name	,
+			f.base_invesfund_begintime	,
+			f.base_invesfund_endtime	,
+			f.deleteflag	,
+			f.createid	,
+			f.createtime	,
+			f.updid	,
+			f.updtime	,
+			f.base_invesfund_state	
+		FROM base_invesfund_info f
+		INNER JOIN sys_labelelement_info l
+		ON  l.deleteflag='0'  
+			AND l.sys_labelelement_state='0'   
+			AND l.sys_labelelement_code=f.base_invesfund_currency
+		INNER JOIN  sys_labelelement_info m
+		ON  m.deleteflag='0'  
+			AND m.sys_labelelement_state='0'   
+			AND m.sys_labelelement_code=f.base_invesfund_scalecode
+		WHERE f.deleteflag='0' 
+			AND f.base_investment_code=#orgCode# 
+		ORDER BY f.updtime DESC  
+		LIMIT $startCount$,$pageSize$
+		
+  </select>
+  <select id="findInvesfund" parameterClass="java.util.HashMap" resultClass="BaseInvesfundInfo">
+  SELECT base_invesfund_name,base_invesfund_scale 
+  FROM base_invesfund_info 
+  WHERE deleteflag='0' and base_investment_code=#base_investment_code# 
+  <!-- 2015-11-30 bug yl mod start -->
+  <!-- and base_invesfund_endtime>=#nowdate#  -->
+  and base_invesfund_state='0'
+  <!-- 2015-11-30 bug yl mod end -->
+  order by updtime desc  limit 0,3
+  </select>
+</sqlMap>

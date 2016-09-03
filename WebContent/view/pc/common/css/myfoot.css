@@ -1,0 +1,15 @@
+.comp {
+    display: block;
+    padding: 0 8px;
+}
+.companyname {
+    color: #2091DF;
+    cursor: pointer;
+    padding: 2px 3px;
+}
+.companyname:hover {
+    transition: all .3s !important;
+    background: #f60;
+    color: #fff;
+    border-radius: 4px;
+}

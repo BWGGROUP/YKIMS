@@ -1,0 +1,35 @@
+<!-- 此页面不改为jsp -->
+<div class="buttom-menu">
+    <ul class="menu1">
+        <li class="ms">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            <ul class="search-menu">
+                <a data-href="gotoSearchMain.html"><li><span class="icon"><img src="view/mobile/icon/finan.png"> </span>投资机构</li></a>
+                <a data-href="trade_search.html"><li><span class="icon"><img src="view/mobile/icon/meeting.png"> </span>近期交易</li></a>
+                <a data-href="company_search.html"> <li><span class="icon"><img src="view/mobile/icon/company.png"> </span>公 <span style="display: inline-block;width: 2em;"></span>司</li></a>
+                <a data-href="meeting_search.html"><li><span class="icon"><img src="view/mobile/icon/lastdate.png"> </span>会 <span style="display: inline-block;width: 2em;"></span>议</li></a>
+                <a data-href="financing_search.html"><li><span class="icon"><img src="view/mobile/icon/organization.png"> </span>融资计划</li></a>
+                <a data-href="myfoot_search.html"><li><span class="icon"><img src="view/mobile/icon/myfoot.png"> </span>我的足迹</li></a>
+            </ul>
+        </li>
+        <li class="m">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <ul class="add-menu ">
+            <a data-href="addMeetingInfoinit.html"><li><span class="icon"><img src="view/mobile/icon/lastdate.png"> </span>会议记录</li></a>
+                 <a data-href="organization_add.html"><li><span class="icon"><img src="view/mobile/icon/finan.png"> </span>投资机构</li></a>
+                 <a data-href="investor_add.html"><li><span class="icon"><img src="view/mobile/icon/people.png"> </span>投 &nbsp;资 &nbsp;人</li></a>
+                  <a data-href="addTradeInfoinit.html"><li><span class="icon"><img src="view/mobile/icon/meeting.png"> </span>交 <span style="display: inline-block;width: 2em;"></span>易</li></a>
+                <a data-href="company_add.html"><li><span class="icon"><img src="view/mobile/icon/company.png"> </span>公 <span style="display: inline-block;width: 2em;"></span>司</li></a>
+            </ul>
+        </li>
+        <li class="mu"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        <ul class="usermenu">
+                    <a data-href="userinfo.html"><li><span class="icon"><span class="glyphicon glyphicon-user" aria-hidden="true" style="padding-right: 9px;"></span></span>个人信息</li></a>
+                    <a data-href="userpassword.html"><li><span class="icon"><span class="glyphicon glyphicon-cog" aria-hidden="true" style="padding-right: 9px;"></span></span>密码管理</li></a>
+                    <a data-href="logout.html"><li><span class="icon"><span class="glyphicon glyphicon-off" aria-hidden="true" style="padding-right: 9px;"></span></span><span class="unbind">用户解绑<span></li></a>
+                    </ul>
+        </li>
+
+    </ul>
+
+</div>

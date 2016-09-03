@@ -1,0 +1,159 @@
+.inputdef {
+    width: 200px;
+    background: #fff;
+    margin-left: 10px;
+    padding: 4px 5px;
+}
+.tiplist ul {
+    max-height: 10000px;
+	width:95%;
+}
+
+.tiplist ul li{
+	height:auto;
+}
+
+.shgroup .title{
+	padding-top:13px;
+    width: 66px;
+}
+.shgroup .tiplist {
+	vertical-align: middle;
+}
+.edit-btn{
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+    background: url("../icon/edit.png") no-repeat;
+    background-size: 100% 100%;
+}
+.tablepadding{
+    padding: 5px 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+table>thead{
+    background: #EEE;
+}
+table>thead>tr{
+    height: 33px;
+}
+table>thead>tr>th{
+    vertical-align: middle;
+    padding: 4px ;
+    border: 1px solid #C0C0C0;
+}
+table>tbody>tr>td{
+    border:1px solid #C0C0C0;
+    padding: 10px 2px;
+}
+table>tbody>tr:nth-child(2n){
+    background: #fbfbfb;
+}
+.box-body .shgroup.jijintable{
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+    position: relative;
+}
+.box-body .shgroup.jijintable .title{
+	display: block;
+    padding-bottom: 3px;
+ }
+.addbtn {
+    width: 20px;
+    height: 20px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+    margin-top: 10px;
+    z-index:50;
+}
+.meeting-box{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+
+}
+.box-body .shgroup.node{
+    position: relative;
+    display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width: 140px!important;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding:1px 2px;
+}
+.meeting-box textarea {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.notecompet{
+    text-align: center;
+    padding-right: 15px;
+}
+.inputlist .inputdef{
+    width: 170px;
+}
+
+
+.smart{
+    height: 25px;
+    line-height: 25px;
+    font-size: 13px;
+    width: 53px!important;
+    margin-top: 0;
+}
+
+.yktable{
+	display: block;
+    width: 100%;
+    border-top: 1px dashed #C0C0C0;
+    position: relative;
+}
+.yklist{
+	padding: 0 20px 0 5px;
+    display: table-cell;
+    position: relative;
+    padding-top: 11px;
+    vertical-align: middle;
+}
+.ykLabel{
+	float: left;
+    margin:0 5px 5px 0;
+    border: 1px solid #C0C0C0;
+    padding: 0px 4px;
+    height: 22px;
+    line-height: 22px;
+}
+.ykDelClick{
+	color: #f60;
+}

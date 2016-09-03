@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ViewMeetingRele">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+
+	<typeAlias alias="ViewMeetingRele"
+		type="cn.com.sims.model.viewmeetingrele.ViewMeetingRele" />
+	<!-- Result maps describe the mapping between the columns returned from 
+		a query, and the class properties. A result map isn't necessary if the columns 
+		(or aliases) match to the properties exactly. -->
+	<!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系 -->
+
+
+	<!-- Select with no parameters using the result map for Account class. -->
+
+
+
+	<select id="screenlist_num" parameterClass="java.util.HashMap"
+		resultClass="int">
+		SELECT COUNT(*) FROM view_meeting_rele WHERE deleteflag='0'
+		<dynamic prepend="">
+			<isNotEmpty prepend="and" property="orgaincode">
+				base_meeting_invicode LIKE '%$orgaincode$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companycode">
+				base_meeting_compcode LIKE '%$companycode$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="investorcode">
+				base_meeting_intorcode LIKE '%$investorcode$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="meetingtype">
+				base_meeting_typecode = #meetingtype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="recordcode">
+				createid=#recordcode#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!--duwenjie 2016-3-22	查询登录用户是否有权限查看会议-->
+	<select id="screenloginInfo" parameterClass="java.util.HashMap"
+	 resultClass="String">
+		SELECT IF(ISNULL(v2.view_meeting_releid),"0","1") visible FROM view_meeting_rele v1 LEFT JOIN view_meeting_rele v2 ON
+			v1.view_meeting_releid=v2.view_meeting_releid and (
+		<dynamic>
+		
+			<isNotEmpty property="sysUserWadslisList">
+				<iterate  property='sysUserWadslisList'
+					 conjunction='OR'>
+					( (v2.base_meeting_sharetype='1' 
+						AND v2.base_meeting_baskcode like '%$sysUserWadslisList[].sys_wad_code$%'
+					  )
+					 OR 
+					  (v2.base_meeting_sharetype='2' 
+					  	AND v2.base_meeting_usercode like '%$sysUserWadslisList[].sys_wad_code$%'
+					  )
+					)
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="sysUserWadslisList">
+			  	1=2
+			</isEmpty>
+			<isNotEmpty property="loginuserid" >
+				OR v2.view_meeting_usercode like '%$loginuserid$%'
+				OR (v2.base_meeting_usercode like '%$loginuserid$%' AND v2.base_meeting_sharetype='2')
+				OR v2.createid = #loginuserid#
+			</isNotEmpty>
+			
+		</dynamic>
+		)
+		WHERE v1.deleteflag='0'
+		AND v1.base_meeting_code=#meetingcode#
+	</select>
+
+	<select id="screenlist" parameterClass="java.util.HashMap"
+		resultClass="ViewMeetingRele">
+		SELECT v1.*,IF(ISNULL(v2.view_meeting_releid),"0","1") visible FROM view_meeting_rele v1 LEFT JOIN view_meeting_rele v2 ON
+			v1.view_meeting_releid=v2.view_meeting_releid and (
+		<dynamic>
+		
+			<isNotEmpty property="sysUserWadslisList">
+				<iterate  property='sysUserWadslisList'
+					 conjunction='OR'>
+					( (v2.base_meeting_sharetype='1' 
+						AND v2.base_meeting_baskcode like '%$sysUserWadslisList[].sys_wad_code$%'
+					  )
+					 OR 
+					  (v2.base_meeting_sharetype='2' 
+					  	AND v2.base_meeting_usercode like '%$sysUserWadslisList[].sys_wad_code$%'
+					  )
+					)
+				</iterate>
+			</isNotEmpty>
+			<isEmpty property="sysUserWadslisList">
+			  	1=2
+			</isEmpty>
+			<isNotEmpty property="loginuserid" >
+				OR v2.view_meeting_usercode like '%$loginuserid$%'
+				OR (v2.base_meeting_usercode like '%$loginuserid$%' AND v2.base_meeting_sharetype='2')
+				OR v2.createid = #loginuserid#
+			</isNotEmpty>
+			
+		</dynamic>
+		)
+		WHERE v1.deleteflag='0'
+		<dynamic prepend="">
+			<isNotEmpty prepend="and" property="orgaincode">
+				v1.base_meeting_invicode LIKE '%$orgaincode$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="companycode">
+				v1.base_meeting_compcode LIKE '%$companycode$%'
+			</isNotEmpty>
+				<isNotEmpty prepend="and" property="investorcode">
+				v1.base_meeting_intorcode LIKE '%$investorcode$%'
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="meetingtype">
+				v1.base_meeting_typecode = #meetingtype#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="recordcode">
+				v1.createid=#recordcode#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY v1.base_meeting_time DESC,v1.updtime desc 	LIMIT #start#,#size#
+	</select>
+	<select id="viewmeetingreleBycode" parameterClass="String"
+		resultClass="ViewMeetingRele">
+		SELECT * FROM view_meeting_rele WHERE deleteflag='0' 
+AND base_meeting_code=#id#
+		</select>
+		
+<!--dwj 2016-3-7	删除会议业务数据-->
+	<delete id="deleteMeetingRele" parameterClass="String">
+		DELETE FROM view_meeting_rele WHERE  deleteflag='0' 
+		AND base_meeting_code=#meetingcode#
+	</delete>
+<!--	用户参与会议数量-->
+	<select id="findJoinMeetingCountByUsercode" parameterClass="String" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(p.base_meeting_code)
+  		FROM base_meeting_parp p 
+		INNER JOIN view_meeting_rele m 
+		ON p.base_meeting_code = m.base_meeting_code
+		WHERE p.sys_user_code = #usercode#
+	</select>
+<!--	用户参与会议信息-->
+	<select id="findJoinMeetingByUsercode" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT 
+			p.base_meeting_code,
+			m.base_meeting_time,
+  			m.base_meeting_compcont,
+  			m.base_meeting_invicont,
+  			m.createid 
+  		FROM base_meeting_parp p 
+		INNER JOIN view_meeting_rele m 
+		ON p.base_meeting_code = m.base_meeting_code
+		WHERE p.sys_user_code = #usercode#
+		ORDER BY m.base_meeting_time DESC
+		LIMIT #starttime#,#pageSize#
+	</select>
+</sqlMap>

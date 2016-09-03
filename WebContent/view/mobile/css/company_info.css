@@ -1,0 +1,262 @@
+.shgroup .title{
+    width: 70px;
+    padding-top: 2px;
+    padding-bottom:2px;
+}
+.shgroup .tiplist{
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.shgroup:first-child{
+    margin-top: 10px;
+}
+.box-body .shgroup{
+    display: block;
+    position: relative;
+}
+.tablepadding{
+    padding: 0 10px;
+}
+table{
+    border-collapse: collapse;
+width: 100%;
+    text-align: center;
+}
+table>thead{
+    background: #EEE;
+}
+table>thead>tr{
+    height: 33px;
+}
+table>thead>tr>th{
+    vertical-align: middle;
+    padding: 4px ;
+    border: 1px solid #C0C0C0;
+}
+table>tbody>tr>td{
+    border:1px solid #C0C0C0;
+    padding: 10px 5px;
+    word-break: break-all;
+}
+table>tbody>tr:nth-child(2n){
+    background: #fbfbfb;
+}
+.addrz{
+    text-align: right;
+    margin-top: 6px;
+}
+.btn-rongz {
+    height: 24px;
+    background: #f60;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.spanblock{
+    display:inline-block;
+}
+.meeting-box{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.meeting-conten{
+    min-height: 100px;
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-radius: 5px;
+    padding: 10px 6px;
+}
+.meeting-box table{
+    width: 100%;
+    border: 1px solid #C0C0C0;
+    border-collapse: collapse;
+}
+.meeting-box table>tbody>tr>td{
+    border: 1px solid #C0C0C0;
+    padding: 3px 2px;
+    text-align: center;
+}
+.meeting-box table>tbody>tr>td:last-child{
+    text-align: center;
+}
+.meeting-box table>tbody>tr>td:nth-child(1){
+    width: 20%;
+}
+.meeting-box table>tbody>tr>td:nth-child(2){
+    width: 20%;
+}
+.meeting-box table>tbody>tr>td:nth-child(3){
+    width: 60%;
+}
+.meeting-box textarea{
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #504F4F;
+    border: 1px solid #C0C0C0;
+    outline: none;
+}
+.notecompet{
+    text-align: center;
+    /*padding-right: 15px;*/
+    /*padding-bottom: 10px;*/
+}
+.btn-default{
+    height: 29px;
+    line-height: 28px;
+    background: #f60;
+    color: #fff;
+    font-size: 16px;
+    width:138px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comp {
+    display: inline-block;
+    padding: 1px 8px 1px 0px;
+}
+.addbtn{
+    width: 19px;
+    height: 19px;
+    background: url("../icon/addbtn.png") no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -10px;
+}
+.closeshearch {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+}
+
+.closefinacplan {
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    border: 1px solid #C0C0C0;
+    border-top: none;
+    display: none;
+}
+#tradePage,#meetingPage,#updlogPage {
+    display: none;
+    background: #fff;
+}
+.returnBtn {
+    border: none;
+    width: 55px;
+    height: 25px;
+    font-size: 13px;
+    background-color: #f60;
+    color: #ffffff;
+    margin: 0 5px;
+    line-height: 24px;
+}
+.people li{
+    display: block;
+
+}
+.people{
+    max-height: 10000px!important;
+}
+.smart {
+    height: 25px;
+    line-height: 25px;
+    font-size: 13px;
+    width: 53px;
+    margin-top: 0;
+}
+.pageaction{
+    text-align: right;
+    padding-right: 20px;
+}
+.page_body{
+    height: 100%;
+    overflow: auto;
+}
+.main-content{
+    height: 100%;
+}
+.box-title {
+    height: 40px;
+    line-height: 40px;
+    position:relative;
+}
+.page_body {
+    position: relative;
+    padding-top: 48px;
+    padding-bottom: 46px;
+}
+.box-return{
+    float: right;
+}
+
+.morebtn{
+    width: 19px;
+    height: 19px;
+    /*background: url("../icon/addbtn.png") no-repeat;*/
+    background-size: 100%;
+    background-position: center center;
+    position: absolute;
+    right: 6px;
+}
+#flanmore {
+    color: #2091DF;
+}
+.topo{
+    margin-top:15px;
+}
+.inputdef{
+    width: 175px;
+}
+textarea{
+    margin-top: 5px;
+    min-height: 60px;
+}
+.inputlist .lable{
+    vertical-align: middle;
+}
+.tiplist ul {
+    max-height: 10000px;
+}
+.tiplist li {
+    height: auto!important;
+}
+.addtradebtn{
+	width: 20px;
+height: 20px;
+background: url("../icon/addbtn.png") no-repeat;
+background-size: 100%;
+background-position: center center;
+position: relative;
+right: 6px;
+z-index: 1;
+float: right;
+margin-top: 10px;
+}
+
+.goback{
+	display:none;
+	float:right;
+	position:absolute;
+	right:0px;
+	top:0px;
+}

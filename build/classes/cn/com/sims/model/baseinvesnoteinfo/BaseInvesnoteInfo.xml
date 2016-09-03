@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BaseInvesnoteInfo">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <!-- 把实体类地址配置到xml文件中反转一个标识对象 -->
+ 
+  <typeAlias alias="BaseInvesnoteInfo" type="cn.com.sims.model.baseinvesnoteinfo.BaseInvesnoteInfo"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+       <!-- 在把标识对象 重新映射一个标识的ID同时把实体类的属性和表对应的字段在做一一映射关系-->
+  <!-- 新增投资机构Note信息 -->
+  <insert id="insertOrgNote" parameterClass="BaseInvesnoteInfo">
+  	INSERT INTO base_invesnote_info(
+  		base_invesnote_code,
+  		base_investment_code,
+  		base_invesnote_content,
+  		sys_user_name,
+  		createid,
+  		createtime,
+  		updid,
+  		updtime)
+ 	VALUES(
+ 		#base_invesnote_code#,
+ 		#base_investment_code#,
+ 		#base_invesnote_content#,
+ 		#sys_user_name#,
+ 		#createid#,
+ 		#createtime#,
+ 		#updid#,
+ 		#updtime#)
+  </insert>
+<!-- 根据投资机构备注code删除-->
+	<delete id="tranDeleteInvestmentNote" parameterClass="String">
+		DELETE FROM base_invesnote_info WHERE deleteflag=0 and base_invesnote_code=#noteCode#
+	</delete>
+  <!-- Select with no parameters using the result map for Account class. -->
+  
+  <!-- 根据机构id查询机构note数量-->
+  <select id="findCountByOrgId" parameterClass="String" resultClass="java.lang.Integer">
+		select COUNT(*) from base_invesnote_info where deleteflag='0' and base_investment_code=#id#
+  </select>
+  
+  <!-- 根据机构id查询机构note信息-->
+  <select id="findInvesnoteByOrgId" parameterClass="String" resultClass="BaseInvesnoteInfo">
+		select * from base_invesnote_info where deleteflag='0'
+		 and base_investment_code=#id# order by updtime desc
+  </select>
+  
+   <!--根据机构code分页查询机构note详情-->
+  <select id="findPageInvesnoteInfo" parameterClass="java.util.HashMap" resultClass="BaseInvesnoteInfo">
+		SELECT * FROM base_invesnote_info WHERE deleteflag='0' 
+		and base_investment_code=#orgCode# order by updtime desc
+		 limit $startCount$,$pageSize$
+  </select>
+  
+  
+  
+  
+</sqlMap>

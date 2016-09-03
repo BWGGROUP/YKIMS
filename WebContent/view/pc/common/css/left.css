@@ -1,0 +1,79 @@
+.left-content{
+    width: 215px;
+    height: 100%;
+    /*border-right: 1px solid #C0C0C0;*/
+}
+.left-head{
+    height: 40px;
+    border-bottom:1px solid #C0C0C0 ;
+    position: relative;
+}
+.left-head .span-box{
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    height: 100%;
+    position: absolute;
+}
+.left-head .span-box:first-child{
+    border-right: 1px solid #C0C0C0;
+    left: 0;
+}
+.left-head .span-box:last-child{
+    right: 0;
+}
+.optbtn{
+    height: 100%;
+    width: 100%;
+      background: #EEE;
+    color: #6F6F6F;
+    font-size: 16px;
+    cursor:pointer;
+}
+.optbtn.active{
+    background: #fff;
+}
+.left-menu-body{
+    padding: 20px 15px;
+}
+.menu-list{
+    width: 100%;
+    display: none;
+}
+.menu-list li{
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    color: #6F6F6F;
+    border:1px solid #C0C0C0 ;
+    margin-bottom: 2px;
+    padding: 5px 15px;
+    font-size: 14px;
+    line-height: 23px;
+position: relative;
+    cursor:pointer;
+}
+.menu-list li .icon{
+    display: inline-block;
+    width: 30px;
+    height: 100%;
+    text-align: left;
+    position: absolute;
+    left: 26px;
+    font-size: 16px;
+}
+.menu-list li.active .icon{
+    left: 20px;
+}
+.menu-list li.active{
+    border-left: 6px solid #FF8F00;
+    padding-left: 9px;
+}
+.adkb{
+    display: inline-block;
+    width: 30px;
+}
+.adkb1{
+    display: inline-block;
+    width: 8px;
+}
