@@ -46,6 +46,11 @@
                         <span class="icon"><img src="view/pc/common/icon/myfoot.png"></span>我的足迹
                     </li>
                 </a>
+                <a menu-href="Briefing.html">
+                        <li class="li_Briefing">
+                        <span class="icon"><span class="glyphicon glyphicon-file"></span></span>机构简介
+                        </li>
+                 </a>
             </ul>
             <ul class="menu-list add" style="display: none">
                 <a menu-href="addMeetingInfoinit.html">

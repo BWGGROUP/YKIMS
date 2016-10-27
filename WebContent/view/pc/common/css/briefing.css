@@ -1,0 +1,42 @@
+.meet_search{
+    margin: 10px;
+    padding-left: 10px;
+    min-height: 35px;
+    position: relative;
+    overflow: hidden;
+}
+.search_condition_title{
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    text-align: right;
+    width: 63px;
+    padding:0 3px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+.search_title{
+    width: 20%;
+    height: 28px;
+    line-height: 28px;
+    text-align: right;
+    font-size: 13px;
+    float: left;
+    margin-right: 10px;
+}
+.search_condition{
+
+    width: 563px;
+    margin-left: 74px;
+}
+
+.search_condition select{
+    width:100%;
+
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #ffffff;
+    border: 1px #f60 solid;
+    margin-top: 5px;
+}

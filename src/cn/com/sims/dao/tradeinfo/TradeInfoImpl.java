@@ -157,5 +157,9 @@ public class TradeInfoImpl implements ITradeInfoDao{
 
 		return (Integer) sqlMapClient.queryForObject(str, map);
 	}
+	@Override
+	public List<Map<String, String>> findPageTradeInfoByDate(String str, HashMap<String, String> map) throws Exception {
+		return sqlMapClient.queryForList(str, map);
+	}
 	
 }

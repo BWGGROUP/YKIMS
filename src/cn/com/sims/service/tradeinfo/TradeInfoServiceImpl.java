@@ -295,5 +295,22 @@ public class TradeInfoServiceImpl implements ITradeInfoService{
 			gs_logger.info("TradeInfoServiceImpl investor_notin_tradser 结束");
 			return data;
 		}
+		@Override
+		public List<Map<String, String>> findPageTradeInfoByDate(String date, String orgCode) throws Exception {
+			gs_logger.info("TradeInfoServiceImpl findPageTradeInfoByDate 开始");
+			List<Map<String, String>> list=null;
+			HashMap<String, String> map = new HashMap<String, String>();
+			try {
+				map.put("date", date);
+				map.put("orgCode", orgCode);
+				list=tradeInfoDao.findPageTradeInfoByDate("viewTradeInfo.findPageTradeInfoBydate", map);
+			} catch (Exception e) {
+				gs_logger.error("TradeInfoServiceImpl findPageTradeInfoByDate方法异常",e);
+				e.printStackTrace();
+				throw e;
+			}
+			gs_logger.info("TradeInfoServiceImpl findPageTradeInfoByDate 结束");
+			return list;
+		}
 
 }

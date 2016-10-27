@@ -98,4 +98,6 @@ public interface ITradeInfoDao {
 	public int deleteViewTradeInfoByTradeCode(String str,String tradeCode)throws Exception;
 	public	Map<String, String> trade_investment(String str,String code)throws Exception;
 	public int investor_notin_tradser(String str,HashMap<String, String> map)throws Exception;
+	public List<Map<String, String>> findPageTradeInfoByDate(String str,HashMap<String, String> map)throws Exception;
+	
 }
