@@ -11,6 +11,7 @@ td {
 td {
 	text-align: center;
 	vertical-align: middle;
+	max-width:300px;
 }
 </style>
 <#if mainlist?exists> 
