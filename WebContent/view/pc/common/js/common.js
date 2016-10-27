@@ -194,7 +194,7 @@ var click= function () {
                 $(this).css("display","none");
             });
             $($(".optbtn")[activenow]).addClass("active");
-            try{$($(".menu-list li")[optactive*5+menuactive]).addClass("active");}catch (e){}
+            try{$($(".menu-list li")[optactive*7+menuactive]).addClass("active");}catch (e){}
 
             var active=".search";
             if(activenow==1){

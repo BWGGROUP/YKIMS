@@ -105,6 +105,7 @@ public interface ITradeInfoService {
 	public int findCountTradeInfoByOrgCode(String orgCode) throws Exception;
 	
 	public List<Map<String, String>> findPageTradeInfoByOrgCode(Page page,String orgCode)throws Exception;
+	public List<Map<String, String>> findPageTradeInfoByDate(String date,String orgCode)throws Exception;
 	
 	/**
 	 *通过交易code查询交易机构

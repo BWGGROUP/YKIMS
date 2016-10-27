@@ -131,6 +131,12 @@ public static String INVESTORADD_PC = ConfigUtil.get("investorAdd_pc");
 	 * 跳转到交易搜索页面（pc）
 	 */
 	public static String TRADESERECH_PC = ConfigUtil.get("tradeserach_pc");
+	/**
+	 * 跳转到交易搜索页面（pc）
+	 */
+	public static String BRIEFING_PC = ConfigUtil.get("Briefing_pc");
+	
+	
 	
 	/**
 	 * 跳转到交易详情页面(mobile)
@@ -339,6 +345,16 @@ public static String INVESTORADD_PC = ConfigUtil.get("investorAdd_pc");
 		map.put(CommonUtil.findNoteTxtOfXML("COMPUTER"), TRADESERECH_PC);
 		return  map.get(logintype);
 	}
+	/**
+	 * 跳转到机构简介
+	 * @author zzg
+	 */
+	public static String Briefing(String logintype) {
+		HashMap<String, String> map=new HashMap<String, String>();
+		map.put(CommonUtil.findNoteTxtOfXML("COMPUTER"), BRIEFING_PC);
+		return  map.get(logintype);
+	}
+	
 	/**跳转到用户信息修改
 	 * @author zzg
 	 */

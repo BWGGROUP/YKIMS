@@ -87,6 +87,33 @@
 		ORDER BY base_trade_date desc,updtime desc
 		limit $startCount$,$pageSize$
   </select>
+  
+     <!--根据机构code分页查询机构交易详情-->
+  <select id="findPageTradeInfoBydate" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT 
+			base_trade_code,
+			base_trade_date,
+			base_trade_stage,
+			base_trade_stagecont,
+			base_trade_money,
+			base_trade_comnum,
+			base_comp_code,
+			base_comp_name,
+			CASE WHEN base_trade_collvote=0 THEN '是'
+			 	 WHEN base_trade_collvote=1 THEN '否'
+			END as base_trade_collvote,
+			base_trade_inmoney,
+			CASE WHEN base_trade_ongam=0 THEN '是'
+			 	 WHEN base_trade_ongam=1 THEN '否'
+			END as base_trade_ongam,
+			CASE WHEN base_trade_subpay=0 THEN '是'
+			 	 WHEN base_trade_subpay=1 THEN '否'
+			END as base_trade_subpay
+		FROM view_trade_info 
+		WHERE deleteflag='0' 
+		AND base_investment_code=#orgCode# AND base_trade_date>#date#
+		ORDER BY base_trade_date desc,updtime desc
+  </select>
 
 <!--  根据交易id查询交易详情 duwnejie-->
   <select id="findViewTradeInfoByID" parameterClass="String" resultClass="viewTradeInfo">
