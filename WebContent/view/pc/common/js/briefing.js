@@ -79,8 +79,6 @@ function clicklisten() {
             
             code=code.substring(0,code.length-1);
             window.open("exportpdf.html?logintype=PC&code="+code);
-    	}else{
-    		$.showtip("请选择投资机构");
     	}
     	
         
@@ -95,8 +93,6 @@ function clicklisten() {
             
             code=code.substring(0,code.length-1);
             $("#frame")[0].src="exportexcel.html?logintype=PC&code="+code;
-    	}else{
-    		$.showtip("请选择投资机构");
     	}
     })
 }
