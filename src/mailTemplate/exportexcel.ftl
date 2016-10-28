@@ -11,7 +11,7 @@ td {
 td {
 	text-align: center;
 	vertical-align: middle;
-	max-width:300px;
+	max-width:500px;
 }
 </style>
 <#if mainlist?exists> 
@@ -63,8 +63,8 @@ td {
 							<#list main.fundList as fund>
 							<tr>
 								<td>${fund.base_invesfund_name!}</td>
-								<td>${fund.base_invesfund_currency!}</td>
 								<td>${fund.base_invesfund_currencyname!}</td>
+								<td>${fund.base_invesfund_scale!}</td>
 							</tr>
 							</#list>
 						</table> 
